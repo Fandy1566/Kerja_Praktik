@@ -9,7 +9,7 @@ class GuruController extends Controller
 
     public function index()
     {
-        
+        return view('dashboard.guru.index', ['data' => $this->data]);
     }
 
     public function create()
