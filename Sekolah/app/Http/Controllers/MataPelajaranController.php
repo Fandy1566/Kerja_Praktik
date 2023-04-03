@@ -3,12 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\MataPelajaran;
 
 class MataPelajaranController extends Controller
 {
+    protected $name;
+    protected $table;
+
+    public function __construct()
+    {
+        $this->name = new MataPelajaran;
+        $this->table = $this->name->getTable();
+    }
+
     public function index()
     {
-        return view('dashboard.mata_pelajaran.index', ['data' => $this->data]);
+        $tableColumns = $this->getTableColumns($this->table);
+        return view('dashboard.mata_pelajaran.index', ['data' => $this->data, 'tableColumns' => $tableColumns]);
     }
 
     public function create()
