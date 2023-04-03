@@ -6,17 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    private $tableName = 'siswa';
+
     public function up(): void
     {
-        if (!Schema::hasTable('siswa')) {
-            Schema::create('siswa', function (Blueprint $table) {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
-                $table->string('nama_siswa');
-                $table->string('gender_siswa');
-                $table->string('alamat_siswa');
+                $table->string('id_'.$this->tableName, 8)->unique();
+                $table->string('nama_'.$this->tableName, 50);
+                $table->enum('gender_'.$this->tableName,['L','P','?']);
+                $table->string('no_telp_'.$this->tableName, 13);
+                $table->text('alamat_'.$this->tableName);
                 $table->timestamps();
             });
         }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::dropIfExists($this->tableName);
     }
 };

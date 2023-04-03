@@ -6,26 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    private $tableName = 'jam_mengajar';
+
     public function up(): void
     {
-        if (!Schema::hasTable('jam_mengajar')) {
-            Schema::create('jam_mengajar', function (Blueprint $table) {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
-                $table->string('id_jam_mengajar')->unique();
-                $table->string('waktu_mengajar');
+                $table->string('id_'.$this->tableName, 8)->unique();
+                $table->string('waktu_'.$this->tableName, 50);
                 $table->timestamps();
             });
         }
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('jam_mengajar');
+        Schema::dropIfExists($this->tableName);
     }
 };
