@@ -15,15 +15,8 @@ class Controller extends BaseController
         data for sidebar menu
         ["name","image"]
     */
+    protected $name, $table, $loc;
     
-    protected $data = [
-        ["Guru",""],
-        ["Siswa", ""],
-        ["Mata Pelajaran",""],
-        ["Jam Mengajar",""],
-        ["User",""]
-    ];
-
     public function getTableColumns($table)
     {
         return DB::getSchemaBuilder()->getColumnListing($table);

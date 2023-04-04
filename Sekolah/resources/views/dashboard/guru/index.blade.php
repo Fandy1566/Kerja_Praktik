@@ -5,13 +5,14 @@
     
 </div>
 <div class="card">
+    <div class="button">
+        <button type="submit"></button>
+    </div>
     <table id="tbl">
         <thead>
             <tr>
                 <th>No</th>
-                @foreach (array_slice($tableColumns, 1, -2) as $item)
-                <th>{{str_replace('Guru', '', ucwords(str_replace('_', ' ', $item)))}}</th>
-                @endforeach
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,4 +21,9 @@
     </table>
 
 </div>
+@endsection
+@section('script')
+<script>
+    
+</script>
 @endsection

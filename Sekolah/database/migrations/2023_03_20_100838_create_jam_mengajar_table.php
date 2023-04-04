@@ -13,7 +13,6 @@ return new class extends Migration
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
-                $table->string('id_'.$this->tableName, 8)->unique();
                 $table->string('waktu_'.$this->tableName, 50);
                 $table->timestamps();
             });

@@ -13,7 +13,6 @@ return new class extends Migration
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
-                $table->string('id_'.$this->tableName, 8)->unique();
                 $table->string('nama_'.$this->tableName, 50);
                 $table->enum('gender_'.$this->tableName,['L','P','?']);
                 $table->string('no_telp_'.$this->tableName, 13);

@@ -3,14 +3,20 @@
     margin: 0;
 }
 
+:root{
+    --primary-color: skyblue;
+    --secondary-color: white;
+}
+
 .sidebar{
-    z-index: 999;
+    z-index: 2;
     width: 20vw;
     height: 100vh;
     position: fixed;
-    background-color: skyblue;
+    background-color: var(--primary-color);
+    min-width: 200px;
 }
 
 .content{
-    margin-left: 20vw;
+    padding-left: max(20vw, 200px);
 }

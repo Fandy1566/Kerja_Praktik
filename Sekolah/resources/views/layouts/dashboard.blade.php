@@ -1,3 +1,14 @@
+@php
+    //Digunakan untuk setting menu pada sidebar
+    $data = [
+        ["Guru",""],
+        ["Siswa", ""],
+        ["Mata Pelajaran",""],
+        ["Jam Mengajar",""],
+        ["User",""]
+    ];
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('/css/dashboard.css') }}" rel="stylesheet">
+    @yield('head')
     <title>@yield('title')</title>
 </head>
 <body>
@@ -40,4 +52,5 @@
     const active = document.getElementsByClassName("active");
     collection[0].innerHTML = active[0].querySelector('a .name').innerHTML;
 </script>
+@yield('script')
 </html>
