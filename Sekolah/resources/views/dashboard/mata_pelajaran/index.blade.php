@@ -9,13 +9,18 @@
         <thead>
             <tr>
                 <th>No</th>
-                @foreach (array_slice($tableColumns, 1, -2) as $item)
-                <th>{{str_replace('Mata Pelajaran', '', ucwords(str_replace('_', ' ', $item)))}}</th>
-                @endforeach
+                <th>Nama</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
-            <td></td>
+            @foreach ($collection as $idx => $item)
+            <tr>
+                <td>{{++$idx}}</td>
+                <td>{{$item->nama_mata_pelajaran}}</td>
+                <td>Edit || Hapus</td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

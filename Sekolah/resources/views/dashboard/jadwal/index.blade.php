@@ -5,11 +5,17 @@
     
 </div>
 <div class="card">
+    <div class="button">
+        <button type="submit"></button>
+    </div>
     <table id="tbl">
         <thead>
             <tr>
                 <th>No</th>
-                <th>Ruang</th>
+                <th>Nama</th>
+                <th>Jenis Kelamin</th>
+                <th>Telepon</th>
+                <th>Alamat</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -17,5 +23,11 @@
             <td></td>
         </tbody>
     </table>
+{{-- [guru, mp, ruang] --}}
 </div>
+@endsection
+@section('script')
+<script>
+     
+</script>
 @endsection

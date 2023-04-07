@@ -4,7 +4,8 @@
         ["Guru",""],
         ["Siswa", ""],
         ["Mata Pelajaran",""],
-        ["Jam Mengajar",""],
+        ["Jadwal",""],
+        ["Jam Piket",""],
         ["User",""]
     ];
 @endphp

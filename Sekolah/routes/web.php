@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard.home');
 });
 
 use App\Http\Controllers\GuruController;
@@ -31,3 +31,6 @@ Route::resource('/siswa', SiswaController::class);
 
 use App\Http\Controllers\UserController;
 Route::resource('/user', UserController::class);
+
+use App\Http\Controllers\JadwalController;
+Route::resource('/jadwal', JadwalController::class);

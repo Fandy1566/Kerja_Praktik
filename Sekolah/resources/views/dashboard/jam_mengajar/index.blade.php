@@ -36,12 +36,14 @@
             <tr>
                 <th>No</th>
                 <th>Waktu</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         @foreach ($collection as $idx =>$item)
         <tbody>
             <td>{{++$idx}}</td>
             <td>{{$item->waktu_jam_mengajar}}</td>
+            <td>&nbsp;</td>
         </tbody>
         @endforeach
     </table>

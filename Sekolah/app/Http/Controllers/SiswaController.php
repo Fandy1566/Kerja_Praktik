@@ -18,8 +18,7 @@ class SiswaController extends Controller
 
     public function index()
     {
-        $tableColumns = $this->getTableColumns($this->table);
-        return view('dashboard.siswa.index', ['data' => $this->data, 'tableColumns' => $tableColumns]);
+        return view('dashboard.siswa.index');
     }
 
     public function create()

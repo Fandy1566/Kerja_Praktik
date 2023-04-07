@@ -15,8 +15,8 @@ class Controller extends BaseController
         data for sidebar menu
         ["name","image"]
     */
-    protected $name, $table, $loc;
-    
+    protected $model, $table, $loc;
+
     public function getTableColumns($table)
     {
         return DB::getSchemaBuilder()->getColumnListing($table);

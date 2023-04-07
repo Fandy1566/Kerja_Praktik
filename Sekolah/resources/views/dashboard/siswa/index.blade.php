@@ -9,9 +9,8 @@
         <thead>
             <tr>
                 <th>No</th>
-                @foreach (array_slice($tableColumns, 1, -2) as $item)
-                <th>{{str_replace('Siswa', '', ucwords(str_replace('_', ' ', $item)))}}</th>
-                @endforeach
+                <th>Nama</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>

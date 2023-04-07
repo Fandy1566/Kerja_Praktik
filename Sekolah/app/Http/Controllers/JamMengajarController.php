@@ -7,12 +7,9 @@ use App\Models\JamMengajar;
 
 class JamMengajarController extends Controller
 {
-    protected $model, $loc, $table;
-
     public function __construct()
     {
         $this->model = new JamMengajar;
-        // $this->table = $this->model->getTable();
         $this->table = $this->model->table;
         $this->loc = 'dashboard.jam_mengajar.';
     }
