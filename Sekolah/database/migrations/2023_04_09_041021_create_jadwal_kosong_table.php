@@ -6,17 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = 'siswa';
-
+    private $tableName = 'jadwal_kosong';
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
-                $table->string('nama_'.$this->tableName, 50);
-                $table->enum('gender_'.$this->tableName,['L','P','?']);
-                $table->string('no_telp_'.$this->tableName, 13);
-                $table->text('alamat_'.$this->tableName);
+                $table->string('kode_'.$this->tableName,4);
+                $table->unsignedBigInteger('kode_waktu');
+                $table->unsignedBigInteger('kode_hari');
                 $table->timestamps();
             });
         }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists($this->tableName);
+        Schema::dropIfExists('jadwal_kosong');
     }
 };

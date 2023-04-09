@@ -4,19 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class JadwalController extends Controller
+class JadwalKosongController extends Controller
 {
-    public function __construct()
-    {
-        // $this->model = new Guru;
-        // $this->table = $this->model->table;
-        $this->loc = 'dashboard.jadwal.';
-    }
-
     public function index()
     {
-        // $collection = get_class($this->model)::all();
-        return view($this->loc.'index');
+        $collection = get_class($this->model)::all();
+        return view($this->loc.'index', compact('collection'));
     }
 
     public function create()
@@ -28,9 +21,9 @@ class JadwalController extends Controller
     {
         $model = $this->model;
         $model->nama_guru = $request->nama_guru;
-        $model->gender_guru = $request->gender_guru;
-        $model->no_telp_guru = $request->no_telp_guru;
-        $model->alamat_guru = $request->alamat_guru;
+        // $model->gender_guru = $request->gender_guru;
+        // $model->no_telp_guru = $request->no_telp_guru;
+        // $model->alamat_guru = $request->alamat_guru;
         $model->is_active_guru = 1;
 
         $model->save();
@@ -51,9 +44,9 @@ class JadwalController extends Controller
     {
         $update = get_class($this->model)::find($id);
         $update->nama_guru = $request->nama_guru;
-        $update->gender_guru = $request->gender_guru;
-        $update->no_telp_guru = $request->no_telp_guru;
-        $update->alamat_guru = $request->alamat_guru;
+        // $update->gender_guru = $request->gender_guru;
+        // $update->no_telp_guru = $request->no_telp_guru;
+        // $update->alamat_guru = $request->alamat_guru;
         $update->is_active_guru = $request->is_active_guru;
         $update->save();
         // $request->session()->flash("info", "Data baru berhasil ditambahkan");

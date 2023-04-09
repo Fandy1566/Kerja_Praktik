@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             DummyDataSeeder::class,
+            HariSeeder::Class,
         ]);
     }
 }
