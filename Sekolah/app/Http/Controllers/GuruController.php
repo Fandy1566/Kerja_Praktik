@@ -9,14 +9,12 @@ class GuruController extends Controller
 {
     public function __construct()
     {
-        $this->model = new Guru;
-        $this->table = $this->model->table;
         $this->loc = 'dashboard.guru.';
     }
 
     public function index()
     {
-        $collection = get_class($this->model)::all();
+        $collection = Guru::all();
         return view($this->loc.'index', compact('collection'));
     }
 
@@ -27,14 +25,16 @@ class GuruController extends Controller
 
     public function store(Request $request)
     {
-        $model = $this->model;
-        $model->nama_guru = $request->nama_guru;
-        // $model->gender_guru = $request->gender_guru;
-        // $model->no_telp_guru = $request->no_telp_guru;
-        // $model->alamat_guru = $request->alamat_guru;
-        $model->is_active_guru = 1;
 
-        $model->save();
+        $store = new Guru;
+        $store->kode_guru = $request->nama_guru;
+        $store->nama_guru = $request->nama_guru;
+        // $store->gender_guru = $request->gender_guru;
+        // $store->no_telp_guru = $request->no_telp_guru;
+        // $store->alamat_guru = $request->alamat_guru;
+        $store->is_active_guru = 1;
+        $store->save();
+        $request->session()->flash("info", "Data baru berhasil ditambahkan");
         return redirect()->back();
     }
 
@@ -50,23 +50,18 @@ class GuruController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $update = get_class($this->model)::find($id);
+        $update = Guru::find($id);
         $update->nama_guru = $request->nama_guru;
-        // $update->gender_guru = $request->gender_guru;
-        // $update->no_telp_guru = $request->no_telp_guru;
-        // $update->alamat_guru = $request->alamat_guru;
         $update->is_active_guru = $request->is_active_guru;
         $update->save();
-        // $request->session()->flash("info", "Data baru berhasil ditambahkan");
+        $request->session()->flash("info", "Data baru berhasil diubah");
         return redirect()->back();
     }
 
     public function destroy(string $id)
     {
-        $destroy = get_class($this->model)::find($id);
+        $destroy = Guru::find($id);
         $destroy->delete();
-
-        // $request->session()->flash("info", "Data produk berhasil dihapus!");
         return redirect()->back();
     }
 }

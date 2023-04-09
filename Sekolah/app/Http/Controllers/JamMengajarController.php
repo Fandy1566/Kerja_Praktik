@@ -9,14 +9,12 @@ class JamMengajarController extends Controller
 {
     public function __construct()
     {
-        $this->model = new JamMengajar;
-        $this->table = $this->model->table;
         $this->loc = 'dashboard.jam_mengajar.';
     }
 
     public function index()
     {
-        $collection = get_class($this->model)::all();
+        $collection = JamMengajar::all();
         return view($this->loc.'index', compact('collection'));
     }
 
@@ -27,10 +25,10 @@ class JamMengajarController extends Controller
 
     public function store(Request $request)
     {
-        $model = $this->model;
-        $waktu_mengajar = $request->waktu_awal." - ".$request->waktu_akhir;
-        $model->waktu_jam_mengajar = $waktu_mengajar;
-        $model->save();
+        $store = new JamMengajar;
+        $store->waktu_awal_jam_mengajar = $request->waktu_awal;
+        $store->waktu_akhir_jam_mengajar = $request->waktu_akhir;
+        $store->save();
         return redirect()->back();
     }
 
@@ -46,8 +44,9 @@ class JamMengajarController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $update = get_class($this->model)::find($id);
-        $update->waktu_mengajar = $request->waktu_mengajar;
+        $update = JamMengajar::find($id);
+        $update->waktu_awal_jam_mengajar = $request->waktu_awal;
+        $update->waktu_akhir_jam_mengajar = $request->waktu_akhir;
         $update->save();
         // $request->session()->flash("info", "Data baru berhasil ditambahkan");
         return redirect()->back();
@@ -55,7 +54,7 @@ class JamMengajarController extends Controller
 
     public function destroy(string $id)
     {
-        $destroy = get_class($this->model)::find($id);
+        $destroy = JamMengajar::find($id);
         $destroy->delete();
 
         // $request->session()->flash("info", "Data produk berhasil dihapus!");

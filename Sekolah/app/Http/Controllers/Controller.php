@@ -10,12 +10,7 @@ use DB;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-
-    /* 
-        data for sidebar menu
-        ["name","image"]
-    */
-    protected $model, $table, $loc;
+    protected $loc;
 
     public function getTableColumns($table)
     {

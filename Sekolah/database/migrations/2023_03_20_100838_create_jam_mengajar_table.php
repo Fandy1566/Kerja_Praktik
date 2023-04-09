@@ -14,7 +14,8 @@ return new class extends Migration
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
                 $table->string('kode_'.$this->tableName,4);
-                $table->string('waktu_'.$this->tableName, 50);
+                $table->string('waktu_awal_'.$this->tableName, 5);
+                $table->string('waktu_akhir_'.$this->tableName, 5);
                 $table->timestamps();
             });
         }

@@ -16,8 +16,10 @@ return new class extends Migration
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
                 $table->string('kode_'.$this->tableName,4);
-                $table->unsignedBigInteger('kode_waktu');
+                $table->unsignedBigInteger('kode_jam_mengajar');
+                $table->foreign('kode_jam_mengajar')->references('id')->on('jam_mengajar');
                 $table->unsignedBigInteger('kode_hari');
+                $table->foreign('kode_hari')->references('id')->on('hari');
                 $table->timestamps();
             });
         }

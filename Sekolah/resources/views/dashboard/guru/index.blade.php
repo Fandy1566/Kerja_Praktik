@@ -38,10 +38,8 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Kode</th>
                 <th>Nama</th>
-                <th>Jenis Kelamin</th>
-                <th>Telepon</th>
-                <th>Alamat</th>
                 <th>Mata Pelajaran yang diajar</th>
                 <th>Jam Mengajar</th>
                 <th>&nbsp;</th>
@@ -51,21 +49,8 @@
             @foreach ($collection as $idx => $item)
             <tr>
                 <td>{{++$idx}}</td>
+                <td>{{$item->kode_guru}}</td>
                 <td>{{$item->nama_guru}}</td>
-                <td>
-                    @php
-                        $gender = $item->gender_guru;
-                        if ($gender == 'L') {
-                            echo "Laki-laki";
-                        } elseif ($gender == 'P') {
-                            echo "Perempuan";
-                        } else {
-                            echo "?";
-                        }
-                    @endphp
-                </td>
-                <td>{{$item->no_telp_guru}}</td>
-                <td>{{$item->alamat_guru}}</td>
                 <td></td>
                 <td></td>
                 <td>Edit || Hapus</td>

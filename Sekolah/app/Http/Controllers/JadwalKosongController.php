@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\JadwalKosong;
 
 class JadwalKosongController extends Controller
 {
     public function index()
     {
-        $collection = get_class($this->model)::all();
+        $collection = JadwalKosong::all();
         return view($this->loc.'index', compact('collection'));
     }
 
@@ -19,14 +20,12 @@ class JadwalKosongController extends Controller
 
     public function store(Request $request)
     {
-        $model = $this->model;
-        $model->nama_guru = $request->nama_guru;
-        // $model->gender_guru = $request->gender_guru;
-        // $model->no_telp_guru = $request->no_telp_guru;
-        // $model->alamat_guru = $request->alamat_guru;
-        $model->is_active_guru = 1;
-
-        $model->save();
+        $store = new JadwalKosong;
+        $store->nama_guru = $request->nama_guru;
+        // $store->gender_guru = $request->gender_guru;
+        // $store->no_telp_guru = $request->no_telp_guru;
+        // $store->alamat_guru = $request->alamat_guru;
+        $store->save();
         return redirect()->back();
     }
 
@@ -42,7 +41,7 @@ class JadwalKosongController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $update = get_class($this->model)::find($id);
+        $update = JadwalKosong::find($id);
         $update->nama_guru = $request->nama_guru;
         // $update->gender_guru = $request->gender_guru;
         // $update->no_telp_guru = $request->no_telp_guru;
@@ -55,7 +54,7 @@ class JadwalKosongController extends Controller
 
     public function destroy(string $id)
     {
-        $destroy = get_class($this->model)::find($id);
+        $destroy = JadwalKosong::find($id);
         $destroy->delete();
 
         // $request->session()->flash("info", "Data produk berhasil dihapus!");

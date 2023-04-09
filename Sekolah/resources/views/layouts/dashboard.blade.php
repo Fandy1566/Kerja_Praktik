@@ -1,12 +1,13 @@
 @php
     //Digunakan untuk setting menu pada sidebar
+    //[nama,link,link gambar]
     $data = [
-        ["Guru",""],
-        ["Siswa", ""],
-        ["Mata Pelajaran",""],
-        ["Jadwal",""],
-        ["Jam Piket",""],
-        ["User",""]
+        ["Guru","guru",""],
+        ["Hari","hari",""],
+        ["Jadwal Kosong","jadwal_kosong",""],
+        ["Jam Mengajar","jam_mengajar",""],
+        ["Mata Pelajaran","mata_pelajaran",""],
+        ["User","user",""]
     ];
 @endphp
 
@@ -24,7 +25,7 @@
     <div class="sidebar">
         <ul>
             <h3>Dashboard</h3>
-            <li class="item dashboard-item-1 {{(request()->is('dashboard')) ? 'active' : '' }}">
+            <li class="item dashboard-item-1 {{(request()->is('')) ? 'active' : '' }}">
                 <a href="/">
                     <span class="image"></span>
                     <span class="name">Dashboard</span>
@@ -32,16 +33,20 @@
             </li>
             <h3>Data</h3>
             @for ($i = 0; $i < count($data); $i++)
-            @php
-                $properUrl = str_replace(" ", "_", strtolower($data[$i][0]));
-            @endphp
-                <li class="item data-item-{{$i}} {{(request()->is($properUrl)) ? 'active' : '' }}">
-                    <a href="/{{$properUrl}}">
-                        <span class="image">{{$data[$i][1]}}</span>
+                <li class="item data-item-{{$i}} {{(request()->is($data[$i][1])) ? 'active' : '' }}">
+                    <a href="/{{$data[$i][1]}}">
+                        <span class="image">{{$data[$i][2]}}</span>
                         <span class="name">{{$data[$i][0]}}</span>
                     </a>
                 </li>
             @endfor
+            <h3>Penjadwalan</h3>
+            <li class="item dashboard-item-2 {{(request()->is('penjadwalan')) ? 'active' : '' }}">
+                <a href="/penjadwalan">
+                    <span class="image"></span>
+                    <span class="name">Penjadwalan</span>
+                </a>
+            </li>
         </ul>
     </div>
     <div class="content">

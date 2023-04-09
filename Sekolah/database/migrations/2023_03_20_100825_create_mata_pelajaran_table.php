@@ -15,6 +15,9 @@ return new class extends Migration
                 $table->id();
                 $table->string('kode_'.$this->tableName,4);
                 $table->string('nama_'.$this->tableName, 50);
+                $table->unsignedBigInteger('kelas');
+                
+                $table->integer('banyak_'.$this->tableName);
                 $table->timestamps();
             });
         }

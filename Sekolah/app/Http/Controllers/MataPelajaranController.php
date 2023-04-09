@@ -9,14 +9,12 @@ class MataPelajaranController extends Controller
 {
     public function __construct()
     {
-        $this->model = new MataPelajaran;
-        $this->table = $this->model->table;
         $this->loc = 'dashboard.mata_pelajaran.';
     }
 
     public function index()
     {
-        $collection = get_class($this->model)::all();
+        $collection = MataPelajaran::all();
         return view($this->loc.'index', compact('collection'));
     }
 
@@ -27,9 +25,10 @@ class MataPelajaranController extends Controller
 
     public function store(Request $request)
     {
-        $model = $this->model;
-        $model->nama_mata_pelajaran = $request->nama_mata_pelajaran;
-        $model->save();
+        $store = new MataPelajaran;
+        $store->kode_mata_pelajaran = $request->kode_mata_pelajaran;
+        $store->nama_mata_pelajaran = $request->nama_mata_pelajaran;
+        $store->save();
         return redirect()->back();
     }
 
@@ -45,8 +44,9 @@ class MataPelajaranController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $update = get_class($this->model)::find($id);
-        $update->waktu_mengajar = $request->waktu_mengajar;
+        $update = MataPelajaran::find($id);
+        $update->kode_mata_pelajaran = $request->kode_mata_pelajaran;
+        $update->nama_mata_pelajaran = $request->nama_mata_pelajaran;
         $update->save();
         // $request->session()->flash("info", "Data baru berhasil ditambahkan");
         return redirect()->back();
@@ -54,7 +54,7 @@ class MataPelajaranController extends Controller
 
     public function destroy(string $id)
     {
-        $destroy = get_class($this->model)::find($id);
+        $destroy = MataPelajaran::find($id);
         $destroy->delete();
 
         // $request->session()->flash("info", "Data produk berhasil dihapus!");
