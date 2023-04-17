@@ -34,3 +34,6 @@ Route::resource('/user', UserController::class);
 
 use App\Http\Controllers\JadwalController;
 Route::resource('/jadwal', JadwalController::class);
+
+use App\Http\Controllers\PenjadwalanController;
+Route::get('/penjadwalan', [PenjadwalanController::class, 'index']);

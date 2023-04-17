@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private $tableName = 'jam_mengajar';
+    private $tableName = 'kelas';
 
     public function up(): void
     {
@@ -14,8 +14,8 @@ return new class extends Migration
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
                 $table->string('kode_'.$this->tableName,4);
-                $table->string('waktu_awal_'.$this->tableName, 5);
-                $table->string('waktu_akhir_'.$this->tableName, 5);
+                $table->string('nama_'.$this->tableName, 50);
+                $table->enum('tingkat', [7,8,9]);
                 $table->timestamps();
             });
         }

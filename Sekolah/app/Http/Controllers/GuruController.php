@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Guru;
+use DB;
 
 class GuruController extends Controller
 {
@@ -14,6 +15,7 @@ class GuruController extends Controller
 
     public function index()
     {
+        dd(DB::table('jadwal_mengajar')->count());
         $collection = Guru::all();
         return view($this->loc.'index', compact('collection'));
     }

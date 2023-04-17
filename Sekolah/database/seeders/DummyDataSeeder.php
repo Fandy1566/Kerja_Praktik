@@ -12,7 +12,7 @@ class DummyDataSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    protected $totalGuru = 10;
+    protected $totalGuru = 40;
     protected $totalSubject = 25;
 
     public function run(): void

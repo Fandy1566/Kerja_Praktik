@@ -29,6 +29,10 @@ class GeneticAlgo
     [Mapel, Guru],[Mapel, Guru], sebanyak kelas
     [Mapel, Guru],[Mapel, Guru], sebanyak kelas
     ...
+    
+    sebanyak hari dan jam
+
+    ...
     [Mapel, Guru],[Mapel, Guru], sebanyak kelas
 
     populasi: (sebanyak sampel yang dibutuhkan)
@@ -36,7 +40,7 @@ class GeneticAlgo
     individu 1
     individu 2
     ...
-    individu N
+    individu n
 
     Hitung fitness
     aturan:

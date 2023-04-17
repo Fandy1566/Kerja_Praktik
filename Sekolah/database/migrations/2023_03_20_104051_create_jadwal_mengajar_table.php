@@ -11,20 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // if (!Schema::hasTable('jadwal_mengajar')) {
-        //     Schema::create('jadwal_mengajar', function (Blueprint $table) {
-        //         $table->id();
-        //         $table->string('id_guru')->unsiqned();
-        //         $table->foreign('id_guru')->references('id_guru')->on('guru');
-        //         $table->string('id_ruang')->unsiqned();
-        //         $table->foreign('id_ruang')->references('id_ruangan')->on('ruang');
-        //         $table->string('id_mapel')->unsiqned();
-        //         $table->foreign('id_mapel')->references('id_mapel')->on('mata_pelajaran');
-        //         $table->string('id_jam_mengajar')->unsiqned();
-        //         $table->foreign('id_jam_mengajar')->references('id_jam_mengajar')->on('jam_mengajar');
-        //         $table->timestamps();
-        //     });
-        // }
+        if (!Schema::hasTable('jadwal_mengajar')) {
+            Schema::create('jadwal_mengajar', function (Blueprint $table) {
+                $table->id();
+                $table->string('kode_jadwal_mengajar',4);
+                $table->unsignedBigInteger('id_hari');
+                $table->foreign('id_hari')->references('id')->on('hari');
+                $table->time('waktu_awal');
+                $table->time('waktu_akhir');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
