@@ -15,7 +15,6 @@ class GuruController extends Controller
 
     public function index()
     {
-        dd(DB::table('jadwal_mengajar')->count());
         $collection = Guru::all();
         return view($this->loc.'index', compact('collection'));
     }

@@ -12,35 +12,57 @@ class PenjadwalanController extends Controller
     protected $guru, $mataPelajaran, $nind, $pop_size, $Pc, $Pm, $ngener, $ngenes;
     public function __construct()
     {
+        set_time_limit(0);
         $this->guru = Guru::all();
         $this->mataPelajaran = MataPelajaran::all();
-        $this->nind = DB::table('jadwal_mengajar')->count();
-        $this->pop_size = 20;
-        $this->Pc=0.75;  // kemungkinan crossover (usahakan pc ni nilainy besak) pc dk boleh kurang dr 0.1
+        // $this->nind = DB::table('jadwal_mengajar')->count();
+        $this->nind = 37;
+        $this->pop_size = 50;
+        $this->Pc=0.2;  // kemungkinan crossover (usahakan pc ni nilainy besak) pc dk boleh kurang dr 0.1
         $this->Pm=0.5;   // kemungkinan mutasi (nilainy kecik)
-        $this->ngener=1000; //generasi
+        $this->ngener=50; //generasi
         $this->ngenes= (DB::table('kelas')->count())-1; //jumlah genes dalam chromosome
     }
 
     public function index()
     {
-        return view('dashboard.penjadwalan.index');
+        $penjadwalan = $this->main();
+        dd($penjadwalan);
+        return view('dashboard.penjadwalan.index', compact('penjadwalan'));
     }
 
     public function main()
     {
+        $population = $this->create_population();
+        // for ($i=0; $i < $this->pop_size; $i++) { 
+        //     for ($j=0; $j < $this->nind; $j++) { 
+        //         for ($k=0; $k < $this->ngenes; $k++) { 
+        //             print_r($population[$i][$j][$k]);
+        //         }
+        //         echo "<br/>";
+        //     }
+        //     echo "<br/>";
+
+        // }
         for ($i=0; $i < $this->ngener; $i++) { 
             if ($i > 0) {
-                $population = $newPopulation;
-            } else {
-                $population = $this->create_population();
+                // echo "Generasi - ".$i."<br/>";
+                $population = $newPopulation[0];
             }
             $fitnesses = $this->fitness_evaluation($population);
+            // foreach ($fitnesses as $key => $value) {
+            //     echo $value."<br/>";
+            // }
+            // if ($i > 0) {
+            //     dd($fitnesses);
+            // }
             $newIndividual = $this->selection($fitnesses, $population);
             $crossover = $this->crossover($newIndividual);
-            $mutation = $this->mutate($crossover);
+            $mutation = $this->mutation($crossover);
             $newPopulation = $this->generate_new_population($population, $mutation);
+            
         }
+        return $newPopulation;
     }
 
     /*
@@ -51,11 +73,16 @@ class PenjadwalanController extends Controller
     public function create_chromosome()
     {
         $chromosome = [];
-        $guru = DB::table('guru')->pluck('kode_guru')->inRandomOrder()->get();
+        $guru = DB::select("select distinct kode_guru from guru order by RAND()");
+        // $guru = DB::table('guru')->pluck('kode_guru')->inRandomOrder()->get();
         for ($i=0; $i < $this->ngenes; $i++) { 
             // $id = DB::table('guru')->where('kode_guru', $guru[$i])->value('id');
-            $chromosome[] = $guru[$i];
+            $chromosome[] = DB::select('SELECT kode_guru FROM guru ORDER BY RAND() LIMIT 1')[0]->kode_guru;
         }
+        // for ($i=0; $i < $this->ngenes; $i++) { 
+        //     // $id = DB::table('guru')->where('kode_guru', $guru[$i])->value('id');
+        //     $chromosome[] = $guru[$i]->kode_guru;
+        // }
         return $chromosome;
     }
 
@@ -65,7 +92,10 @@ class PenjadwalanController extends Controller
     */
     public function create_individual()
     {
-        return array_fill(0, $this->nind, $this->create_chromosome());
+        for ($i=0; $i < $this->nind; $i++) { 
+            $individual[] = $this->create_chromosome();
+        }
+        return $individual;
     }
 
     /*
@@ -74,38 +104,45 @@ class PenjadwalanController extends Controller
     */
     public function create_population()
     {
-        return array_fill(0, $this->pop_size, $this->create_individual());
+        for ($i=0; $i < $this->pop_size; $i++) { 
+            $population[] = $this->create_individual();
+        }
+        return $population;
     }
 
     public function fitness_evaluation(array $population)
     {
-        $population_fitnesses = [];
-        for ($i=0; $i < $this->pop_size; $i++) {
-            $total_penalty = 0;
-            $individual_fitnesses = [];
-            //melakukan perbandingan perchromosome
-            for ($i=0; $i < $this->nind; $i++) { 
-                $chromosome = $population[$i];
-                $fitness = [];
+        $individual = [];
+        $chromosome = [];
+        $fitnesses_individual = [];
+        $fitnesses_population = [];
+        for ($i = 0; $i < count($population); $i++) {
+            $individual = $population[$i];
+            $fitnesses_chromosome = [];
+            for ($j = 0; $j < count($individual); $j++) {
+                $chromosome = $individual[$j];
                 $penalty = 0;
-                for ($j=0; $j < $this->nind; $j++) {
-                    $jumlah = 1; // utk menghitung jumlah mk
-                    if ($i !== $j) {
-                        $chromosome2 = $population[$j];
-                        //cek guru sama pada jam yang sama
-                        if ($chromosome[0] == $chromosome2[0]) {
-                            $penalty += 1;
+        
+                for ($k = 0; $k < count($chromosome); $k++) {
+                    for ($l = $k + 1; $l < count($chromosome); $l++) {
+                        
+                        //genes
+                        if ($k !== $l) {
+                            // dd($k,$l,[$chromosome[$k], $chromosome[$l]], $chromosome);
+                            if ($chromosome[$k] == $chromosome[$l]) {
+                                $penalty += 1;
+                            }
                         }
-                        //kalau jam tidak mau bersebelahan cek idx jam ny +1
                     }
                 }
-                $fitnesses[] = 1/(1+$penalty);
-                $total_penalty += $penalty;
+                $fitnesses_chromosome[] = 1 / (1 + $penalty);
             }
-            $individual_fitnesses[] = $fitnesses;
-            $population_fitnesses[] = array_sum($fitnesses)/count($fitnesses);
+            $fitnesses_individual[] = array_sum($fitnesses_chromosome) / count($fitnesses_chromosome);
+            // dd($chromosome, $penalty, $fitnesses_individual);
         }
-        return $population_fitnesses;
+        $fitnesses_population = $fitnesses_individual ;
+        return $fitnesses_population;
+        
     }
 
     public function selection(array $fitnesses, array $population)
@@ -141,22 +178,24 @@ class PenjadwalanController extends Controller
     {
         $idx = [];
         //mengambil index dari kromosom
-        for ($i=0; $i <count($newIndividual) ; $i++) { 
-            $rand = mt_rand() / mt_getrandmax();
-            if ($rand <= $this->Pc) {
-                $idx[] = $i;
+        for ($i=0; $i < $this->pop_size ; $i++) {
+            for ($j=0; $j < $this->nind; $j++) { 
+                $rand = mt_rand() / mt_getrandmax();
+                if ($rand <= $this->Pc) {
+                    $idx[] = [$i,$j];
+                }
             }
         }
 
         //crossover antar chromosome di dalam individu
-        $temp = $newIndividual[0];
+        $temp = $newIndividual[0][0][0];
         $crossover_point = mt_rand(0, $this->ngenes-1);
         for ($i=$crossover_point; $i < $this->ngenes; $i++) { 
             for ($j=0; $j <count($idx) ; $j++) { 
                 if ($j < count($idx)-1) {
-                    $newIndividual[$idx[$j]][$i] = $newIndividual[$idx[$j+1]][$i];
+                    $newIndividual[$idx[$j][0]][$idx[$j][1]][$i] = $newIndividual[$idx[$j+1][0]][$idx[$j+1][1]][$i];
                 } else {
-                    $newIndividual[$idx[$j]][$i] = $temp;
+                    $newIndividual[$idx[$j][0]][$idx[$j][1]][$i] = $temp;
                 }
             }
         }
@@ -164,20 +203,35 @@ class PenjadwalanController extends Controller
     }
     public function mutation(array $newIndividual)
     {
-        // $mutate = [];
-        // $idx = [];
-        for ($i=0; $i < $this->nind; $i++) {
-            // $row = [];
-            for ($j=0; $j < $this->ngenes; $j++) {
-                // $row[] = mt_rand() / mt_getrandmax();
-                $rand = mt_rand() / mt_getrandmax();
-                if ($rand <= $this->Pm) {
-                    // $idx[] = [$i,$j];
-                    $newIndividual[$i][$j] = DB::table('guru')->whereNotIn('kode_guru', $newIndividual[$i][$j])->inRandomOrder()->value('kode_guru')[0];
+        try {
+            // $mutate = [];
+            // $idx = [];
+            for ($k=0; $k < $this->pop_size; $k++) { 
+                for ($i=0; $i < $this->nind; $i++) {
+                    // $row = [];
+                    for ($j=0; $j < $this->ngenes; $j++) {
+                        // $row[] = mt_rand() / mt_getrandmax();
+                        $rand = mt_rand() / mt_getrandmax();
+                        if ($rand <= $this->Pm) {
+                            // $idx[] = [$i,$j];
+                            // dd([$newIndividual[$k][$i][$j]->kode_guru]);
+                            // dd($newIndividual[$k][$i][$j]);
+                            $newIndividualValue = $newIndividual[$k][$i];
+                            $newIndividualValueQuery = implode(',', array_map(function ($value) {
+                                return "'" . $value . "'";
+                            }, $newIndividualValue));
+                            $newIndividual[$k][$i][$j] = DB::select("SELECT kode_guru FROM guru WHERE kode_guru NOT IN (?) ORDER BY RAND() LIMIT 1", [$newIndividualValueQuery])[0]->kode_guru;
+                            // $newIndividual[$k][$i][$j] = DB::select("SELECT kode_guru FROM guru WHERE kode_guru NOT IN (?) ORDER BY RAND() LIMIT 1", [$newIndividual[$k][$i][$j]->kode_guru])[0]->kode_guru;
+                        }
+                    }
+                    // $mutate[] = $row;
                 }
             }
-            // $mutate[] = $row;
+        } catch (\Exception $e) {
+            dd([$k,$this->pop_size],[$i,$this->nind],[$j,$this->ngenes], $newIndividual[$k][$i][$j]);
         }
+        
+        
 
         // for ($j=0; $j <count($idx) ; $j++) { 
         //     $newIndividual[$idx[0]][$idx[1]] = DB::table('guru')->whereNotIn('kode_guru', $newIndividual[$idx[0]][$idx[1]])->inRandomOrder()->value('kode_guru')[0];
@@ -186,17 +240,23 @@ class PenjadwalanController extends Controller
     }
     public function generate_new_population(array $population, array $newIndividual)
     {
-        $combined_individual = array_unique($population + $newIndividual);
-
-        $fitness = $this->fitness_evaluation($combined_individual);
-
-        sort($fitness);
-
-        $newPopulation = [];
-        $arrlength = count($fitness);
-        for($i = $arrlength; $i >= $arrlength-$this->nind; $i--) {
-            $newPopulation[] = $combined_individual[array_search($fitness[$i], $fitness)];
+        try {
+            $combined_individual = array_merge($population, $newIndividual);
+            $fitness = $this->fitness_evaluation($combined_individual);
+            $keys = array_keys($fitness);
+            array_multisort($fitness, SORT_DESC, $keys);
+            // print_r($keys);
+            // dd($fitness, $keys);
+            $newPopulation = [];
+            $arrlength = count($fitness);
+            for ($i=0; $i < $this->pop_size; $i++) { 
+                $newPopulation[] = $combined_individual[$keys[$i]];
+            }
+            // dd($newPopulation);
+            return [$newPopulation,$fitness];
+        } catch (\Exception $e) {
+            dd($arrlength, $combined_individual, $i);
         }
-        return $newPopulation;
+        
     }
 }

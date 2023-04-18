@@ -1,8 +1,10 @@
 @extends('layouts.dashboard')
 @section('title', 'Dashboard')
 @section('content')
-<div class="title-content">
-    
+<div class="title-card">
+    <div class="title-content">
+        
+    </div>
 </div>
 <div class="card">
     <form action="{{route('guru.store')}}" method="POST" style="padding-top: 0px">
