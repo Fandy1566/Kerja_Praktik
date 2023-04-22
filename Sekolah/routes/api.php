@@ -29,3 +29,15 @@ Route::get('guru', [APIGuruController::class, 'index']);
 Route::post('guru', [APIGuruController::class, 'store']);
 Route::patch('guru/{id}', [APIGuruController::class, 'update']);
 Route::delete('guru/{id}', [APIGuruController::class, 'destroy']);
+
+use App\Http\Controllers\API\APIKelasController;
+Route::get('kelas', [APIKelasController::class, 'index']);
+Route::post('kelas', [APIKelasController::class, 'store']);
+Route::patch('kelas/{id}', [APIKelasController::class, 'update']);
+Route::delete('kelas/{id}', [APIKelasController::class, 'destroy']);
+
+use App\Http\Controllers\API\APIMataPelajaranController;
+Route::get('mata_pelajaran', [APIMataPelajaranController::class, 'index']);
+Route::post('mata_pelajaran', [APIMataPelajaranController::class, 'store']);
+Route::patch('mata_pelajaran/{id}', [APIMataPelajaranController::class, 'update']);
+Route::delete('mata_pelajaran/{id}', [APIMataPelajaranController::class, 'destroy']);

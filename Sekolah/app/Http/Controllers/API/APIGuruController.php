@@ -108,4 +108,23 @@ class APIGuruController extends Controller
         }
         
     }
+
+    public function destroyAll()
+    {
+        try {
+            $guru = new Guru;
+            DB::table($guru->getTable())->truncate();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Semua data berhasil dihapus',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Data gagal dihapus',
+                'error' => $e
+            ],400);
+        }
+
+    }
 }

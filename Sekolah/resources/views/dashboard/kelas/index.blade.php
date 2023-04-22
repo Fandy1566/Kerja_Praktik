@@ -7,17 +7,76 @@
     </div>
 </div>
 <div class="card">
+    <form class="store">
+        <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+        <h2>Form</h2>
+        <label>Nama<span style="color:red">*</span></label> <br>
+        <input type="text" name="nama_guru">
+        <br>
+        <label>Mata Pelajaran<span style="color:red">*</span></label> <br>
+        <input type="text" name="mata_pelajaran">
+        <br>
+        <input type="submit" value="Submit" onclick="submitForm()">
+    </form>
+</div>
+<div class="card">
+    <div class="button">
+        <button type="submit"></button>
+    </div>
     <table id="tbl">
         <thead>
             <tr>
                 <th>No</th>
-                <th>Ruang</th>
+                <th>Kode</th>
+                <th>Nama</th>
+                <th>Mata Pelajaran yang diajar</th>
+                <th>Jam Mengajar</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
-            <td></td>
+            
         </tbody>
     </table>
+
 </div>
+@endsection
+@section('script')
+<script>
+    
+    window.onload = () => {
+        getData();
+    }
+    const url = window.location.origin+"/api/kelas";
+
+    function getData() {
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const tblBody = document.querySelector('#tbl tbody');
+            let row = "";
+            data.data.forEach((element, idx) => {
+                const newRow = `
+                <tr>
+                <td>${++idx}</td>
+                <td>${element.kode_kelas}</td>
+                <td>${element.nama_kelas}</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <button onclick="deleteData(${element.id})">Delete</button>
+                    <button onclick="updateData(${element.id})">Update</button>
+                </td>
+                </tr>
+            `;
+            row += newRow;
+            });
+            tblBody.innerHTML = row
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
 @endsection
