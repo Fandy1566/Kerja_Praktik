@@ -28,7 +28,7 @@ class GuruController extends Controller
     {
 
         $store = new Guru;
-        $store->kode_guru = $request->nama_guru;
+        $store->kode_guru = 0;
         $store->nama_guru = $request->nama_guru;
         // $store->gender_guru = $request->gender_guru;
         // $store->no_telp_guru = $request->no_telp_guru;

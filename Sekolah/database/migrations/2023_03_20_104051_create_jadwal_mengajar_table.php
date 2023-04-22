@@ -14,7 +14,7 @@ return new class extends Migration
         if (!Schema::hasTable('jadwal_mengajar')) {
             Schema::create('jadwal_mengajar', function (Blueprint $table) {
                 $table->id();
-                $table->string('kode_jadwal_mengajar',4);
+                $table->string('kode_jadwal_mengajar',4)->unique();
                 $table->unsignedBigInteger('id_hari');
                 $table->foreign('id_hari')->references('id')->on('hari');
                 $table->time('waktu_awal');

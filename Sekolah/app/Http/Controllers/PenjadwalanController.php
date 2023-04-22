@@ -17,11 +17,11 @@ class PenjadwalanController extends Controller
         $this->mataPelajaran = MataPelajaran::all();
         // $this->nind = DB::table('jadwal_mengajar')->count();
         $this->nind = 37;
-        $this->pop_size = 50;
-        $this->Pc=0.2;  // kemungkinan crossover (usahakan pc ni nilainy besak) pc dk boleh kurang dr 0.1
+        $this->pop_size = 20;
+        $this->Pc=0.9;  // kemungkinan crossover (usahakan pc ni nilainy besak) pc dk boleh kurang dr 0.1
         $this->Pm=0.5;   // kemungkinan mutasi (nilainy kecik)
-        $this->ngener=50; //generasi
-        $this->ngenes= (DB::table('kelas')->count())-1; //jumlah genes dalam chromosome
+        $this->ngener=300; //generasi
+        $this->ngenes= (DB::table('kelas')->count()); //jumlah genes dalam chromosome
     }
 
     public function index()
@@ -204,38 +204,39 @@ class PenjadwalanController extends Controller
     public function mutation(array $newIndividual)
     {
         try {
+
+            
             // $mutate = [];
             // $idx = [];
             for ($k=0; $k < $this->pop_size; $k++) { 
                 for ($i=0; $i < $this->nind; $i++) {
                     // $row = [];
-                    for ($j=0; $j < $this->ngenes; $j++) {
-                        // $row[] = mt_rand() / mt_getrandmax();
+                    //uniform mutation
+                    try {
                         $rand = mt_rand() / mt_getrandmax();
                         if ($rand <= $this->Pm) {
-                            // $idx[] = [$i,$j];
-                            // dd([$newIndividual[$k][$i][$j]->kode_guru]);
-                            // dd($newIndividual[$k][$i][$j]);
-                            $newIndividualValue = $newIndividual[$k][$i];
-                            $newIndividualValueQuery = implode(',', array_map(function ($value) {
-                                return "'" . $value . "'";
-                            }, $newIndividualValue));
-                            $newIndividual[$k][$i][$j] = DB::select("SELECT kode_guru FROM guru WHERE kode_guru NOT IN (?) ORDER BY RAND() LIMIT 1", [$newIndividualValueQuery])[0]->kode_guru;
-                            // $newIndividual[$k][$i][$j] = DB::select("SELECT kode_guru FROM guru WHERE kode_guru NOT IN (?) ORDER BY RAND() LIMIT 1", [$newIndividual[$k][$i][$j]->kode_guru])[0]->kode_guru;
+                            $unique = array_unique($newIndividual[$k][$i]);
+                            foreach ($unique as $key => $val) {
+                                if (!array_key_exists($key,$unique)) unset($array2[$key]);
+                            }
+                            //get non unique keys index
+                            $array_non_unique_index = array_keys(array_diff_key($newIndividual[$k][$i],$unique));
+                            for ($j=0; $j < count($array_non_unique_index); $j++) {
+                                $newIndividualValueQuery = implode(',', array_map(function ($value) {
+                                    return "'" . $value . "'";
+                                }, $newIndividual[$k][$i]));
+                                $newIndividual[$k][$i][$array_non_unique_index[$j]] = DB::select("SELECT kode_guru FROM guru WHERE kode_guru NOT IN (?) ORDER BY RAND() LIMIT 1", [$newIndividualValueQuery])[0]->kode_guru;
+                            }
                         }
+                    } catch (\Exception $e) {
+                        dd($unique, $array_non_unique_index, $newIndividual[$k][$i]);
+
                     }
-                    // $mutate[] = $row;
                 }
             }
         } catch (\Exception $e) {
             dd([$k,$this->pop_size],[$i,$this->nind],[$j,$this->ngenes], $newIndividual[$k][$i][$j]);
         }
-        
-        
-
-        // for ($j=0; $j <count($idx) ; $j++) { 
-        //     $newIndividual[$idx[0]][$idx[1]] = DB::table('guru')->whereNotIn('kode_guru', $newIndividual[$idx[0]][$idx[1]])->inRandomOrder()->value('kode_guru')[0];
-        // }
         return $newIndividual;
     }
     public function generate_new_population(array $population, array $newIndividual)
@@ -253,7 +254,7 @@ class PenjadwalanController extends Controller
                 $newPopulation[] = $combined_individual[$keys[$i]];
             }
             // dd($newPopulation);
-            return [$newPopulation,$fitness];
+            return [$newPopulation,array_slice($fitness, 0 , count($newPopulation))];
         } catch (\Exception $e) {
             dd($arrlength, $combined_individual, $i);
         }

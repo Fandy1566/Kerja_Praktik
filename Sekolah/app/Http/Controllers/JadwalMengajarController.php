@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\JadwalKosong;
+use App\Models\JadwalMengajar;
 
-class JadwalKosongController extends Controller
+class JadwalMengajarController extends Controller
 {
+    public function __construct()
+    {
+        $this->loc = 'dashboard.jadwal_mengajar.';
+    }
+
     public function index()
     {
-        $collection = JadwalKosong::all();
+        $collection = JadwalMengajar::all();
         return view($this->loc.'index', compact('collection'));
     }
 
@@ -20,12 +25,12 @@ class JadwalKosongController extends Controller
 
     public function store(Request $request)
     {
-        $store = new JadwalKosong;
-        $store->nama_guru = $request->nama_guru;
-        // $store->gender_guru = $request->gender_guru;
-        // $store->no_telp_guru = $request->no_telp_guru;
-        // $store->alamat_guru = $request->alamat_guru;
-        $store->save();
+        $jadwalMengajar = new JadwalMengajar;
+        $jadwalMengajar->kode_jadwal_mengajar = $request->kode_jadwal_mengajar;
+        $jadwalMengajar->id_hari = $request->id_hari;
+        $jadwalMengajar->waktu_awal = $request->waktu_awal;
+        $jadwalMengajar->waktu_akhir = $request->waktu_akhir;
+        $jadwalMengajar->save();
         return redirect()->back();
     }
 
@@ -41,20 +46,18 @@ class JadwalKosongController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $update = JadwalKosong::find($id);
-        $update->nama_guru = $request->nama_guru;
-        // $update->gender_guru = $request->gender_guru;
-        // $update->no_telp_guru = $request->no_telp_guru;
-        // $update->alamat_guru = $request->alamat_guru;
-        $update->is_active_guru = $request->is_active_guru;
-        $update->save();
+        $jadwalMengajar = JadwalMengajar::find($id);
+        $jadwalMengajar->id_hari = $request->id_hari;
+        $jadwalMengajar->waktu_awal = $request->waktu_awal;
+        $jadwalMengajar->waktu_akhir = $request->waktu_akhir;
+        $jadwalMengajar->save();
         // $request->session()->flash("info", "Data baru berhasil ditambahkan");
         return redirect()->back();
     }
 
     public function destroy(string $id)
     {
-        $destroy = JadwalKosong::find($id);
+        $destroy = JadwalMengajar::find($id);
         $destroy->delete();
 
         // $request->session()->flash("info", "Data produk berhasil dihapus!");

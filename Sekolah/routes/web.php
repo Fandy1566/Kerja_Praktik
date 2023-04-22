@@ -20,20 +20,18 @@ Route::get('/', function () {
 use App\Http\Controllers\GuruController;
 Route::resource('/guru', GuruController::class);
 
-use App\Http\Controllers\JamMengajarController;
-Route::resource('/jam_mengajar', JamMengajarController::class);
-
 use App\Http\Controllers\MataPelajaranController;
 Route::resource('/mata_pelajaran', MataPelajaranController::class);
-
-use App\Http\Controllers\SiswaController;
-Route::resource('/siswa', SiswaController::class);
 
 use App\Http\Controllers\UserController;
 Route::resource('/user', UserController::class);
 
-use App\Http\Controllers\JadwalController;
-Route::resource('/jadwal', JadwalController::class);
+use App\Http\Controllers\JadwalMengajarController;
+Route::resource('/jadwal_mengajar', JadwalMengajarController::class);
 
 use App\Http\Controllers\PenjadwalanController;
 Route::get('/penjadwalan', [PenjadwalanController::class, 'index']);
+
+Route::get('/login', function(){
+    return view('login.login');
+});

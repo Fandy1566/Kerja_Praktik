@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+use App\Http\Controllers\API\APIJadwalMengajarController;
+Route::post('jadwal_mengajar', [APIJadwalMengajarController::class, 'store']);
+Route::patch('jadwal_mengajar/{id}', [APIJadwalMengajarController::class, 'update']);
+Route::delete('jadwal_mengajar/{id}', [APIJadwalMengajarController::class, 'destroy']);
