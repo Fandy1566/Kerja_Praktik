@@ -7,29 +7,16 @@
     </div>
 </div>
 <div class="card">
-    <form action="{{route('guru.store')}}" method="POST" style="padding-top: 0px">
-        @csrf
+    <form class="store">
+        <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
         <h2>Form</h2>
         <label>Nama<span style="color:red">*</span></label> <br>
         <input type="text" name="nama_guru">
         <br>
-        <label>Jenis Kelamin<span style="color:red">*</span></label> <br>
-        <input type="text" name="gender_guru">
-        <br>
-        <label>No Telepon<span style="color:red">*</span></label> <br>
-        <input type="text" name="no_telp_guru">
-        <br>
-        <label>Alamat<span style="color:red">*</span></label> <br>
-        <input type="text" name="alamat_guru">
-        <br>
         <label>Mata Pelajaran<span style="color:red">*</span></label> <br>
-        <input type="text" name="waktu_awal">
+        <input type="text" name="mata_pelajaran">
         <br>
-        <label>Jam Mengajar<span style="color:red">*</span></label> <br>
-        <input type="text" name="waktu_awal">
-        <br>
-        <br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" onclick="submitForm()">
     </form>
 </div>
 <div class="card">
@@ -48,16 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($collection as $idx => $item)
-            <tr>
-                <td>{{++$idx}}</td>
-                <td>{{$item->kode_guru}}</td>
-                <td>{{$item->nama_guru}}</td>
-                <td></td>
-                <td></td>
-                <td>Edit || Hapus</td>
-            </tr>
-            @endforeach
+            
         </tbody>
     </table>
 
@@ -65,6 +43,40 @@
 @endsection
 @section('script')
 <script>
-     
+    
+    window.onload = () => {
+        getData();
+    }
+    const url = window.location.origin+"/api/guru";
+
+    function getData() {
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const tblBody = document.querySelector('#tbl tbody');
+            let row = "";
+            data.data.forEach((element, idx) => {
+                const newRow = `
+                <tr>
+                <td>${++idx}</td>
+                <td>${element.kode_guru}</td>
+                <td>${element.nama_guru}</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <button onclick="deleteData(${element.id})">Delete</button>
+                    <button onclick="updateData(${element.id})">Update</button>
+                </td>
+                </tr>
+            `;
+            row += newRow;
+            });
+            tblBody.innerHTML = row
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 </script>
 @endsection

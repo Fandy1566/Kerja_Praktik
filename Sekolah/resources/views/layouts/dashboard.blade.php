@@ -4,7 +4,8 @@
     $data = [
         ["Dashboard","",""],
         ["Guru","guru",""],
-        ["Jam Mengajar","jam_mengajar",""],
+        ["Kelas","kelas",""],
+        ["Jadwal Mengajar","jadwal_mengajar",""],
         ["Mata Pelajaran","mata_pelajaran",""],
         ["Penjadwalan","penjadwalan",""]
     ];
@@ -44,10 +45,40 @@
         @yield('content')
     </div>
 </body>
-{{-- <script>
-    // const collection = document.getElementsByClassName("title-content");
-    // const active = document.getElementsByClassName("active");
-    // collection[0].innerHTML = active[0].querySelector('a .name').innerHTML;
-</script> --}}
 @yield('script')
+<script>
+    function submitForm() {
+        event.preventDefault(); // prevent form submission
+        const csrfToken = document.querySelector('input[name="_token"]').value;
+        const form = document.querySelector('form.store');
+        const formData = new FormData(form);
+
+        fetch(url, {
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": csrfToken
+        },
+        method: "post",
+        credentials: "same-origin",
+        body: JSON.stringify(Object.fromEntries(formData))
+        })
+        .then(response => response.json())
+        .then(getData)
+        .catch(error => console.error(error));
+    }
+
+    function deleteData(id) {
+        fetch(url+"/"+id, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "delete",
+        credentials: "same-origin",
+        })
+        .then(response => response.json())
+        .then(getData)
+        .catch(error => console.error(error));
+    }
+</script>
+
 </html>
