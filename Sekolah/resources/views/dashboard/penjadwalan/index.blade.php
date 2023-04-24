@@ -6,15 +6,15 @@
 </div>
 <div class="card">
 
-    <label for="pop_size">Population Size</label>
-    <input type="text" name="pop_size">
-    <label for="pc">Pc</label>
-    <input type="text" name="pc">
-    <label for="pm">Pm</label>
-    <input type="text" name="pm">
-    <label for="ngener">ngener</label>
-    <input type="text" name="ngener">
-    <button id="submit">Submit</button>
+    <label for="pop_size">Population Size</label><br>
+    <input type="text" name="pop_size"><br>
+    <label for="pc">Pc</label><br>
+    <input type="text" name="pc"><br>
+    <label for="pm">Pm</label><br>
+    <input type="text" name="pm"><br>
+    <label for="ngener">ngener</label><br>
+    <input type="text" name="ngener"><br>
+    <button id="submit">Submit</button><br>
     <p>guru >= kelas</p>
     <p>waktu_mata_pelajaran >= jumlah jadwal_mengajar</p>
     <table id="tbl">
@@ -46,6 +46,20 @@
         
         const newPop = geneticAlgorithm();
 
+        result = [];
+        for(let i = 0; i < newPop.length; i++){
+            for (let j = 0; j < guru.length; j++) {
+                if (newPop[i].includes(guru[j].id)) {
+                    result.push([guru[j].id, guru[j].nama_guru]);
+                }
+            }
+        }
+
+        newArr = [];
+        while (result.length) {
+            newArr.push(result.splice(0,kelas.length));
+        }
+
         tBody = document.querySelector("tbody")
         let row = `<tr>`;
         jadwalMengajar.forEach((element, i) => {
@@ -53,9 +67,9 @@
                 <td>${element.nama_hari}</td>
                 <td>${element.waktu_awal} - ${element.waktu_akhir}</td>
             `
-            newPop[i].forEach(element2 => {
+            newArr[i].forEach(element2 => {
                 newRow += `
-                    <td>${element2}</td>
+                    <td>${element2[1]}</td>
                 `
             });
             row += newRow;
@@ -156,7 +170,7 @@
             }
             population.push(individual);
         }
-        // console.log(population);
+        console.log(population);
         return population;
     }
 
