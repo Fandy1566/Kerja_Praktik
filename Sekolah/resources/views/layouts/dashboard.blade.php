@@ -2,7 +2,7 @@
     //Digunakan untuk setting menu pada sidebar
     //[nama,link,link gambar]
     $data = [
-        ["Dashboard","",""],
+        ["Dashboard","",asset('logo.png')],
         ["Guru","guru",""],
         ["Kelas","kelas",""],
         ["Jadwal Mengajar","jadwal_mengajar",""],
@@ -34,7 +34,9 @@
             @for ($i = 0; $i < count($data); $i++)
                 <li class="item data-item-{{$i}} {{(request()->is($data[$i][1])) ? 'active' : '' }}">
                     <a href="/{{$data[$i][1]}}">
-                        <span class="image">{{$data[$i][2]}}</span>
+                        <span class="image">
+                            <img src="{{$data[$i][2]}}" style="width: 20px; height: 20px">
+                        </span>
                         <span class="name">{{$data[$i][0]}}</span>
                     </a>
                 </li>
@@ -45,40 +47,47 @@
         @yield('content')
     </div>
 </body>
-@yield('script')
 <script>
-    function submitForm() {
+    async function submitForm() {
         event.preventDefault(); // prevent form submission
         const csrfToken = document.querySelector('input[name="_token"]').value;
         const form = document.querySelector('form.store');
         const formData = new FormData(form);
 
-        fetch(url, {
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": csrfToken
-        },
-        method: "post",
-        credentials: "same-origin",
-        body: JSON.stringify(Object.fromEntries(formData))
-        })
-        .then(response => response.json())
-        .then(getData)
-        .catch(error => console.error(error));
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-Token": csrfToken
+                },
+                method: "post",
+                credentials: "same-origin",
+                body: JSON.stringify(Object.fromEntries(formData))
+            });
+            const data = await response.json();
+            await getData();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
-    function deleteData(id) {
-        fetch(url+"/"+id, {
-        headers: {
-            "Content-Type": "application/json",
-        },
-        method: "delete",
-        credentials: "same-origin",
-        })
-        .then(response => response.json())
-        .then(getData)
-        .catch(error => console.error(error));
+    async function deleteData(id) {
+        try {
+            const response = await fetch(url+"/"+id, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                method: "delete",
+                credentials: "same-origin",
+            });
+            const data = await response.json();
+            await getData();
+        } catch (error) {
+            console.error(error);
+        }
     }
+
 </script>
+@yield('script')
 
 </html>

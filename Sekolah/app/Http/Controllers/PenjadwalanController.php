@@ -26,9 +26,9 @@ class PenjadwalanController extends Controller
 
     public function index()
     {
-        $penjadwalan = $this->main();
-        dd($penjadwalan);
-        return view('dashboard.penjadwalan.index', compact('penjadwalan'));
+        // $penjadwalan = $this->main();
+        // dd($penjadwalan);
+        return view('dashboard.penjadwalan.index');
     }
 
     public function main()

@@ -44,39 +44,38 @@
 @section('script')
 <script>
     
-    window.onload = () => {
-        getData();
+    window.onload = async () => {
+        await getData();
     }
     const url = window.location.origin+"/api/guru";
 
-    function getData() {
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
+    async function getData() {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
             const tblBody = document.querySelector('#tbl tbody');
             let row = "";
             data.data.forEach((element, idx) => {
                 const newRow = `
-                <tr>
-                <td>${++idx}</td>
-                <td>${element.kode_guru}</td>
-                <td>${element.nama_guru}</td>
-                <td></td>
-                <td></td>
-                <td>
-                    <button onclick="deleteData(${element.id})">Delete</button>
-                    <button onclick="updateData(${element.id})">Update</button>
-                </td>
-                </tr>
-            `;
-            row += newRow;
+                    <tr>
+                    <td>${++idx}</td>
+                    <td>${element.kode_guru}</td>
+                    <td>${element.nama_guru}</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button class="delete-button" onclick="deleteData(${element.id})">Delete</button>
+                        <button onclick="updateData(${element.id})">Update</button>
+                    </td>
+                    </tr>
+                `;
+                row += newRow;
             });
-            tblBody.innerHTML = row
-        })
-        .catch(error => {
+            tblBody.innerHTML = row;
+        } catch (error) {
             console.error('Error:', error);
-        });
+        }
     }
+
 </script>
 @endsection

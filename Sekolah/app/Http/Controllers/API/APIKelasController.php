@@ -11,7 +11,7 @@ class APIKelasController extends Controller
     public function index()
     {
         try {
-            $kelas = Kelas::all();
+            $kelas = DB::select("SELECT * FROM kelas ORDER BY tingkat ASC, nama_kelas ASC");
             if ($kelas) {
                 return response()->json([
                     'status' => 200,
@@ -37,8 +37,15 @@ class APIKelasController extends Controller
         try {
             $kelas = new Kelas;
             $increment = DB::select("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA ='" . env('DB_DATABASE') . "' AND TABLE_NAME ='" . $kelas->getTable() . "'")[0]->AUTO_INCREMENT;
-            $kelas->kode_kelas = "G".str_pad($increment,3,"0",STR_PAD_LEFT);
-            $kelas->nama_kelas = $request->nama_kelas;
+            $kelas->kode_kelas = "K".str_pad($increment,3,"0",STR_PAD_LEFT);
+            $count = DB::select("SELECT COUNT(tingkat) as Count FROM kelas WHERE tingkat = '".$request->tingkat."'")[0]->Count + 1;
+            if ($request->tingkat == 7) {       
+                $kelas->nama_kelas = "VII.".$count;
+            } if ($request->tingkat == 8) {
+                $kelas->nama_kelas = "VIII.".$count;
+            } if ($request->tingkat == 9) {
+                $kelas->nama_kelas = "IX.".$count;
+            }
             $kelas->tingkat = $request->tingkat;
             $kelas->save();
             return response()->json([
@@ -51,7 +58,7 @@ class APIKelasController extends Controller
                 'status' => 400,
                 'message' => 'Data gagal di simpan',
                 'error' => $e
-            ], 400);
+            ],400);
         }        
     }
 

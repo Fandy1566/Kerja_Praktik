@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\GuruMapelDetail;
 use Illuminate\Http\Request;
 use App\Models\Guru;
 use DB;
@@ -41,6 +42,14 @@ class APIGuruController extends Controller
             $guru->kode_guru = "G".str_pad($increment,3,"0",STR_PAD_LEFT);
             $guru->nama_guru = $request->nama_guru;
             $guru->save();
+
+            // foreach ($request->id_mata_pelajaran as $key => $value) {
+            //     $guruMapelDetail = new GuruMapelDetail;
+            //     $guruMapelDetail->id_guru = $increment;
+            //     $guruMapelDetail->id_mata_pelajaran = $value[$key];
+            //     $guruMapelDetail->save();
+            // }
+
             return response()->json([
                 'status' => 200,
                 'message' => 'Data berhasil di simpan',

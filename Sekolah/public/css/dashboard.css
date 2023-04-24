@@ -87,3 +87,12 @@ body{
 .content::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+
+#tbl{
+    border-collapse: collapse;
+}
+
+#tbl th, #tbl td{
+    border: 1px solid #0C2A58;
+    padding: 8px;
+}

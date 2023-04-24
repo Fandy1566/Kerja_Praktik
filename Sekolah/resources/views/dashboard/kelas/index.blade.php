@@ -9,14 +9,14 @@
 <div class="card">
     <form class="store">
         <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-        <h2>Form</h2>
-        <label>Nama<span style="color:red">*</span></label> <br>
-        <input type="text" name="nama_guru">
-        <br>
-        <label>Mata Pelajaran<span style="color:red">*</span></label> <br>
-        <input type="text" name="mata_pelajaran">
-        <br>
-        <input type="submit" value="Submit" onclick="submitForm()">
+        <label>Tambah Kelas</label> <br>
+        <input type="radio" id="html" name="tingkat" value=7>
+        <label>Kelas 7</label><br>
+        <input type="radio" id="css" name="tingkat" value=8>
+        <label>Kelas 8</label><br>
+        <input type="radio" id="javascript" name="tingkat" value=9>
+        <label>Kelas 9</label><br><br>
+        <input type="submit" value="Tambah" onclick="submitForm()">
     </form>
 </div>
 <div class="card">
@@ -29,8 +29,6 @@
                 <th>No</th>
                 <th>Kode</th>
                 <th>Nama</th>
-                <th>Mata Pelajaran yang diajar</th>
-                <th>Jam Mengajar</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -62,8 +60,6 @@
                 <td>${++idx}</td>
                 <td>${element.kode_kelas}</td>
                 <td>${element.nama_kelas}</td>
-                <td></td>
-                <td></td>
                 <td>
                     <button onclick="deleteData(${element.id})">Delete</button>
                     <button onclick="updateData(${element.id})">Update</button>
