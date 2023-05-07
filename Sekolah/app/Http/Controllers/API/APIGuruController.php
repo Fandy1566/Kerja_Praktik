@@ -52,7 +52,7 @@ class APIGuruController extends Controller
                 $guruMapelDetail->save();
             }
 
-            foreach ($request->id_ as $key => $value) {
+            foreach ($request->id_jam as $key => $value) {
                 $GuruJamDetail = new GuruJamDetail;
                 $GuruJamDetail->id_guru = $increment;
                 $GuruJamDetail->id_mata_pelajaran = $value[$key];
@@ -101,23 +101,41 @@ class APIGuruController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         try {
-            $guru = Guru::find($id);
-            if ($guru) {
-                $guru->delete();
+            $berhasil = [];
+            $gagal = [];
+            $i = 0;
+            $j = 0;
+            foreach ($request->id_guru as $value) {
+                $guru = Guru::find($value);
+                if ($guru) {
+                    $guru->delete();
+                    $berhasil[$i] = $value;
+                    $i += 1;
+                } else {
+                    $gagal[$j] = $value;
+                    $j += 1;
+                }
+            }
+
+            if ($i > 0) {
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Data berhasil di update',
-                    'data' => $guru
+                    'message' => 'Data tidak ditemukan',
+                    'data' => array(
+                        "Berhasil" => $berhasil,
+                        "Gagal" => $gagal
+                    )
                 ]);
             } else {
                 return response()->json([
                     'status' => 400,
-                    'message' => 'Data tidak ditemukan',
+                    'message' => 'Data gagal dihapus',
                 ],400);
             }
+            
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 400,
@@ -128,7 +146,7 @@ class APIGuruController extends Controller
         
     }
 
-    public function destroyAll()
+    public function reset()
     {
         try {
             $guru = new Guru;

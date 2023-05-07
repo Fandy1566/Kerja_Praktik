@@ -17,23 +17,29 @@ Route::get('/dashboard', function () {
     return view('dashboard.home');
 });
 
-use App\Http\Controllers\GuruController;
-Route::resource('/guru', GuruController::class)->except(['store', 'update', 'destroy']);
+Route::get('/guru', function () {
+    return view('dashboard.guru.index');
+});
 
-use App\Http\Controllers\MataPelajaranController;
-Route::resource('/mata_pelajaran', MataPelajaranController::class)->except(['store', 'update', 'destroy']);;
+Route::get('/mata_pelajaran', function () {
+    return view('dashboard.mata_pelajaran.index');
+});
 
-use App\Http\Controllers\UserController;
-Route::resource('/user', UserController::class)->except(['store', 'update', 'destroy']);;
+Route::get('/user', function () {
+    return view('dashboard.user.index');
+});
 
-use App\Http\Controllers\KelasController;
-Route::resource('/kelas', KelasController::class)->except(['store', 'update', 'destroy']);;
+Route::get('/kelas', function () {
+    return view('dashboard.kelas.index');
+});
 
-use App\Http\Controllers\JadwalMengajarController;
-Route::resource('/jam_pelajaran', JadwalMengajarController::class)->except(['store', 'update', 'destroy']);;
+Route::get('/jam_pelajaran', function () {
+    return view('dashboard.jam_pelajaran.index');
+});
 
-use App\Http\Controllers\PenjadwalanController;
-Route::get('/penjadwalan', [PenjadwalanController::class, 'index']);
+Route::get('/penjadwalan', function () {
+    return view('dashboard.home.penjadwalan.index');
+});
 
 Route::get('/login', function(){
     return view('login.login');
