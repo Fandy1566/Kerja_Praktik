@@ -15,6 +15,7 @@ return new class extends Migration
                 $table->id();
                 $table->string('kode_'.$this->tableName,4);
                 $table->string('nama_'.$this->tableName, 50);
+                $table->integer('banyak_jam');
                 // $table->enum('gender_'.$this->tableName,['L','P','?']);
                 // $table->string('no_telp_'.$this->tableName,30);
                 // $table->text('alamat_'.$this->tableName);

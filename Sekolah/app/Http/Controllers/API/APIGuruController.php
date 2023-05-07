@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GuruMapelDetail;
 use Illuminate\Http\Request;
 use App\Models\Guru;
+use App\Models\GuruJamDetail;
 use DB;
 
 class APIGuruController extends Controller
@@ -41,14 +42,22 @@ class APIGuruController extends Controller
             $increment = DB::select("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA ='" . env('DB_DATABASE') . "' AND TABLE_NAME ='" . $guru->getTable() . "'")[0]->AUTO_INCREMENT;
             $guru->kode_guru = "G".str_pad($increment,3,"0",STR_PAD_LEFT);
             $guru->nama_guru = $request->nama_guru;
+            $guru->banyak_jam = $request->banyak;
             $guru->save();
 
-            // foreach ($request->id_mata_pelajaran as $key => $value) {
-            //     $guruMapelDetail = new GuruMapelDetail;
-            //     $guruMapelDetail->id_guru = $increment;
-            //     $guruMapelDetail->id_mata_pelajaran = $value[$key];
-            //     $guruMapelDetail->save();
-            // }
+            foreach ($request->id_mata_pelajaran as $key => $value) {
+                $guruMapelDetail = new GuruMapelDetail;
+                $guruMapelDetail->id_guru = $increment;
+                $guruMapelDetail->id_mata_pelajaran = $value[$key];
+                $guruMapelDetail->save();
+            }
+
+            foreach ($request->id_ as $key => $value) {
+                $GuruJamDetail = new GuruJamDetail;
+                $GuruJamDetail->id_guru = $increment;
+                $GuruJamDetail->id_mata_pelajaran = $value[$key];
+                $GuruJamDetail->save();
+            }
 
             return response()->json([
                 'status' => 200,
@@ -70,6 +79,7 @@ class APIGuruController extends Controller
             $guru = Guru::find($id);
             if ($guru) {
                 $guru->nama_guru = $request->nama_guru;
+                $guru->banyak_jam = $request->banyak;
                 $guru->save();
                 return response()->json([
                     'status' => 200,

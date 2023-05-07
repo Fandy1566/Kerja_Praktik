@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/dashboard', function () {
     return view('dashboard.home');
 });
 
@@ -30,7 +30,7 @@ use App\Http\Controllers\KelasController;
 Route::resource('/kelas', KelasController::class)->except(['store', 'update', 'destroy']);;
 
 use App\Http\Controllers\JadwalMengajarController;
-Route::resource('/jadwal_mengajar', JadwalMengajarController::class)->except(['store', 'update', 'destroy']);;
+Route::resource('/jam_pelajaran', JadwalMengajarController::class)->except(['store', 'update', 'destroy']);;
 
 use App\Http\Controllers\PenjadwalanController;
 Route::get('/penjadwalan', [PenjadwalanController::class, 'index']);

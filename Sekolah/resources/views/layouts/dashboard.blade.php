@@ -1,14 +1,19 @@
 @php
     //Digunakan untuk setting menu pada sidebar
     //[nama,link,link gambar]
-    $data = [
-        ["Dashboard","",asset('logo.png')],
-        ["Guru","guru",""],
-        ["Kelas","kelas",""],
-        ["Jadwal Mengajar","jadwal_mengajar",""],
-        ["Mata Pelajaran","mata_pelajaran",""],
-        ["Penjadwalan","penjadwalan",""]
+    $sidebarItem = [
+        ["Dashboard","dashboard",[asset('image/icon/dashboard_active.svg'), asset('image/icon/dashboard_default.svg')]],
+        ["Guru","guru",[asset('image/icon/guru_active.svg'), asset('image/icon/guru_default.svg')]],
+        ["Kelas","kelas",[asset('image/icon/kelas_active.svg'), asset('image/icon/kelas_default.svg')]],
+        ["Mata Pelajaran","mata_pelajaran",[asset('image/icon/mata_pelajaran_active.svg'), asset('image/icon/mata_pelajaran_default.svg')]],
+        ["Jam Pelajaran","jam_pelajaran",[asset('image/icon/jam_active.svg'), asset('image/icon/jam_default.svg')]],
+        ["Jadwal Mengajar","jadwal_mengajar",[asset('image/icon/jadwal_active.svg'), asset('image/icon/jadwal_default.svg')]]
     ];
+
+    $sidebarItemAdditional = [
+        ["Pengaturan","pengaturan",asset('image/icon/dashboard_active.svg')],
+        ["Keluar","keluar",asset('image/icon/dashboard_active.svg')],
+    ]
 @endphp
 
 <!DOCTYPE html>
@@ -19,34 +24,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('/css/dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/font.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/sidebar.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/content.css') }}" rel="stylesheet">
     @yield('head')
     <title>@yield('title')</title>
 </head>
 <body>
     <div class="sidebar">
-        <div class="logo">
-            <div class="logo-border">
-                <img src="{{ asset('logo.png') }}" alt="">
+        <div class="sidebar-logo">
+            <div class="logo-container">
+                {{-- <img src="{{ asset('/image/picture/logo.png')}}" alt=""> --}}
             </div>
-            SMPN 23 Palembang
+            <div class="logo-text">
+                SMPN 23 PALEMBANG
+            </div>
         </div>
-        <ul>
-            @for ($i = 0; $i < count($data); $i++)
-                <li class="item data-item-{{$i}} {{(request()->is($data[$i][1])) ? 'active' : '' }}">
-                    <a href="/{{$data[$i][1]}}">
-                        <span class="image">
-                            <img src="{{$data[$i][2]}}" style="width: 20px; height: 20px">
-                        </span>
-                        <span class="name">{{$data[$i][0]}}</span>
-                    </a>
-                </li>
-            @endfor
-        </ul>
+        <div class="sidebar-top-menu">
+            <div class="text">
+                MAIN MENU
+            </div>
+            <ul>
+                @foreach ($sidebarItem as $item)
+                    <li class="sidebar-item {{(request()->is($item[1])) ? 'active' : '' }}">
+                        <a href="/{{$item[1]}}">
+                            <img src="{{(request()->is($item[1])) ? $item[2][0] : $item[2][1] }}" alt="">
+                            <div class="text">
+                                {{$item[0]}}
+                            </div>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="sidebar-bottom-menu">
+            <ul>
+                @foreach ($sidebarItemAdditional as $item)
+                    <li class="sidebar-item {{(request()->is($item[1])) ? 'active' : '' }}">
+                        <a href="/{{$item[1]}}">
+                            <img src="{{$item[2]}}" alt="">
+                            <div class="text">
+                                {{$item[0]}}
+                            </div>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
     <div class="content">
         @yield('content')
     </div>
-</body>
 <script>
     async function submitForm() {
         event.preventDefault(); // prevent form submission

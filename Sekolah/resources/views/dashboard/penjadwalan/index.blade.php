@@ -17,6 +17,7 @@
     <button id="submit">Submit</button><br>
     <p>guru >= kelas</p>
     <p>waktu_mata_pelajaran >= jumlah jadwal_mengajar</p>
+    {{-- total banyak jam guru >= kelas * count($jumlah_jadwal) --}}
     <table id="tbl">
         <thead>
 
@@ -44,39 +45,43 @@
         pm = document.getElementsByName("pm")[0].value;
         ngener = document.getElementsByName("ngener")[0].value;
         
-        const newPop = geneticAlgorithm();
-
-        result = [];
-        for(let i = 0; i < newPop.length; i++){
-            for (let j = 0; j < guru.length; j++) {
-                if (newPop[i].includes(guru[j].id)) {
-                    result.push([guru[j].id, guru[j].nama_guru]);
+        if (guru.length >= kelas.length && guru.length != 0) {
+            const newPop = geneticAlgorithm();
+    
+            result = [];
+            for(let i = 0; i < newPop.length; i++){
+                for (let j = 0; j < guru.length; j++) {
+                    if (newPop[i].includes(guru[j].id)) {
+                        result.push([guru[j].id, guru[j].nama_guru]);
+                    }
                 }
             }
-        }
-
-        newArr = [];
-        while (result.length) {
-            newArr.push(result.splice(0,kelas.length));
-        }
-
-        tBody = document.querySelector("tbody")
-        let row = `<tr>`;
-        jadwalMengajar.forEach((element, i) => {
-            let newRow = `
-                <td>${element.nama_hari}</td>
-                <td>${element.waktu_awal} - ${element.waktu_akhir}</td>
-            `
-            newArr[i].forEach(element2 => {
-                newRow += `
-                    <td>${element2[1]}</td>
+    
+            newArr = [];
+            while (result.length) {
+                newArr.push(result.splice(0,kelas.length));
+            }
+    
+            tBody = document.querySelector("tbody")
+            let row = `<tr>`;
+            jadwalMengajar.forEach((element, i) => {
+                let newRow = `
+                    <td>${element.nama_hari}</td>
+                    <td>${element.waktu_awal} - ${element.waktu_akhir}</td>
                 `
+                newArr[i].forEach(element2 => {
+                    newRow += `
+                        <td>${element2[1]}</td>
+                    `
+                });
+                row += newRow;
+                row +=`</tr>`;
             });
-            row += newRow;
-            row +=`</tr>`;
-        });
-        
-        tBody.innerHTML = row;
+            
+            tBody.innerHTML = row;
+        } else {
+            alert("BANYAK GURU Tidak Boleh Kurang dari BANYAK KELAS")
+        }
 
     })
 
@@ -202,11 +207,15 @@
 
                 for (let i = 0; i < chromosome.length; i++) {
                     if (seen.has(chromosome[i])) {
-                        penalty += 1;
+                        penalty += 3; //3
                     } else {
                         seen.add(chromosome[i]);
                     }
                 }
+
+                //tambah untuk perhitungan jumlah jam guru tidak kurang dari yang ditentukan //1
+                //tambah untuk perhitungan jumlah mapel tidak kurang dari yang ditentukan //2
+                //tambah untuk perhitungan mapel harus diajar di waktu berikutnya  //2
 
                 fitnesses_chrom.push(1 / (1 + penalty));
             }
@@ -254,6 +263,7 @@
     function singlePointCrossover(parent1, parent2) {
         // Select a random crossover point
         const crossoverPoint = Math.floor(Math.random() * parent1.length);
+        // ubah jadi ordered crossover
 
         // Create two empty child arrays
         const child1 = new Array(parent1.length);
@@ -319,7 +329,6 @@
                             const randomValue = filteredArray[randomIndex];
                             offspring[i][j][k] = randomValue;
                         }
-
                     }
                 }
             }

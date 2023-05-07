@@ -3,96 +3,60 @@
     margin: 0;
     text-decoration: none;
     box-sizing: border-box;
-}
-
-:root{
-    --primary-color: skyblue;
-    --secondary-color: white;
-}
-
-body{
-    background-color: #E9F3FB;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-}
-
-.logo{
-    margin: 20px 15px 15px 15px;
-    color: #0C2A58;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    /* letter-spacing: -0.25px; */
-}
-    
-.logo-border{
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    background: #E9F3FB;
-    border: 1px solid #A6CDE5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo-border>img{
-    width: 40px;
-    height: 40px;
-}
-
-.sidebar{
-    z-index: 2;
-    width: 250px;
-    height: 100vh;
-    overflow: hidden;
-    /* background-color: var(--primary-color); */
-    min-width: 200px;
     font-family: 'Poppins', sans-serif;
-}
-
-.sidebar>ul{
-    margin-left: 30px;
     list-style: none;
+    font-size: 16px;
+    /* border: 0.1px solid red !important; */
 }
 
-.sidebar>ul>li{
-    margin-bottom: 20px;
+:root {
+    --color-primary: #0C2A58;
+    --color-secondary: #274B6F;
+    --color-tertiary: #5D7893;
+    --line-color: #B3C3D5;
+    --background-color: #EBF7FF;
+    --sidebar-color: #FFFFFF;
 }
 
-.sidebar>ul>li>a{
-    color: #0C2A58;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.content{
-    background-color: #ffffff;
-    width: 83%;
-    height: 95vh;
-    top: 0;
-    right: 0;
-    margin: auto 0;
-    border-radius: 30px;
-    box-shadow: 0px 0px 10px 4px rgba(9, 0, 67, 0.08);
-    overflow: scroll;
+.content, .sidebar {
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
-    padding: 25px;
 }
-
-.content::-webkit-scrollbar { 
+.content::-webkit-scrollbar, .sidebar::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
 
-#tbl{
-    border-collapse: collapse;
+body{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--background-color);
 }
 
-#tbl th, #tbl td{
-    border: 1px solid #0C2A58;
-    padding: 4px 6px;
+.sidebar{
+    width: 15%;
+    padding-inline: 2%;
+    background-color: var(--sidebar-color);
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.content{
+    width: 100%;
+    padding: 2% 4%;
+    overflow: scroll;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+hr#header-line{
+    border: 1px solid var(--line-color);
 }

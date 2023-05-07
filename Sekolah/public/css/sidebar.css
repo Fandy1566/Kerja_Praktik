@@ -1,0 +1,16 @@
+.sidebar ul>li>a{
+    display: flex;
+    color: var(--color-tertiary);
+    letter-spacing: 0.05em;
+    padding: 3px 5px;
+}
+
+.active{
+    background-color: var(--color-secondary);
+    border-radius: 0.313rem;
+}
+
+.active a{
+    color: white !important;
+}
+
