@@ -3,7 +3,7 @@
         {{$title}}
     </div>
     <div class="right-side">
-        <img src="" alt="">
+    <div class="logo-smp"><img src="{{asset('image/picture/Logo.png')}}" alt=""></div>
         Administrator
     </div>
 </div>

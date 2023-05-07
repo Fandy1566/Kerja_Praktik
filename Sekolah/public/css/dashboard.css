@@ -1,54 +1,35 @@
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 *{
+    font-family: 'Poppins', sans-serif;
     padding: 0;
     margin: 0;
-    text-decoration: none;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-    list-style: none;
-    font-size: 16px;
-    /* border: 0.1px solid red !important; */
-}
-
-:root {
-    --color-primary: #0C2A58;
-    --color-secondary: #274B6F;
-    --color-tertiary: #5D7893;
-    --line-color: #B3C3D5;
-    --background-color: #EBF7FF;
-    --sidebar-color: #FFFFFF;
-}
-
-.content, .sidebar {
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
-}
-.content::-webkit-scrollbar, .sidebar::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
 }
 
 body{
     display: flex;
-    width: 100vw;
     height: 100vh;
-    overflow: hidden;
-    background-color: var(--background-color);
+    width: 100vw;
+    background-color: #EBF7FF;
 }
 
 .sidebar{
-    width: 15%;
-    padding-inline: 2%;
-    background-color: var(--sidebar-color);
-    height: 100%;
-    position: relative;
+    height: 100vh;
+    width: 15vw;
+    background-color: white;
+    box-shadow: 0px 0px 10px 4px rgba(9, 0, 67, 0.08);
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding-inline: 20px;
 }
 
 .content{
-    width: 100%;
-    padding: 2% 4%;
-    overflow: scroll;
+    height: 100vh;
+    width: 85vw;
+    padding: 30px;
 }
 
 .header{
@@ -57,6 +38,34 @@ body{
     margin-bottom: 20px;
 }
 
+.header .right-side{
+    display: flex;
+    font-size: 12px;
+    font-weight: 500;
+    color: #5AA0D4;
+    align-items: center;
+
+}
+
+.header .left-side{
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+    color: #0C2A58;
+}
+
+.header img{
+    width: 25px;
+    height: auto;
+}
+
+.header .logo-smp{
+    width: 32px;
+    height: 32px;
+    margin-right: 5px;
+}
+
 hr#header-line{
-    border: 1px solid var(--line-color);
+    border: none;
+    border-top: 0.031rem solid #B3C3D5; 
 }
