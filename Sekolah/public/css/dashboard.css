@@ -12,6 +12,7 @@ body{
     height: 100vh;
     width: 100vw;
     background-color: #EBF7FF;
+    overflow: hidden;
 }
 
 .sidebar{
@@ -30,6 +31,7 @@ body{
     height: 100vh;
     width: 85vw;
     padding: 30px;
+    overflow: scroll;
 }
 
 .header{
@@ -68,4 +70,127 @@ body{
 hr#header-line{
     border: none;
     border-top: 0.031rem solid #B3C3D5; 
+}
+
+.item-title{
+    margin: 15px;
+    border-bottom: 0.031rem solid #D1D1D1;
+    position: relative;
+    padding-bottom: 30px;
+    
+}
+
+.item-bot{
+    margin-top: -5px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    text-align: right;
+    
+}
+
+.title1{
+    font-size: 18px;
+    font-weight: 600;
+    color: #274B6F;
+}
+
+.item1{
+    font-size: 48px;
+    font-weight: 600;
+    color: #274B6F;
+}
+
+.item-title img{
+    width: 80px;
+    height: auto;
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    
+}
+
+a{
+    font-size: 12px;
+    font-weight: 400;
+    color: #75B5FF;
+}
+
+.title2{
+    font-size: 20px;
+    font-weight: 600;
+    color: #274B6F;
+}
+
+.item2{
+    margin-top: 5px;
+    font-size: 58px;
+    font-weight: 600;
+    color: #274B6F;
+}
+
+.item-title2{
+    margin: 15px;
+    border-bottom: 0.031rem solid #D1D1D1;
+    position: relative;
+    padding-bottom: 0px;
+    display: flex;
+    min-width: 100px;
+}
+
+.item-title2-1{
+    margin: 15px;
+    border-bottom: 0.031rem solid #D1D1D1;
+    position: relative;
+    padding-bottom: 0px;
+}
+
+.item-title3{
+    margin: 15px;
+    border-bottom: 0.031rem solid #D1D1D1;
+    position: relative;
+    padding-bottom: 15px;
+    
+}
+
+.pb{
+    height: 8px;
+    width: 100%;
+    background-color: #A6CDE5;
+    border-radius: 8px;
+}
+
+
+.right-item{
+    padding: 40px;
+
+}
+
+.content-mapel{
+    margin-top: 5px;
+    font-size: 10px;
+    font-weight: 500;
+    color: #5D7893;
+}
+
+.content-jam{
+    margin-top: 15px;
+    display: flex;
+}
+
+.content-jam-kelas{
+    background-color: #EBF7FF;
+    border-radius: 10px;
+    width: 30%;
+    height: 200px;
+    justify-content: center;
+    margin-left: 15px;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
+}
+
+.content-jam-bot{
+    margin: 15px;
+    font-size: 10px;
+    font-weight: 500;
+    color: #5D7893;
 }
