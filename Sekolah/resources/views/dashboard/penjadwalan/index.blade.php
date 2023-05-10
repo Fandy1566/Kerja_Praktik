@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 @section('title', 'Dashboard')
 @section('content')
+@include('layouts.header', ['title' => 'Jadwal Mengajar'])
 <div class="title-content">
     
 </div>

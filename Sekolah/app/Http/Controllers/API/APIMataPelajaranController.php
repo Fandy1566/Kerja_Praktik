@@ -62,7 +62,7 @@ class APIMataPelajaranController extends Controller
         try {
             $mataPelajaran = MataPelajaran::find($id);
             if ($mataPelajaran) {
-                $mataPelajaran->nama_MataPelajaran = $request->nama_MataPelajaran;
+                $mataPelajaran->nama_mata_pelajaran = $request->nama_mata_pelajaran;
                 $mataPelajaran->save();
                 return response()->json([
                     'status' => 200,

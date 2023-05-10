@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 @section('title', 'Dashboard')
 @section('content')
+@include('layouts.header', ['title' => 'Mata Pelajaran'])
 <div class="title-content">
     
 </div>

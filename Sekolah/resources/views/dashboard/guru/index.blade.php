@@ -1,65 +1,58 @@
 @extends('layouts.dashboard')
+@section('head')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@endsection
 @section('title', 'Dashboard')
 @section('content')
-<div class="title-card">
-    <div class="title-content">
-        
+@include('layouts.header', ['title' => 'Guru'])
+<div class="card m-20">
+    <div class="title-card">
+        Input Guru
     </div>
-</div>
-<div class="card">
     <form class="store">
         <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-        <h2>Form</h2>
-        <label>Nama<span style="color:red">*</span></label> <br>
-        <input type="text" name="nama_guru">
-        <br>
-        <label>Banyak Waktu Per Minggu</label>
-        <input type="number" name="banyak">
-        <label>Mata Pelajaran<span style="color:red">*</span></label> <br>
-        <select name="id_mata_pelajaran[]" multiple onclick="toggleOptionSelection(event)">
-            <option>123</option>
-            <option>456</option>
-            <option>789</option>
-        </select>
-        {{-- <div class="select-btn">
-            <span class="select-btn-text">
-                Pilih Mata Pelajaran
-            </span>
-            <span class="select-btn-arrow">
-                <img src="{{ asset('arrow-down.svg')}}" alt="">
-            </span>
+        <div class="left-side-form">
+            <label>Nama Guru</label><br>
+            <input type="text" name="nama_guru" placeholder="Masukkan nama guru.."><br>
+            <label>Mata Pelajaran</label> <br>
+            <select id="select-mapel" name="mata_pelajaran[]">
+                <option value="">Pilih Mata Pelajaran</option>
+            </select>
+            <br>
         </div>
-        <div class="list-select hide">
-            <ul>
-                @php
-                    $list = ["IPA","IPS","MTK"]
-                @endphp
-                @foreach ($list as $item)
-                <li class="item">
-                    <span class="select-checkbox">
-                        <img src="{{ asset('check.svg')}}" alt="" class="check-icon">
-                    </span>
-                    <span class="item-text">{{$item}}</span>
-                </li>               
-                @endforeach
-            </ul>
-        </div> --}}
-        <br>
-        <input type="submit" value="Submit" onclick="submitForm()">
+        <div class="right-side-form">
+            <label>Kelas</label><br>
+            <input type="checkbox" name="" id=""><label for="">Kelas VII</label>
+            <input type="checkbox" name="" id=""><label for="">Kelas VIII</label>
+            <input type="checkbox" name="" id=""><label for="">Kelas IX</label><br>
+            <label>Kategori</label><br>
+            <input type="checkbox" name="" id=""><label for="">Guru Tetap</label>
+            <input type="checkbox" name="" id=""><label for="">Guru Honorer</label><br>
+            
+        </div>
+        <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
     </form>
 </div>
-<div class="card">
-    <div class="button">
-        <button type="submit"></button>
+<div class="card m-32">
+    <div class="title-card">
+        Guru
     </div>
+    <input class="search" type="text" name="" id="">
+    <button class="clickable">Cari</button>
+    <button class="clickable">Import</button>
+    <button class="clickable">Export</button>
+    <button class="clickable">Delete</button>
     <table id="tbl">
         <thead>
             <tr>
-                <th>No</th>
-                <th>Kode</th>
-                <th>Nama</th>
-                <th>Mata Pelajaran yang diajar</th>
-                <th>&nbsp;</th>
+                <th><input type="checkbox" id="check-all"></th>
+                <th>ID  Guru</th>
+                <th>Nama Guru</th>
+                <th>Mata Pelajaran</th>
+                <th>Status</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -71,10 +64,15 @@
 @endsection
 @section('script')
 <script>
+    $(document).ready(function() {
+      $('#select-mapel').select2();
+    });
     
-    window.onload = async () => {
-        await getData();
-    }
+    window.addEventListener('load', function() {
+        getData();
+        getMapel();
+    });
+
     const url = window.location.origin+"/api/guru";
 
     const selectElement = document.querySelector('select');
@@ -84,6 +82,24 @@
     function toggleOptionSelection(event) {
         if (event.target.tagName === 'OPTION') {
             event.target.selected = !event.target.selected;
+        }
+    }
+
+    async function getMapel() {
+        try {
+            const response = await fetch(window.location.origin+"/api/mata_pelajaran");
+            const data = await response.json();
+            const select = document.querySelector('#select-mapel');
+            let options = "";
+            data.data.forEach(element => {
+                const newOption = `
+                    <option value="${element.id}">${element.nama_mata_pelajaran}</option>
+                `;
+                options += newOption;
+            });
+            tblBody.innerHTML = options;
+        } catch (error) {
+            console.error('Error:', error);
         }
     }
 
