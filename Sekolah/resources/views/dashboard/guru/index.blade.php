@@ -87,39 +87,6 @@
         }
     }
 
-
-
-    // const selectBtn = document.querySelector(".select-btn");
-    // const items = document.querySelectorAll(".item");
-    // const selectList = document.querySelector(".list-select ");
-
-    // selectBtn.addEventListener("click", () =>{
-    //     selectList.classList.toggle("hide");
-    // })
-
-    // items.forEach(item => {
-    //     item.addEventListener("click", () =>{
-    //         item.classList.toggle("checked");
-
-    //         let checked = document.querySelectorAll(".checked");
-    //         let selectBtnText = document.querySelector(".select-btn-text");
-
-    //         if (checked && checked.length > 0) {
-    //             let text = "";
-    //             checked.forEach((items, idx, checked) => {
-    //                 let newText = `${items.querySelector(".item-text").textContent}`;
-    //                 if (!(idx === checked.length - 1)) {
-    //                     newText += ",";
-    //                 }
-    //                 text += newText;
-    //             });
-    //             selectBtnText.innerText = text;
-    //         } else {
-    //             selectBtnText.innerText = "Pilih Mata Pelajaran";
-    //         }
-    //     })
-    // });
-
     async function getData() {
         try {
             const response = await fetch(url);

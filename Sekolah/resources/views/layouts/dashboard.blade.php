@@ -57,6 +57,45 @@
     <div class="content">
         @yield('content')
     </div>
-    
 </body>
+@yield('script')
+<script>
+    async function submitForm() {
+        event.preventDefault(); // prevent form submission
+        const csrfToken = document.querySelector('input[name="_token"]').value;
+        const form = document.querySelector('form.store');
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-Token": csrfToken
+                },
+                method: "post",
+                credentials: "same-origin",
+                body: JSON.stringify(Object.fromEntries(formData))
+            });
+            await getData();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function deleteData(id) {
+        try {
+            const response = await fetch(url+"/"+id, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                method: "delete",
+                credentials: "same-origin",
+            });
+            const data = await response.json();
+            await getData();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+</script>
 </html>
