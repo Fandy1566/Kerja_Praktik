@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,28 +14,50 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard.home');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
 Route::get('/dashboard', function () {
     return view('dashboard.home');
-});
+})->name('dashboard');
 
-use App\Http\Controllers\GuruController;
-Route::resource('/guru', GuruController::class)->except(['store', 'update', 'destroy']);
+Route::get('/guru', function () {
+    return view('dashboard.guru.index');
+})->name('guru');
 
-use App\Http\Controllers\MataPelajaranController;
-Route::resource('/mata_pelajaran', MataPelajaranController::class)->except(['store', 'update', 'destroy']);;
+Route::get('/mata_pelajaran', function () {
+    return view('dashboard.mata_pelajaran.index');
+})->name('mapel');
 
-use App\Http\Controllers\UserController;
-Route::resource('/user', UserController::class)->except(['store', 'update', 'destroy']);;
+Route::get('/user', function () {
+    return view('dashboard.user.index');
+})->name('user');
 
-use App\Http\Controllers\KelasController;
-Route::resource('/kelas', KelasController::class)->except(['store', 'update', 'destroy']);;
+Route::get('/kelas', function () {
+    return view('dashboard.kelas.index');
+})->name('kelas');
 
-use App\Http\Controllers\JadwalMengajarController;
-Route::resource('/jam_pelajaran', JadwalMengajarController::class)->except(['store', 'update', 'destroy']);;
+Route::get('/jam_pelajaran', function () {
+    return view('dashboard.jam_pelajaran.index');
+})->name('jampel');
 
-use App\Http\Controllers\PenjadwalanController;
-Route::get('/penjadwalan', [PenjadwalanController::class, 'index']);
+Route::get('/penjadwalan', function () {
+    return view('dashboard.penjadwalan.index');
+})->name('jadwal');
 
-Route::get('/login', function(){
-    return view('login.login');
-});
+// Route::get('/login', function(){
+//     return view('login.login');
+// });

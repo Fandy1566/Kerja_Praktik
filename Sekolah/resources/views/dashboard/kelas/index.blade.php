@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 @section('title', 'Dashboard')
 @section('content')
+@include('layouts.header', ['title' => 'Kelas'])
 <div class="title-card">
     <div class="title-content">
         
