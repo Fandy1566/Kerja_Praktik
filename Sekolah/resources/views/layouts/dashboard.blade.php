@@ -68,8 +68,9 @@
         const csrfToken = document.querySelector('input[name="_token"]').value;
         const form = document.querySelector('form.store');
         const formData = new FormData(form);
-
+        console.log(formData);
         try {
+
             const response = await fetch(url, {
                 headers: {
                     "Content-Type": "application/json",
@@ -79,7 +80,31 @@
                 credentials: "same-origin",
                 body: JSON.stringify(Object.fromEntries(formData))
             });
+            const data = await response.json();
             await getData();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function updateData(id) {
+        event.preventDefault(); // prevent form submission
+        const csrfToken = document.querySelector('input[name="_token"]').value;
+        const form = document.querySelector('form.edit');
+        const formData = new FormData(form);
+        try {
+            const response = await fetch(url+"/"+id, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-Token": csrfToken
+                },
+                method: "post",
+                credentials: "same-origin",
+                body: JSON.stringify(Object.fromEntries(formData))
+            });
+            const data = await response.json();
+            await getData();
+            showFormStore();
         } catch (error) {
             console.error(error);
         }

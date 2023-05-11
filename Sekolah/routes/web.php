@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,7 +52,8 @@ Route::get('/kelas', function () {
 })->name('kelas');
 
 Route::get('/jam_pelajaran', function () {
-    return view('dashboard.jam_pelajaran.index');
+    $hari = \App\Models\Hari::all();
+    return view('dashboard.jam_pelajaran.index', compact('hari'));
 })->name('jampel');
 
 Route::get('/penjadwalan', function () {

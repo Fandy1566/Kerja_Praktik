@@ -24,12 +24,12 @@
         </div>
         <div class="right-side-form">
             <label>Kelas</label><br>
-            <input type="checkbox" name="" id=""><label for="">Kelas VII</label>
-            <input type="checkbox" name="" id=""><label for="">Kelas VIII</label>
-            <input type="checkbox" name="" id=""><label for="">Kelas IX</label><br>
+            <input type="checkbox" name="id_kelas[]" id="" value="7"><label for="">Kelas VII</label>
+            <input type="checkbox" name="id_kelas[]" id="" value="8"><label for="">Kelas VIII</label>
+            <input type="checkbox" name="id_kelas[]" id="" value="9"><label for="">Kelas IX</label><br>
             <label>Kategori</label><br>
-            <input type="checkbox" name="" id=""><label for="">Guru Tetap</label>
-            <input type="checkbox" name="" id=""><label for="">Guru Honorer</label><br>
+            <input type="checkbox" name="kategori" id=""><label for="">Guru Tetap</label>
+            <input type="checkbox" name="kategori" id=""><label for="">Guru Honorer</label><br>
             
         </div>
         <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
@@ -39,7 +39,7 @@
     <div class="title-card">
         Guru
     </div>
-    <input class="search" type="text" name="" id="">
+    <input class="search" type="text" name="" id="" placeholder="Cari Guru">
     <button class="clickable">Cari</button>
     <button class="clickable">Import</button>
     <button class="clickable">Export</button>
@@ -59,7 +59,6 @@
             
         </tbody>
     </table>
-
 </div>
 @endsection
 @section('script')

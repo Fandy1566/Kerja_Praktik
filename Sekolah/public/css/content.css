@@ -48,7 +48,9 @@
     background-color: #274B6F;
     border-radius: 5px;
     color: white;
-    width: 100px;
+    min-width: 100px;
+    width: fit-content;
+    padding-inline: 10px;
     height: 25px;
     font-size: 12px;
     display: grid;
@@ -58,7 +60,7 @@
     border: 0;
 }
 
-form.store{
+.form-area form{
     display: flex;
     position: relative;
 }
@@ -77,6 +79,7 @@ form.store{
     margin-top: 16px;
     width: 100%;
     border-collapse: collapse;
+    border-spacing: 0;
     border-radius: 10px;
 }
 
@@ -94,6 +97,7 @@ form.store{
 
 #tbl th:first-child{
     border-top-left-radius: 10px;
+    border-left: 1px solid #274B6F;
 }
 #tbl th:last-child{
     border-top-right-radius: 10px;
@@ -103,6 +107,17 @@ form.store{
     text-align: center;
 }
 
+#tbl tbody tr{
+    border: 1px solid #5D7893;
+}
+#tbl tbody td{
+    padding-block: 10px;
+}
+
 .search{
     margin-top: 31px;
+}
+
+.center-text{
+    text-align: center;
 }

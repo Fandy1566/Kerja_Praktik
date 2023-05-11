@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JadwalMengajar;
+use App\Models\Hari;
 use DB;
 
 class APIJadwalMengajarController extends Controller
@@ -71,6 +72,8 @@ class APIJadwalMengajarController extends Controller
                 $jadwalMengajar->save();
                 return response()->json([
                     'status' => 200,
+                    'message' => 'Berhasil mengupdate data',
+                    'data' => $jadwalMengajar,
                 ]);
             } else {
                 return response()->json([
@@ -82,6 +85,7 @@ class APIJadwalMengajarController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' => 'failed to update data',
+                'data' => $request,
                 'error' => $e
             ],400);
         }
@@ -110,6 +114,5 @@ class APIJadwalMengajarController extends Controller
                 'error' => $e
             ],400);
         }
-        
     }
 }
