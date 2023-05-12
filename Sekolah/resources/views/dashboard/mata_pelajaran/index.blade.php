@@ -2,46 +2,55 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Mata Pelajaran'])
-<div class="title-content">
-    
+<div id="form-layout" class="card m-20" style="width: 600px">
+    <div class="title-card">
+        Input Mata Pelajaran
+    </div>
+    <div class="form-area">
+        <form class="store">
+            <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+            <div class="left-side-form">
+                <label>Mata Pelajaran</label><br>
+                <input type="text" name="nama_guru" placeholder="Masukkan nama Mata Pelajaran.."><br>
+                <label>Total Jam</label> <br>
+                <input type="text" name="banyak" placeholder="Masukkan Total Jam.."><br>
+                <br>
+            </div>
+            <div class="right-side-form">
+                <label>Kategori</label><br>
+                <input type="checkbox" name="tingkat" id=""><label for="">Kelas VII</label><br>
+                <input type="checkbox" name="tingkat" id=""><label for="">Kelas VIII</label><br>
+                <input type="checkbox" name="tingkat" id=""><label for="">Kelas IX</label><br>
+            </div>
+            <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
+        </form>
+    </div>
 </div>
-<div class="card">
-    <form class="store">
-        <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-        <label>Nama</label> <br>
-        <input type="text" name="nama_mata_pelajaran"> <br>
-        <label>Banyak per minggu</label> <br>
-        <input type="text" name="banyak"> <br>
-        <label>Tingkat</label>
-        <select name="tingkat">
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-        </select>
-        <br><br>
-        <input type="submit" value="Tambah" onclick="submitForm()">
-    </form>
-</div>
-<div class="card">
-    <table id="tbl">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Kode</th>
-                <th>Nama</th>
-                <th>tingkat</th>
-                <th>Banyak</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+<div class="card m-32">
+    <div class="title-card">
+        Mata Pelajaran
+    </div>
+    <div class="table-container">
+        <table id="tbl">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="check-all"></th>
+                    <th>ID Mata Pelajaran</th>
+                    <th>Mata Pelajaran</th>
+                    <th>Total Jam / Minggu</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script>
     window.onload = () => {
         getData();
     }
+    
     const url = window.location.origin+"/api/mata_pelajaran";
 
     function getData() {
@@ -54,15 +63,14 @@
             data.data.forEach((element, idx) => {
                 const newRow = `
                 <tr>
-                <td>${++idx}</td>
-                <td>${element.kode_mata_pelajaran}</td>
-                <td>${element.nama_mata_pelajaran}</td>
-                <td>${element.tingkat}</td>
-                <td>${element.banyak}</td>
-                <td>
-                    <button onclick="deleteData(${element.id})">Delete</button>
-                    <button onclick="updateData(${element.id})">Update</button>
-                </td>
+                    <td class="center-text"><input type="checkbox"></td>
+                    <td>${element.id}</td>
+                    <td>${element.nama_mata_pelajaran}</td>
+                    <td>${element.banyak}</td>
+                    <td>
+                        <button onclick="deleteData(${element.id})">Delete</button>
+                        <button onclick="updateData(${element.id})">Update</button>
+                    </td>
                 </tr>
             `;
             row += newRow;

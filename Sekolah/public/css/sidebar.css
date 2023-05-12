@@ -42,6 +42,11 @@ a{
     padding-left: 8px;
 }
 
+
+.active{
+    background-color: #274B6F;
+}
+
 .menu:hover{
     background-color: #274B6F;
 }
@@ -57,6 +62,10 @@ a{
 }
 
 .menu a:hover {
+    color: white;
+}
+
+.active a{
     color: white;
 }
 

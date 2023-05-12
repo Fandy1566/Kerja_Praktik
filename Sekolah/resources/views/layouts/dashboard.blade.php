@@ -20,34 +20,34 @@
             </div>
             <div class="main-menu">
                 <div class="main-menu-title">MAIN MENU</div>
-                <div class="menu menu-1"><a href="{{ route('dashboard')}}">
+                <div class="menu menu-1 {{(request()->url() == route('dashboard')) ? 'active' : '' }}"><a href="{{ route('dashboard')}}">
                     <img src="{{asset('image/icon/dashboard.svg')}}" alt="">
                     Dashboard
                 </a></div>
-                <div class="menu menu-2"><a href="{{ route('guru')}}">
+                <div class="menu menu-2 {{(request()->url() == route('guru')) ? 'active' : '' }}"><a href="{{ route('guru')}}">
                     <img src="{{asset('image/icon/guru.svg')}}" alt="">
                     Guru
                 </a></div>
-                <div class="menu menu-3"><a href="{{ route('kelas')}}">
+                <div class="menu menu-3 {{(request()->url() == route('kelas')) ? 'active' : '' }}"><a href="{{ route('kelas')}}">
                     <img src="{{asset('image/icon/kelas.svg')}}" alt="">
                     Kelas
                 </a></div>
-                <div class="menu menu-4"><a href="{{ route('mapel')}}">
+                <div class="menu menu-4 {{(request()->url() == route('mapel')) ? 'active' : '' }}"><a href="{{ route('mapel')}}">
                     <img src="{{asset('image/icon/mapel.svg')}}" alt="">
                     Mata Pelajaran
                 </a></div>
-                <div class="menu menu-5"><a href="{{ route('jampel')}}">
+                <div class="menu menu-5 {{(request()->url() == route('jampel')) ? 'active' : '' }}"><a href="{{ route('jampel')}}">
                     <img src="{{asset('image/icon/jampel.svg')}}" alt="">
                     Jam Pelajaran
                 </a></div>
-                <div class="menu menu-6"><a href="{{ route('jadwal')}}">
+                <div class="menu menu-6 {{(request()->url() == route('jadwal')) ? 'active' : '' }}"><a href="{{ route('jadwal')}}">
                     <img src="{{asset('image/icon/jadwal.svg')}}" alt="">
                     Jadwal Mengajar
                 </a></div>
             </div>
         </div>
         <div class="logout">
-        <div class="menu menu-7"><a href="">
+        <div class="menu menu-7 {{(request()->url() == route('pengaturan')) ? 'active' : '' }}"><a href="{{ route('pengaturan') }}">
                     <img src="{{asset('image/icon/pengaturan.svg')}}" alt="">
                     Pengaturan
                 </a></div>

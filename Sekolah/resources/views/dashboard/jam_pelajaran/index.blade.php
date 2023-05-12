@@ -37,20 +37,22 @@
     <button class="clickable">Import</button>
     <button class="clickable">Export</button>
     <button class="clickable">Delete</button>
-    <table id="tbl">
-        <thead>
-            <tr>
-                <th><input type="checkbox" id="check-all"></th>
-                {{-- <th>ID Jam Pelajaran</th> --}}
-                <th>Hari</th>
-                <th>Waktu Pelajaran</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table id="tbl">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="check-all"></th>
+                    {{-- <th>ID Jam Pelajaran</th> --}}
+                    <th>Hari</th>
+                    <th>Waktu Pelajaran</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection
 @section('script')

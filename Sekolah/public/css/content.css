@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 .container{
     background-color: white;
     height: 200px;
@@ -76,7 +78,6 @@
 }
 
 #tbl{
-    margin-top: 16px;
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
@@ -96,19 +97,15 @@
 }
 
 #tbl th:first-child{
-    border-top-left-radius: 10px;
     border-left: 1px solid #274B6F;
-}
-#tbl th:last-child{
-    border-top-right-radius: 10px;
 }
 
 #tbl th:first-child{
     text-align: center;
 }
 
-#tbl tbody tr{
-    border: 1px solid #5D7893;
+#tbl tbody tr:not(:last-child){
+    border-bottom: 1px solid #5D7893;
 }
 #tbl tbody td{
     padding-block: 10px;
@@ -120,4 +117,32 @@
 
 .center-text{
     text-align: center;
+}
+
+.table-container{
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 16px;
+    border: 1px solid #5D7893;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-secondary{
+    background-color: #EBF7FF;
+    border: 1px solid #587693;
+    border-radius: 5px;
+    width: 150px;
+    font-size: 12px;
+    color: #0C2A58;
+    font-weight: 600;
+    height: 25px;
 }

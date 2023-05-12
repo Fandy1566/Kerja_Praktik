@@ -60,6 +60,10 @@ Route::get('/penjadwalan', function () {
     return view('dashboard.penjadwalan.index');
 })->name('jadwal');
 
+Route::get('/pengaturan', function () {
+    return view('pengaturan');
+})->name('pengaturan');
+
 // Route::get('/login', function(){
 //     return view('login.login');
 // });

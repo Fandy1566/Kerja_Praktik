@@ -7,33 +7,35 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Guru'])
-<div class="card m-20">
+<div id="form-layout" class="card m-20" style="width: 100%">
     <div class="title-card">
         Input Guru
     </div>
-    <form class="store">
-        <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-        <div class="left-side-form">
-            <label>Nama Guru</label><br>
-            <input type="text" name="nama_guru" placeholder="Masukkan nama guru.."><br>
-            <label>Mata Pelajaran</label> <br>
-            <select id="select-mapel" name="mata_pelajaran[]">
-                <option value="">Pilih Mata Pelajaran</option>
-            </select>
-            <br>
-        </div>
-        <div class="right-side-form">
-            <label>Kelas</label><br>
-            <input type="checkbox" name="id_kelas[]" id="" value="7"><label for="">Kelas VII</label>
-            <input type="checkbox" name="id_kelas[]" id="" value="8"><label for="">Kelas VIII</label>
-            <input type="checkbox" name="id_kelas[]" id="" value="9"><label for="">Kelas IX</label><br>
-            <label>Kategori</label><br>
-            <input type="checkbox" name="kategori" id=""><label for="">Guru Tetap</label>
-            <input type="checkbox" name="kategori" id=""><label for="">Guru Honorer</label><br>
-            
-        </div>
-        <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
-    </form>
+    <div class="form-area">
+        <form class="store">
+            <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+            <div class="left-side-form">
+                <label>Nama Guru</label><br>
+                <input type="text" name="nama_guru" placeholder="Masukkan nama guru.."><br>
+                <label>Mata Pelajaran</label> <br>
+                <select id="select-mapel" name="mata_pelajaran[]">
+                    <option value="">Pilih Mata Pelajaran</option>
+                </select>
+                <br>
+            </div>
+            <div class="right-side-form">
+                <label>Kelas</label><br>
+                <input type="checkbox" name="id_kelas[]" id="" value="7"><label for="">Kelas VII</label>
+                <input type="checkbox" name="id_kelas[]" id="" value="8"><label for="">Kelas VIII</label>
+                <input type="checkbox" name="id_kelas[]" id="" value="9"><label for="">Kelas IX</label><br>
+                <label>Kategori</label><br>
+                <input type="checkbox" name="kategori" id=""><label for="">Guru Tetap</label>
+                <input type="checkbox" name="kategori" id=""><label for="">Guru Honorer</label><br>
+                
+            </div>
+            <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
+        </form>
+    </div>
 </div>
 <div class="card m-32">
     <div class="title-card">
@@ -44,21 +46,23 @@
     <button class="clickable">Import</button>
     <button class="clickable">Export</button>
     <button class="clickable">Delete</button>
-    <table id="tbl">
-        <thead>
-            <tr>
-                <th><input type="checkbox" id="check-all"></th>
-                <th>ID  Guru</th>
-                <th>Nama Guru</th>
-                <th>Mata Pelajaran</th>
-                <th>Status</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table id="tbl">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="check-all"></th>
+                    <th>ID  Guru</th>
+                    <th>Nama Guru</th>
+                    <th>Mata Pelajaran</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection
 @section('script')
@@ -111,14 +115,15 @@
             data.data.forEach((element, idx) => {
                 const newRow = `
                     <tr>
-                    <td>${++idx}</td>
-                    <td>${element.kode_guru}</td>
-                    <td>${element.nama_guru}</td>
-                    <td></td>
-                    <td>
-                        <button class="delete-button" onclick="deleteData(${element.id})">Delete</button>
-                        <button onclick="updateData(${element.id})">Update</button>
-                    </td>
+                        <td class="center-text"><input type="checkbox"></td>
+                        <td>${element.id}</td>
+                        <td>${element.kode_guru}</td>
+                        <td>${element.nama_guru}</td>
+                        <td></td>
+                        <td>
+                            <button class="delete-button" onclick="deleteData(${element.id})">Delete</button>
+                            <button onclick="updateData(${element.id})">Update</button>
+                        </td>
                     </tr>
                 `;
                 row += newRow;
