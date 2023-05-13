@@ -24,10 +24,10 @@
                 <br>
             </div>
             <div class="right-side-form">
-                <label>Kelas</label><br>
+                {{-- <label>Kelas</label><br>
                 <label for="">Kelas VII</label><input type="number" name="kelas_7">
                 <label for="">Kelas VIII</label><input type="number" name="kelas_8">
-                <label for="">Kelas IX</label><input type="number" name="kelas_9"><br>
+                <label for="">Kelas IX</label><input type="number" name="kelas_9"><br> --}}
                 <label>Kategori</label><br>
                 <input type="radio" name="kategori" id="" checked value="1"><label for="">Guru Tetap</label>
                 <input type="radio" name="kategori" id="" value="0"><label for="">Guru Honorer</label><br>

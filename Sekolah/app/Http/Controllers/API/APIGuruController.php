@@ -40,7 +40,6 @@ class APIGuruController extends Controller
         try {
             $guru = new Guru;
             $increment = DB::select("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA ='" . env('DB_DATABASE') . "' AND TABLE_NAME ='" . $guru->getTable() . "'")[0]->AUTO_INCREMENT;
-            $guru->kode_guru = "G".str_pad($increment,3,"0",STR_PAD_LEFT);
             $guru->nama_guru = $request->nama_guru;
             $guru->banyak_jam = $request->banyak;
             $guru->save();
@@ -50,13 +49,6 @@ class APIGuruController extends Controller
                 $guruMapelDetail->id_guru = $increment;
                 $guruMapelDetail->id_mata_pelajaran = $value[$key];
                 $guruMapelDetail->save();
-            }
-
-            foreach ($request->id_jam as $key => $value) {
-                $GuruJamDetail = new GuruJamDetail;
-                $GuruJamDetail->id_guru = $increment;
-                $GuruJamDetail->id_mata_pelajaran = $value[$key];
-                $GuruJamDetail->save();
             }
 
             return response()->json([

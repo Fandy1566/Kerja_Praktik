@@ -19,27 +19,41 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 use App\Http\Controllers\API\APIJadwalMengajarController;
-Route::get('jadwal_mengajar', [APIJadwalMengajarController::class, 'index']);
-Route::post('jadwal_mengajar', [APIJadwalMengajarController::class, 'store']);
-Route::post('jadwal_mengajar/{id}', [APIJadwalMengajarController::class, 'update']);
-Route::delete('jadwal_mengajar/{id}', [APIJadwalMengajarController::class, 'destroy']);
+Route::controller(APIJadwalMengajarController::class)->group( function() {
+    Route::get('jadwal_mengajar', 'index');
+    Route::post('jadwal_mengajar', 'store');
+    Route::post('jadwal_mengajar/{id}', 'update');
+    Route::delete('delete/jadwal_mengajar', 'destroy');
 
+    Route::delete('reset/jadwal_mengajar', 'reset');
+});
 
 use App\Http\Controllers\API\APIGuruController;
-Route::get('guru', [APIGuruController::class, 'index']);
-Route::post('guru', [APIGuruController::class, 'store']);
-Route::post('guru/{id}', [APIGuruController::class, 'update']);
-// Route::delete('guru/{id}', [APIGuruController::class, 'destroy']);
-Route::delete('delete/guru', [APIGuruController::class, 'destroy']);
+Route::controller(APIGuruController::class)->group( function() {
+    Route::get('guru', 'index');
+    Route::post('guru', 'store');
+    Route::post('guru/{id}', 'update');
+    Route::delete('delete/guru', 'destroy');
+
+    Route::delete('reset/guru', 'reset');
+});
 
 use App\Http\Controllers\API\APIKelasController;
-Route::get('kelas', [APIKelasController::class, 'index']);
-Route::post('kelas', [APIKelasController::class, 'store']);
-Route::post('kelas/{id}', [APIKelasController::class, 'update']);
-Route::delete('delete/kelas', [APIKelasController::class, 'destroy']);
+Route::controller(APIKelasController::class)->group( function() {
+    Route::get('kelas', 'index');
+    Route::post('kelas', 'store');
+    Route::post('kelas/{id}', 'update');
+    Route::delete('delete/kelas', 'destroy');
+
+    Route::delete('reset/kelas', 'reset');
+});
 
 use App\Http\Controllers\API\APIMataPelajaranController;
-Route::get('mata_pelajaran', [APIMataPelajaranController::class, 'index']);
-Route::post('mata_pelajaran', [APIMataPelajaranController::class, 'store']);
-Route::post('mata_pelajaran/{id}', [APIMataPelajaranController::class, 'update']);
-Route::delete('delete/mata_pelajaran', [APIMataPelajaranController::class, 'destroy']);
+Route::controller(APIMataPelajaranController::class)->group( function() {
+    Route::get('mata_pelajaran', 'index');
+    Route::post('mata_pelajaran', 'store');
+    Route::post('mata_pelajaran/{id}', 'update');
+    Route::delete('delete/mata_pelajaran', 'destroy');
+
+    Route::delete('reset/mata_pelajaran', 'reset');
+});

@@ -70,6 +70,7 @@
         const form = document.querySelector('form.store');
         const formData = new FormData(form);
         console.log(formData);
+
         try {
 
             const response = await fetch(url, {

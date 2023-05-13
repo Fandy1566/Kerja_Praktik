@@ -11,16 +11,16 @@
             <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
             <div class="left-side-form">
                 <label>Mata Pelajaran</label><br>
-                <input type="text" name="nama_guru" placeholder="Masukkan nama Mata Pelajaran.."><br>
+                <input type="text" name="nama_mata_pelajaran" placeholder="Masukkan nama Mata Pelajaran.."><br>
                 <label>Total Jam</label> <br>
                 <input type="text" name="banyak" placeholder="Masukkan Total Jam.."><br>
                 <br>
             </div>
             <div class="right-side-form">
                 <label>Kategori</label><br>
-                <input type="checkbox" name="tingkat" id=""><label for="">Kelas VII</label><br>
-                <input type="checkbox" name="tingkat" id=""><label for="">Kelas VIII</label><br>
-                <input type="checkbox" name="tingkat" id=""><label for="">Kelas IX</label><br>
+                <input type="checkbox" name="tingkat[]" checked value=7><label for="">Kelas VII</label><br>
+                <input type="checkbox" name="tingkat[]" checked value=8><label for="">Kelas VIII</label><br>
+                <input type="checkbox" name="tingkat[]" checked value=9><label for="">Kelas IX</label><br>
             </div>
             <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
         </form>

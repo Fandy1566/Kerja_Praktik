@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 .container{
-    background-color: white;
+    background-color: var(--sidebar-color);
     height: 200px;
     padding: 2% 5%;
     box-shadow: 0px 0px 2px 0.5px rgba(0, 0, 0, 0.08);
@@ -32,7 +32,7 @@
 }
 
 .card{
-    background-color: white;
+    background-color: var(--sidebar-color);
     border-radius: 10px;
     padding-block: 20px ;
     padding-inline: 15px ;
@@ -47,7 +47,7 @@
 }
 
 .title-card{
-    background-color: #274B6F;
+    background-color: var(--color-secondary);
     border-radius: 5px;
     color: white;
     min-width: 100px;
@@ -97,7 +97,7 @@
 }
 
 #tbl th:first-child{
-    border-left: 1px solid #274B6F;
+    border-left: 1px solid var(--color-secondary);
 }
 
 #tbl th:first-child{
@@ -105,7 +105,7 @@
 }
 
 #tbl tbody tr:not(:last-child){
-    border-bottom: 1px solid #5D7893;
+    border-bottom: 1px solid var(--color-tertiary);
 }
 #tbl tbody td{
     padding-block: 10px;
@@ -123,7 +123,7 @@
     border-radius: 10px;
     overflow: hidden;
     margin-top: 16px;
-    border: 1px solid #5D7893;
+    border: 1px solid var(--color-tertiary);
 }
 
 .flex-row{
@@ -137,12 +137,12 @@
 }
 
 .button-secondary{
-    background-color: #EBF7FF;
+    background-color: var(--background-color);
     border: 1px solid #587693;
     border-radius: 5px;
     width: 150px;
     font-size: 12px;
-    color: #0C2A58;
+    color: var(--color-primary);
     font-weight: 600;
     height: 25px;
 }

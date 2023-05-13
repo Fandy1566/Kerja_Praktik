@@ -36,8 +36,6 @@ class APIKelasController extends Controller
     {
         try {
             $kelas = new Kelas;
-            $increment = DB::select("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA ='" . env('DB_DATABASE') . "' AND TABLE_NAME ='" . $kelas->getTable() . "'")[0]->AUTO_INCREMENT;
-            $kelas->kode_kelas = "K".str_pad($increment,3,"0",STR_PAD_LEFT);
             $count = DB::select("SELECT COUNT(tingkat) as Count FROM kelas WHERE tingkat = '".$request->tingkat."'")[0]->Count + 1;
             if ($request->tingkat == 7) {       
                 $kelas->nama_kelas = "VII.".$count;

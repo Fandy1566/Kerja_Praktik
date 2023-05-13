@@ -5,11 +5,28 @@
     box-sizing: border-box;
 }
 
+:root {
+    --color-primary: #0C2A58;;
+    --color-secondary: #274B6F; 
+    --color-tertiary: #5D7893;
+    --line-color: #B3C3D5;
+    --background-color: #EBF7FF;
+    --sidebar-color: #FFFFFF;
+}
+
+.content, .sidebar {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+.content::-webkit-scrollbar, .sidebar::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
 body{
     display: flex;
     height: 100vh;
     width: 100vw;
-    background-color: #EBF7FF;
+    background-color: var(--background-color);
     overflow: hidden;
 }
 
@@ -51,7 +68,7 @@ body{
     display: flex;
     font-size: 20px;
     font-weight: 600;
-    color: #0C2A58;
+    color: var(--color-primary);
 }
 
 .header img{
@@ -67,7 +84,7 @@ body{
 
 hr#header-line{
     border: none;
-    border-top: 0.031rem solid #B3C3D5; 
+    border-top: 0.031rem solid var(--line-color); 
 }
 
 .item-title{
@@ -90,13 +107,13 @@ hr#header-line{
 .title1{
     font-size: 18px;
     font-weight: 600;
-    color: #274B6F;
+    color: var(--color-secondary);
 }
 
 .item1{
     font-size: 48px;
     font-weight: 600;
-    color: #274B6F;
+    color: var(--color-secondary);
 }
 
 .item-title img{
@@ -117,14 +134,14 @@ a{
 .title2{
     font-size: 20px;
     font-weight: 600;
-    color: #274B6F;
+    color: var(--color-secondary);
 }
 
 .item2{
     margin-top: 5px;
     font-size: 58px;
     font-weight: 600;
-    color: #274B6F;
+    color: var(--color-secondary);
 }
 
 .item-title2{
@@ -168,7 +185,7 @@ a{
     margin-top: 5px;
     font-size: 10px;
     font-weight: 500;
-    color: #5D7893;
+    color: var(--color-tertiary);
 }
 
 .content-jam{
@@ -177,7 +194,7 @@ a{
 }
 
 .content-jam-kelas{
-    background-color: #EBF7FF;
+    background-color: var(--background-color);
     border-radius: 10px;
     width: 30%;
     height: 200px;
@@ -190,5 +207,5 @@ a{
     margin: 15px;
     font-size: 10px;
     font-weight: 500;
-    color: #5D7893;
+    color: var(--color-tertiary);
 }
