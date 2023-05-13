@@ -34,7 +34,7 @@
         <table id="tbl">
             <thead>
                 <tr>
-                    <th><input type="checkbox" id="check-all"></th>
+                    <th><input type="checkbox" onchange="checkAll(this)"></th>
                     <th>ID Mata Pelajaran</th>
                     <th>Mata Pelajaran</th>
                     <th>Total Jam / Minggu</th>

@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 @section('head')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('js/jquery.min.js')}}"></script>
+<link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+<script src="{{ asset('js/select2.min.js') }}"></script>
 @endsection
 @section('title', 'Dashboard')
 @section('content')
@@ -18,20 +18,19 @@
                 <label>Nama Guru</label><br>
                 <input type="text" name="nama_guru" placeholder="Masukkan nama guru.."><br>
                 <label>Mata Pelajaran</label> <br>
-                <select id="select-mapel" name="mata_pelajaran[]">
-                    <option value="">Pilih Mata Pelajaran</option>
+                <select id="select-mapel" name="mata_pelajaran[]" multiple="multiple" placeholder="Test" style="width: 100%">
+                    
                 </select>
                 <br>
             </div>
             <div class="right-side-form">
                 <label>Kelas</label><br>
-                <input type="checkbox" name="id_kelas[]" id="" value="7"><label for="">Kelas VII</label>
-                <input type="checkbox" name="id_kelas[]" id="" value="8"><label for="">Kelas VIII</label>
-                <input type="checkbox" name="id_kelas[]" id="" value="9"><label for="">Kelas IX</label><br>
+                <label for="">Kelas VII</label><input type="number" name="kelas_7">
+                <label for="">Kelas VIII</label><input type="number" name="kelas_8">
+                <label for="">Kelas IX</label><input type="number" name="kelas_9"><br>
                 <label>Kategori</label><br>
-                <input type="checkbox" name="kategori" id=""><label for="">Guru Tetap</label>
-                <input type="checkbox" name="kategori" id=""><label for="">Guru Honorer</label><br>
-                
+                <input type="radio" name="kategori" id="" checked value="1"><label for="">Guru Tetap</label>
+                <input type="radio" name="kategori" id="" value="0"><label for="">Guru Honorer</label><br>
             </div>
             <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
         </form>
@@ -45,12 +44,12 @@
     <button class="clickable">Cari</button>
     <button class="clickable">Import</button>
     <button class="clickable">Export</button>
-    <button class="clickable">Delete</button>
+    <button class="clickable" onclick="deleteSelected('guru')">Delete</button>
     <div class="table-container">
         <table id="tbl">
             <thead>
                 <tr>
-                    <th><input type="checkbox" id="check-all"></th>
+                    <th><input type="checkbox" onchange="checkAll()"></th>
                     <th>ID  Guru</th>
                     <th>Nama Guru</th>
                     <th>Mata Pelajaran</th>
@@ -78,16 +77,6 @@
 
     const url = window.location.origin+"/api/guru";
 
-    const selectElement = document.querySelector('select');
-    const selectedValues = Array.from(selectElement.selectedOptions).map(option => option.value);
-    console.log(selectedValues);
-
-    function toggleOptionSelection(event) {
-        if (event.target.tagName === 'OPTION') {
-            event.target.selected = !event.target.selected;
-        }
-    }
-
     async function getMapel() {
         try {
             const response = await fetch(window.location.origin+"/api/mata_pelajaran");
@@ -100,7 +89,7 @@
                 `;
                 options += newOption;
             });
-            tblBody.innerHTML = options;
+            select.innerHTML = options;
         } catch (error) {
             console.error('Error:', error);
         }
@@ -115,13 +104,12 @@
             data.data.forEach((element, idx) => {
                 const newRow = `
                     <tr>
-                        <td class="center-text"><input type="checkbox"></td>
+                        <td class="center-text"><input type="checkbox" value="${element.id}"></td>
                         <td>${element.id}</td>
                         <td>${element.kode_guru}</td>
                         <td>${element.nama_guru}</td>
                         <td></td>
                         <td>
-                            <button class="delete-button" onclick="deleteData(${element.id})">Delete</button>
                             <button onclick="updateData(${element.id})">Update</button>
                         </td>
                     </tr>

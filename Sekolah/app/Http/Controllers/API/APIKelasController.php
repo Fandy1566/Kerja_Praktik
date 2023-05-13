@@ -89,23 +89,41 @@ class APIKelasController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         try {
-            $kelas = Kelas::find($id);
-            if ($kelas) {
-                $kelas->delete();
+            $berhasil = [];
+            $gagal = [];
+            $i = 0;
+            $j = 0;
+            foreach ($request->checkedCheckboxes as $value) {
+                $kelas = Kelas::find($value);
+                if ($kelas) {
+                    $kelas->delete();
+                    $berhasil[$i] = $value;
+                    $i++;
+                } else {
+                    $gagal[$j] = $value;
+                    $j++;
+                }
+            }
+
+            if ($i > 0) {
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Data berhasil di update',
-                    'data' => $kelas
+                    'message' => 'Data tidak ditemukan',
+                    'data' => array(
+                        "Berhasil" => $berhasil,
+                        "Gagal" => $gagal
+                    )
                 ]);
             } else {
                 return response()->json([
                     'status' => 400,
-                    'message' => 'Data tidak ditemukan',
+                    'message' => 'Data gagal dihapus',
                 ],400);
             }
+            
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 400,

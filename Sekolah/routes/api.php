@@ -29,16 +29,17 @@ use App\Http\Controllers\API\APIGuruController;
 Route::get('guru', [APIGuruController::class, 'index']);
 Route::post('guru', [APIGuruController::class, 'store']);
 Route::post('guru/{id}', [APIGuruController::class, 'update']);
-Route::delete('guru/{id}', [APIGuruController::class, 'destroy']);
+// Route::delete('guru/{id}', [APIGuruController::class, 'destroy']);
+Route::delete('delete/guru', [APIGuruController::class, 'destroy']);
 
 use App\Http\Controllers\API\APIKelasController;
 Route::get('kelas', [APIKelasController::class, 'index']);
 Route::post('kelas', [APIKelasController::class, 'store']);
 Route::post('kelas/{id}', [APIKelasController::class, 'update']);
-Route::delete('kelas/{id}', [APIKelasController::class, 'destroy']);
+Route::delete('delete/kelas', [APIKelasController::class, 'destroy']);
 
 use App\Http\Controllers\API\APIMataPelajaranController;
 Route::get('mata_pelajaran', [APIMataPelajaranController::class, 'index']);
 Route::post('mata_pelajaran', [APIMataPelajaranController::class, 'store']);
 Route::post('mata_pelajaran/{id}', [APIMataPelajaranController::class, 'update']);
-Route::delete('mata_pelajaran/{id}', [APIMataPelajaranController::class, 'destroy']);
+Route::delete('delete/mata_pelajaran', [APIMataPelajaranController::class, 'destroy']);

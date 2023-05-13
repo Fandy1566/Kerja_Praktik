@@ -36,12 +36,12 @@
     <button class="clickable">Cari</button>
     <button class="clickable">Import</button>
     <button class="clickable">Export</button>
-    <button class="clickable">Delete</button>
+    <button class="clickable" onclick="deleteSelected()">Delete</button>
     <div class="table-container">
         <table id="tbl">
             <thead>
                 <tr>
-                    <th><input type="checkbox" id="check-all"></th>
+                    <th><input type="checkbox" onchange="checkAll(this)"></th>
                     {{-- <th>ID Jam Pelajaran</th> --}}
                     <th>Hari</th>
                     <th>Waktu Pelajaran</th>
@@ -76,7 +76,7 @@
             data.data.forEach((element, idx) => {
                 const newRow = `
                 <tr>
-                    <td class="center-text"><input type="checkbox" nama="id_guru[]"></td>
+                    <td class="center-text"><input type="checkbox" nama="id_guru[]" value="${element.id}"></td>
                     <td>${element.nama_hari}</td>
                     <td>${element.waktu_awal} - ${element.waktu_akhir}</td>
                     <td>

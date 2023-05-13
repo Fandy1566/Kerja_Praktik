@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{asset('css/dashboard.css')}}">
     <link rel="stylesheet" href="{{asset('css/sidebar.css')}}"> 
     <link rel="stylesheet" href="{{asset('css/content.css')}}"> 
+
     @yield('head')
 
     <title>Document</title>
@@ -124,6 +125,45 @@
         } catch (error) {
             console.error(error);
         }
+    }
+
+    async function deleteSelected(name) {
+        try {
+            const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+            const checkedCheckboxes = [];
+            checkboxes.forEach(tbodyCheckBox  => {
+                if (tbodyCheckBox.checked) {
+                    checkedCheckboxes.push(tbodyCheckBox.value);
+                }
+            });
+            // console.log(checkedCheckboxes);
+            // console.log(JSON.stringify({ checkedCheckboxes }));
+
+            if (checkedCheckboxes.length > 0) {
+                const response = await fetch(window.location.origin+"/api/delete/"+name, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    method: "delete",
+                    credentials: "same-origin",
+                    body: JSON.stringify({ checkedCheckboxes })
+                });
+                const data = await response.json();
+                await getData();
+                } else {
+                //kalo kurang dari 1
+            }
+            
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function checkAll() {
+        const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+        checkboxes.forEach(tbodyCheckBox  => {
+            tbodyCheckBox.checked = document.querySelector('thead input[type="checkbox"]').checked;
+        });
     }
 </script>
 </html>

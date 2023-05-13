@@ -108,15 +108,15 @@ class APIGuruController extends Controller
             $gagal = [];
             $i = 0;
             $j = 0;
-            foreach ($request->id_guru as $value) {
+            foreach ($request->checkedCheckboxes as $value) {
                 $guru = Guru::find($value);
                 if ($guru) {
                     $guru->delete();
                     $berhasil[$i] = $value;
-                    $i += 1;
+                    $i++;
                 } else {
                     $gagal[$j] = $value;
-                    $j += 1;
+                    $j++;
                 }
             }
 
@@ -162,6 +162,5 @@ class APIGuruController extends Controller
                 'error' => $e
             ],400);
         }
-
     }
 }

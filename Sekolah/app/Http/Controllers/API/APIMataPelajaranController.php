@@ -84,23 +84,41 @@ class APIMataPelajaranController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         try {
-            $mataPelajaran = MataPelajaran::find($id);
-            if ($mataPelajaran) {
-                $mataPelajaran->delete();
+            $berhasil = [];
+            $gagal = [];
+            $i = 0;
+            $j = 0;
+            foreach ($request->checkedCheckboxes as $value) {
+                $mataPelajaran = MataPelajaran::find($value);
+                if ($mataPelajaran) {
+                    $mataPelajaran->delete();
+                    $berhasil[$i] = $value;
+                    $i++;
+                } else {
+                    $gagal[$j] = $value;
+                    $j++;
+                }
+            }
+
+            if ($i > 0) {
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Data berhasil di update',
-                    'data' => $mataPelajaran
+                    'message' => 'Data tidak ditemukan',
+                    'data' => array(
+                        "Berhasil" => $berhasil,
+                        "Gagal" => $gagal
+                    )
                 ]);
             } else {
                 return response()->json([
                     'status' => 400,
-                    'message' => 'Data tidak ditemukan',
+                    'message' => 'Data gagal dihapus',
                 ],400);
             }
+            
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 400,
