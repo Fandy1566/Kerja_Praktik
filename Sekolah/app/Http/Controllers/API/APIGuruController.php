@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\GuruMapelDetail;
+use App\Models\GuruMataPelajaran;
 use Illuminate\Http\Request;
 use App\Models\Guru;
 use DB;
@@ -47,7 +48,7 @@ class APIGuruController extends Controller
             $guru->save();
 
             foreach ($request->id_mata_pelajaran as $value) {
-                $guruMapelDetail = new GuruMapelDetail;
+                $guruMapelDetail = new GuruMataPelajaran;
                 $guruMapelDetail->id_guru = $increment;
                 $guruMapelDetail->id_mata_pelajaran = $value;
                 $guruMapelDetail->save();
