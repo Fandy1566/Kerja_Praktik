@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\GuruMapelDetail;
 use Illuminate\Http\Request;
 use App\Models\Guru;
-use App\Models\GuruJamDetail;
 use DB;
 
 class APIGuruController extends Controller
@@ -14,7 +13,9 @@ class APIGuruController extends Controller
     public function index()
     {
         try {
-            $guru = Guru::all();
+            $guru = Guru::with(['GuruMataPelajaran' => function ($query) {
+                $query->with('MataPelajaran');
+            }])->get();
             if ($guru) {
                 return response()->json([
                     'status' => 200,
@@ -32,6 +33,7 @@ class APIGuruController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' => 'Data gagal ditampilkan',
+                'error' => $e
             ],400);
         }
     }
@@ -41,13 +43,13 @@ class APIGuruController extends Controller
             $guru = new Guru;
             $increment = DB::select("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA ='" . env('DB_DATABASE') . "' AND TABLE_NAME ='" . $guru->getTable() . "'")[0]->AUTO_INCREMENT;
             $guru->nama_guru = $request->nama_guru;
-            $guru->banyak_jam = $request->banyak;
+            $guru->is_guru_tetap = $request->is_guru_tetap;
             $guru->save();
 
-            foreach ($request->id_mata_pelajaran as $key => $value) {
+            foreach ($request->id_mata_pelajaran as $value) {
                 $guruMapelDetail = new GuruMapelDetail;
                 $guruMapelDetail->id_guru = $increment;
-                $guruMapelDetail->id_mata_pelajaran = $value[$key];
+                $guruMapelDetail->id_mata_pelajaran = $value;
                 $guruMapelDetail->save();
             }
 
@@ -60,7 +62,8 @@ class APIGuruController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' => 'Data gagal di simpan',
-                'error' => $e
+                'error' => $e,
+                'request' => $request->all()
             ], 400);
         }        
     }

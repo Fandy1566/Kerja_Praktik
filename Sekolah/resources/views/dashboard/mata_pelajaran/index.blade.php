@@ -30,6 +30,11 @@
     <div class="title-card">
         Mata Pelajaran
     </div>
+    <input class="search" type="text" name="" id="" placeholder="Cari Guru">
+    <button class="clickable">Cari</button>
+    <button class="clickable">Import</button>
+    <button class="clickable">Export</button>
+    <button class="clickable" onclick="deleteSelected('mata_pelajaran')">Delete</button>
     <div class="table-container">
         <table id="tbl">
             <thead>
@@ -46,9 +51,7 @@
         </table>
     </div>
 </div>
-
 @endsection
-
 @section('script')
 <script>
     window.onload = () => {
@@ -67,9 +70,20 @@
             data.data.forEach((element, idx) => {
                 const newRow = `
                 <tr>
-                    <td class="center-text"><input type="checkbox"></td>
+                    <td class="center-text"><input type="checkbox" value="${element.id}"></td>
                     <td>${element.id}</td>
-                    <td>${element.nama_mata_pelajaran}</td>
+                    <td>${element.nama_mata_pelajaran} (${(() => {
+                        switch (element.tingkat) {
+                        case "7":
+                            return "VII";
+                        case "8":
+                            return "VIII";
+                        case "9":
+                            return "IX";
+                        default:
+                            return "?";
+                    }
+                    })()})</td>
                     <td>${element.banyak}</td>
                     <td>
                         <button onclick="deleteData(${element.id})">Delete</button>
