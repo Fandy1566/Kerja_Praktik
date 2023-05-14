@@ -1,5 +1,4 @@
 .modal {
-    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 3; /* Sit on top */
     padding-top: 100px; /* Location of the box */
@@ -35,3 +34,7 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+.hidden {
+  display: none;
+}

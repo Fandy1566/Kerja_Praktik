@@ -119,3 +119,28 @@
 
 </div>
 @endsection
+
+@section('script')
+
+<script>
+    const url = window.location.origin+"/reset";
+
+    function reset(name) {
+        event.preventDefault(); // prevent form submission
+        try {
+            const response = await fetch(url+"/"+name, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-Token": {{ csrf_token() }}
+                },
+                method: "delete",
+                credentials: "same-origin",
+            });
+            const data = await response.json();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+</script>
+
+@endsection

@@ -6,7 +6,7 @@
         ["Mata Pelajaran", route('mapel'), [asset('image/icon/mapel.svg'), asset('image/icon/mapel_active.svg')]],
         ["Jam Pelajaran", route('jampel'), [asset('image/icon/jampel.svg'), asset('image/icon/jampel_active.svg')]],
         ["Jadwal Mengajar", route('jadwal'), [asset('image/icon/jadwal.svg'), asset('image/icon/jadwal_active.svg')]],
-    ]
+];
 @endphp
 
 <!DOCTYPE html>
@@ -14,16 +14,22 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @yield('head')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{asset('css/dashboard.css')}}">
     <link rel="stylesheet" href="{{asset('css/sidebar.css')}}"> 
     <link rel="stylesheet" href="{{asset('css/content.css')}}"> 
-
-    @yield('head')
+    <link rel="stylesheet" href="{{asset('css/modal.css')}}"> 
 
     <title>Document</title>
 </head>
 <body>
+    <div class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="modalLogoutToggle()">&times;</span>
+            <p>Some text in the Modal..</p>
+        </div>
+    </div>
     <div class="sidebar">
         <div class="sidebar-top">
             <div class="logo">
@@ -44,13 +50,13 @@
         </div>
         <div class="logout">
         <div class="menu menu-7 {{(request()->url() == route('pengaturan')) ? 'active' : '' }}"><a href="{{ route('pengaturan') }}">
-                    <img src="{{asset('image/icon/pengaturan.svg')}}" alt="">
-                    Pengaturan
-                </a></div>
-                <div class="menu menu-8"><a href="">
-                    <img src="{{asset('image/icon/logout.svg')}}" alt="">
-                    Logout
-                </a></div>
+                <img src="{{asset('image/icon/pengaturan.svg')}}" alt="">
+                Pengaturan
+            </a></div>
+            <div class="menu menu-8 clickable" onclick="modalLogoutToggle()">
+                <img src="{{asset('image/icon/logout.svg')}}" alt="">
+                Logout
+            </div>
         </div>
     </div>
     <div class="content">
@@ -177,21 +183,21 @@
         }
     }
 
-    async function deleteData(id) {
-        try {
-            const response = await fetch(url+"/"+id, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                method: "delete",
-                credentials: "same-origin",
-            });
-            const data = await response.json();
-            await getData();
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    // async function deleteData(id) {
+    //     try {
+    //         const response = await fetch(url+"/"+id, {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             method: "delete",
+    //             credentials: "same-origin",
+    //         });
+    //         const data = await response.json();
+    //         await getData();
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
     async function deleteSelected(name) {
         try {
@@ -232,5 +238,11 @@
             tbodyCheckBox.checked = document.querySelector('thead input[type="checkbox"]').checked;
         });
     }
+
+    function modalLogoutToggle() {
+        const modal = document.querySelector('.modal');
+        modal.classList.toggle('hidden');
+    }
+
 </script>
 </html>
