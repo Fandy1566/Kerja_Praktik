@@ -13,10 +13,9 @@ class HariSeeder extends Seeder
      */
     public function run(): void
     {
-        $list_hari = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+        $list_hari = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
         for ($i=0; $i < count($list_hari); $i++) { 
             DB::table('hari')->insert([
-                'kode_hari' => "H". str_pad($i+1, 3, 0, STR_PAD_LEFT),
                 'nama_hari' => $list_hari[$i]
             ]);
         }

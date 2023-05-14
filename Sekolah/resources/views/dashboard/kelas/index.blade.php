@@ -11,11 +11,11 @@
     <form class="store">
         <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
         <label>Tambah Kelas</label> <br>
-        <input type="radio" id="html" name="tingkat" value=7>
+        <input type="radio" name="tingkat" value=7>
         <label>Kelas 7</label><br>
-        <input type="radio" id="css" name="tingkat" value=8>
+        <input type="radio" name="tingkat" value=8>
         <label>Kelas 8</label><br>
-        <input type="radio" id="javascript" name="tingkat" value=9>
+        <input type="radio" name="tingkat" value=9>
         <label>Kelas 9</label><br><br>
         <input type="submit" value="Tambah" onclick="submitForm()">
     </form>

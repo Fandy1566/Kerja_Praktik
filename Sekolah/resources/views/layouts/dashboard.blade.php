@@ -64,15 +64,84 @@
 </body>
 @yield('script')
 <script>
+    function formDataToObject(formData) {
+        let object = {}
+
+        const debug = (message) => {
+            //console.log(message)
+        }
+
+        /**
+         * Parses FormData key xxx`[x][x][x]` fields into array
+         */
+        const parseKey = (key) => {
+            const subKeyIdx = key.indexOf('[');
+
+            if (subKeyIdx !== -1) {
+                const keys = [key.substring(0, subKeyIdx)]
+                key = key.substring(subKeyIdx)
+
+                for (const match of key.matchAll(/\[(?<key>.*?)]/gm)) {
+                    keys.push(match.groups.key)
+                }
+                return keys
+            } else {
+                return [key]
+            }
+        }
+
+        /**
+         * Recursively iterates over keys and assigns key/values to object
+         */
+        const assign = (keys, value, object) => {
+            const key = keys.shift()
+            debug(key)
+            debug(keys)
+
+            // When last key in the iterations
+            if (key === '' || key === undefined) {
+                return object.push(value)
+            }
+
+            if (Reflect.has(object, key)) {
+                debug('hasKey ' + key)
+                // If key has been found, but final pass - convert the value to array
+                if (keys.length === 0) {
+                    if (!Array.isArray(object[key])) {
+                        debug('isArray ' + object[key])
+                        object[key] = [object[key], value]
+                        return
+                    }
+                }
+                // Recurse again with found object
+                return assign(keys, value, object[key])
+            }
+
+            // Create empty object for key, if next key is '' do array instead, otherwise set value
+            if (keys.length >= 1) {
+                debug(`undefined '${key}' key: remaining ${keys.length}`)
+                object[key] = keys[0] === '' ? [] : {}
+                return assign(keys, value, object[key])
+            } else {
+                debug("set value: " + value)
+                object[key] = value
+            }
+        }
+
+        for (const pair of formData.entries()) {
+            assign(parseKey(pair[0]), pair[1], object)
+        }
+
+        return object
+    }
+
     async function submitForm() {
         event.preventDefault(); // prevent form submission
         const csrfToken = document.querySelector('input[name="_token"]').value;
         const form = document.querySelector('form.store');
         const formData = new FormData(form);
-        console.log(formData);
-
+        console.log(JSON.stringify(formDataToObject(formData)));
         try {
-
             const response = await fetch(url, {
                 headers: {
                     "Content-Type": "application/json",
@@ -80,7 +149,7 @@
                 },
                 method: "post",
                 credentials: "same-origin",
-                body: JSON.stringify(Object.fromEntries(formData))
+                body: JSON.stringify(formDataToObject(formData))
             });
             const data = await response.json();
             await getData();
@@ -148,6 +217,7 @@
                     method: "delete",
                     credentials: "same-origin",
                     body: JSON.stringify({ checkedCheckboxes })
+                    // body: JSON.stringify({ id : checkedCheckboxes })
                 });
                 const data = await response.json();
                 await getData();

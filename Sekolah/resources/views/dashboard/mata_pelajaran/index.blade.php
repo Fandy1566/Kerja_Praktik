@@ -18,9 +18,9 @@
             </div>
             <div class="right-side-form">
                 <label>Kategori</label><br>
-                <input type="checkbox" name="tingkat[]" checked value=7><label for="">Kelas VII</label><br>
-                <input type="checkbox" name="tingkat[]" checked value=8><label for="">Kelas VIII</label><br>
-                <input type="checkbox" name="tingkat[]" checked value=9><label for="">Kelas IX</label><br>
+                <input type="checkbox" name="tingkat" checked value="7"><label for="">Kelas VII</label><br>
+                <input type="checkbox" name="tingkat" checked value="8"><label for="">Kelas VIII</label><br>
+                <input type="checkbox" name="tingkat" checked value="9"><label for="">Kelas IX</label><br>
             </div>
             <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
         </form>
@@ -46,6 +46,10 @@
         </table>
     </div>
 </div>
+
+@endsection
+
+@section('script')
 <script>
     window.onload = () => {
         getData();

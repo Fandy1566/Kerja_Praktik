@@ -49,13 +49,14 @@ class APIKelasController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => 'Data berhasil di simpan',
-                'data' => $kelas
+                'data' => $kelas,
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 400,
                 'message' => 'Data gagal di simpan',
-                'error' => $e
+                'error' => $e,
+                'request' => $request
             ],400);
         }        
     }
