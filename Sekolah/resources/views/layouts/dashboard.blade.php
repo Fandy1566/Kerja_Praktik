@@ -1,3 +1,14 @@
+@php
+    $menu =[
+        ["Dashboard", route('dashboard'), [asset('image/icon/dashboard.svg'), asset('image/icon/dashboard_active.svg')]],
+        ["Guru", route('guru'), [asset('image/icon/guru.svg'), asset('image/icon/guru_active.svg')]],
+        ["Kelas", route('kelas'), [asset('image/icon/kelas.svg'), asset('image/icon/kelas_active.svg')]],
+        ["Mata Pelajaran", route('mapel'), [asset('image/icon/mapel.svg'), asset('image/icon/mapel_active.svg')]],
+        ["Jam Pelajaran", route('jampel'), [asset('image/icon/jampel.svg'), asset('image/icon/jampel_active.svg')]],
+        ["Jadwal Mengajar", route('jadwal'), [asset('image/icon/jadwal.svg'), asset('image/icon/jadwal_active.svg')]],
+    ]
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,30 +32,14 @@
             </div>
             <div class="main-menu">
                 <div class="main-menu-title">MAIN MENU</div>
-                <div class="menu menu-1 {{(request()->url() == route('dashboard')) ? 'active' : '' }}"><a href="{{ route('dashboard')}}">
-                    <img src="{{asset('image/icon/dashboard.svg')}}" alt="">
-                    Dashboard
-                </a></div>
-                <div class="menu menu-2 {{(request()->url() == route('guru')) ? 'active' : '' }}"><a href="{{ route('guru')}}">
-                    <img src="{{asset('image/icon/guru.svg')}}" alt="">
-                    Guru
-                </a></div>
-                <div class="menu menu-3 {{(request()->url() == route('kelas')) ? 'active' : '' }}"><a href="{{ route('kelas')}}">
-                    <img src="{{asset('image/icon/kelas.svg')}}" alt="">
-                    Kelas
-                </a></div>
-                <div class="menu menu-4 {{(request()->url() == route('mapel')) ? 'active' : '' }}"><a href="{{ route('mapel')}}">
-                    <img src="{{asset('image/icon/mapel.svg')}}" alt="">
-                    Mata Pelajaran
-                </a></div>
-                <div class="menu menu-5 {{(request()->url() == route('jampel')) ? 'active' : '' }}"><a href="{{ route('jampel')}}">
-                    <img src="{{asset('image/icon/jampel.svg')}}" alt="">
-                    Jam Pelajaran
-                </a></div>
-                <div class="menu menu-6 {{(request()->url() == route('jadwal')) ? 'active' : '' }}"><a href="{{ route('jadwal')}}">
-                    <img src="{{asset('image/icon/jadwal.svg')}}" alt="">
-                    Jadwal Mengajar
-                </a></div>
+                @for ($i = 0; $i < count($menu); $i++)
+                    <div class="menu menu-{{$i}} {{(request()->url() == $menu[$i][1]) ? 'active' : '' }}">
+                        <a href="{{ $menu[$i][1] }}">
+                            <img src="{{(request()->url() == $menu[$i][1]) ? $menu[$i][2][1] : $menu[$i][2][0]}}" alt="">
+                            {{$menu[$i][0]}}
+                        </a>
+                    </div>
+                @endfor
             </div>
         </div>
         <div class="logout">

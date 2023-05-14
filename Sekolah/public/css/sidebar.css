@@ -48,7 +48,7 @@ a{
 }
 
 .menu:hover{
-    background-color: #274B6F;
+    background-color: rgba(1, 126, 243, 0.123)
 }
 
 .menu a{
@@ -61,9 +61,9 @@ a{
     display: flex;
 }
 
-.menu a:hover {
-    color: white;
-}
+/* .menu a:hover {
+    color: #274B6F;
+} */
 
 .active a{
     color: white;
