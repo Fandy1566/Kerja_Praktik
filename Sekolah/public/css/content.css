@@ -57,9 +57,10 @@
     font-size: 12px;
     display: grid;
     place-items: center;
-    font-weight: 500;
+    font-weight: 400;
     outline: 0;
     border: 0;
+    margin-left: 12px;
 }
 
 .form-area form{
@@ -138,11 +139,89 @@
 
 .button-secondary{
     background-color: var(--background-color);
-    border: 1px solid #587693;
+    border: 0.5px solid #587693;
     border-radius: 5px;
-    width: 150px;
+    width: 175px;
     font-size: 12px;
     color: var(--color-primary);
     font-weight: 600;
+    height: 30px;
+    display: grid;
+    align-items: center;
+}
+
+.title-card2{
+    background-color: var(--color-secondary);
+    border-radius: 5px;
+    color: white;
+    min-width: 100px;
+    width: fit-content;
+    padding-inline: 10px;
+    height: 30px;
+    font-size: 12px;
+    display: grid;
+    place-items: center;
+    font-weight: 400;
+    outline: 0;
+    border: 0;
+}
+
+label{
+    color: #0C2A58;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+input{
+    border-radius: 10px;
+    border: 0.5px solid #587693;
+    width: 275px;
+    height: 30px;
+}
+
+::placeholder{
+    padding: 8px;
+    font-size: 10px;
+    font-weight: 600px;
+    color: #5D7893;
+    display: grid;
+    align-items: center;
+}
+
+.reset-table{
+    color: #274B6F;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.reset-table-content{
+    color: #5D7893;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.title-card-reset{
+    background-color: #D74545;
+    border-radius: 5px;
+    color: white;
+    min-width: 100px;
+    width: fit-content;
+    padding-inline: 10px;
     height: 25px;
+    font-size: 12px;
+    display: grid;
+    place-items: center;
+    font-weight: 400;
+    outline: 0;
+    border: 0;
+    margin-left: 12px;
+}
+
+.grid-container-pengaturan{
+    margin-top: 3%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr ;
+    gap: 20px;
+    width: 800px;
 }
