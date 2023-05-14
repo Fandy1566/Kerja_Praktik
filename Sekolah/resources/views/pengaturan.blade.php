@@ -19,16 +19,16 @@
         <div class="form-area" style="margin-left: 12px;">
             <form action="" style="padding-bottom: 40px">
                 <div class="flex-row" style="margin-top: 24px; gap:20px; align-items: center;">
-                    <div>
-                        <label for="">Username</label><br>
-                        <input type="text" placeholder="Masukan Username.." name="username">
+                    <div class="pengaturan-username">
+                            <label for="">Username</label>
+                            <input type="text" placeholder="Masukan Username.." name="username">
                     </div>
-                    <div>
-                        <label for="">Email</label><br>
+                    <div class="pengaturan-username">
+                        <label for="">Email</label>
                         <input type="email" placeholder="Masukan Email .." name="email">
                     </div>
                 </div>
-                <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
+                <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="submitForm()">
             </form>
         </div>
     </div>

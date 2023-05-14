@@ -7,30 +7,36 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Guru'])
-<div id="form-layout" class="card m-20" style="width: 100%">
+<div id="form-layout" class="card m-20" style="width: 55%">
     <div class="title-card">
         Input Guru
     </div>
     <div class="form-area">
         <form class="store">
             <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-            <div class="left-side-form">
-                <label>Nama Guru</label><br>
-                <input type="text" name="nama_guru" placeholder="Masukkan nama guru.."><br>
-                <label>Mata Pelajaran</label> <br>
-                <select id="select-mapel" name="id_mata_pelajaran[]" multiple="multiple" placeholder="Test" style="width: 100%">
-                    
-                </select>
-                <br>
+            <div class="left-side-form" >
+                <div class="pengaturan-username">
+                    <label>Nama Guru</label>
+                    <input type="text" name="nama_guru" placeholder="Masukkan nama guru..">
+                </div>
+                <div class="pengaturan-username" style="margin-top: 12px;">
+                    <label>Mata Pelajaran</label>
+                    <select id="select-multiple" name="id_mata_pelajaran[]" multiple="multiple" placeholder="Masukan mata pelajaran..">
+                    </select>
+                </div>
             </div>
-            <div class="right-side-form">
+            <div class="right-side-form" style="margin-left: 32px;">
                 {{-- <label>Kelas</label><br>
                 <label for="">Kelas VII</label><input type="number" name="kelas_7">
                 <label for="">Kelas VIII</label><input type="number" name="kelas_8">
                 <label for="">Kelas IX</label><input type="number" name="kelas_9"><br> --}}
-                <label>Kategori</label><br>
-                <input type="radio" name="is_guru_tetap" id="" checked value="1"><label for="">Guru Tetap</label>
-                <input type="radio" name="is_guru_tetap" id="" value="0"><label for="">Guru Honorer</label><br>
+                <div class="pengaturan-rb">
+                    <label>Kategori</label>
+                </div>
+                <input type="radio" name="is_guru_tetap" id="" checked value="1">
+                <label for="" style="margin-left: 4px; margin-right: 4px;">Guru Tetap</label>
+                <input type="radio" name="is_guru_tetap" id="" value="0">
+                <label for="" style="margin-left: 4px; margin-right: 4px;">Guru Honorer</label>
             </div>
             <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
         </form>
@@ -40,12 +46,14 @@
     <div class="title-card">
         Guru
     </div>
-    <input class="search" type="text" onkeyup="search('nama_guru')" placeholder="Cari Guru">
-    <button class="clickable">Cari</button>
-    <button class="clickable">Import</button>
-    <button class="clickable">Export</button>
-    <button class="clickable" onclick="deleteSelected('guru')">Delete</button>
-    <div class="table-container">
+    <div class="table-top" style="margin-left: 12px;">
+        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_guru')" placeholder="Cari Guru">
+        <button class="clickable">Cari</button>
+        <button class="clickable">Import</button>
+        <button class="clickable">Export</button>
+        <button class="clickable" onclick="deleteSelected('guru')">Delete</button>
+    </div>
+    <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">
             <thead>
                 <tr>
@@ -67,7 +75,7 @@
 @section('script')
 <script>
     $(document).ready(function() {
-      $('#select-mapel').select2();
+      $('#select-multiple').select2();
     });
     
     window.addEventListener('load', function() {

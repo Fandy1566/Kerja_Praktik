@@ -113,7 +113,7 @@
 }
 
 .search{
-    margin-top: 31px;
+    margin-top: 24px;
 }
 
 .center-text{
@@ -172,7 +172,14 @@ label{
     font-weight: 500;
 }
 
-input{
+input[type="text"]{
+        border-radius: 10px;
+        border: 0.5px solid #587693;
+        width: 275px;
+        height: 30px;
+}
+
+input[type="email"]{
     border-radius: 10px;
     border: 0.5px solid #587693;
     width: 275px;
@@ -224,4 +231,34 @@ input{
     grid-template-rows: 1fr 1fr ;
     gap: 20px;
     width: 800px;
+}
+
+.store{
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.pengaturan-username{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pengaturan-rb{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4px;
+}
+
+#select-multiple + .select2-container{
+    border-radius: 10px;
+    border: 1px solid #587693 !important;
+    height: 30px;
+}
+
+.select2-selection--multiple{
+    border: none !important;
+    background-color: transparent !important;
 }
