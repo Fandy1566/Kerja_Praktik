@@ -18,7 +18,7 @@
                 <label>Nama Guru</label><br>
                 <input type="text" name="nama_guru" placeholder="Masukkan nama guru.."><br>
                 <label>Mata Pelajaran</label> <br>
-                <select id="select-mapel" name="mata_pelajaran[]" multiple="multiple" placeholder="Test" style="width: 100%">
+                <select id="select-mapel" name="id_mata_pelajaran[]" multiple="multiple" placeholder="Test" style="width: 100%">
                     
                 </select>
                 <br>
@@ -29,8 +29,8 @@
                 <label for="">Kelas VIII</label><input type="number" name="kelas_8">
                 <label for="">Kelas IX</label><input type="number" name="kelas_9"><br> --}}
                 <label>Kategori</label><br>
-                <input type="radio" name="kategori" id="" checked value="1"><label for="">Guru Tetap</label>
-                <input type="radio" name="kategori" id="" value="0"><label for="">Guru Honorer</label><br>
+                <input type="radio" name="is_guru_tetap" id="" checked value="1"><label for="">Guru Tetap</label>
+                <input type="radio" name="is_guru_tetap" id="" value="0"><label for="">Guru Honorer</label><br>
             </div>
             <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
         </form>
@@ -40,7 +40,7 @@
     <div class="title-card">
         Guru
     </div>
-    <input class="search" type="text" name="" id="" placeholder="Cari Guru">
+    <input class="search" type="text" onkeyup="search('nama_guru')" placeholder="Cari Guru">
     <button class="clickable">Cari</button>
     <button class="clickable">Import</button>
     <button class="clickable">Export</button>
@@ -85,7 +85,18 @@
             let options = "";
             data.data.forEach(element => {
                 const newOption = `
-                    <option value="${element.id}">${element.nama_mata_pelajaran}</option>
+                    <option value="${element.id}">${element.nama_mata_pelajaran} (${(() => {
+                        switch (element.tingkat) {
+                        case "7":
+                            return "VII";
+                        case "8":
+                            return "VIII";
+                        case "9":
+                            return "IX";
+                        default:
+                            return "?";
+                    }
+                    })()})</option>
                 `;
                 options += newOption;
             });
@@ -106,9 +117,9 @@
                     <tr>
                         <td class="center-text"><input type="checkbox" value="${element.id}"></td>
                         <td>${element.id}</td>
-                        <td>${element.kode_guru}</td>
-                        <td>${element.nama_guru}</td>
-                        <td></td>
+                        <td id="nama_guru">${element.nama_guru}</td>
+                        <td>${element.guru_mata_pelajaran.map(mp => mp.mata_pelajaran.nama_mata_pelajaran).join(', ')}</td>
+                        <td id="kode_guru">${element.is_guru_tetap}</td>
                         <td>
                             <button onclick="updateData(${element.id})">Update</button>
                         </td>
@@ -119,6 +130,22 @@
             tblBody.innerHTML = row;
         } catch (error) {
             console.error('Error:', error);
+        }
+    }
+
+    function search(col_name) {
+        const row = document.querySelector('#tbl tbody tr');
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementById(col_name);
+            console.log(td);
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }       
         }
     }
 

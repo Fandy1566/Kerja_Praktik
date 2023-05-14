@@ -64,6 +64,7 @@
 </body>
 @yield('script')
 <script>
+
     function formDataToObject(formData) {
         let object = {}
 
@@ -140,7 +141,7 @@
         const csrfToken = document.querySelector('input[name="_token"]').value;
         const form = document.querySelector('form.store');
         const formData = new FormData(form);
-        console.log(JSON.stringify(formDataToObject(formData)));
+        // console.log(JSON.stringify(formDataToObject(formData)));
         try {
             const response = await fetch(url, {
                 headers: {
