@@ -45,7 +45,7 @@
                     Kamu bisa mereset tabel secara permanen dengan menekan tombol reset dibawah ini.
                     </div>
                 </div>
-                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="submitForm()">
+                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('guru'); reset('jadwal_mengajar'); reset('mata_pelajaran'); reset('user')">
             </form>
         </div>
     </div>
@@ -64,7 +64,7 @@
                         Kamu bisa mereset tabel Guru secara permanen dengan menekan tombol reset dibawah ini.
                         </div>
                     </div>
-                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="submitForm()">
+                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('guru')">
                 </form>
             </div>
     </div>
@@ -80,7 +80,7 @@
                         Kamu bisa mereset tabel jam pembelajaran secara permanen dengan menekan tombol reset dibawah ini.
                         </div>
                     </div>
-                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="submitForm()">
+                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('jadwal_mengajar')">
                 </form>
             </div>  
     </div>
@@ -96,7 +96,7 @@
                         Kamu bisa mereset tabel mata pelajaran secara permanen dengan menekan tombol reset dibawah ini.
                         </div>
                     </div>
-                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="submitForm()">
+                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('mata_pelajaran')">
                 </form>
             </div>
     </div>
@@ -107,12 +107,12 @@
             <div class="form-area">
                 <form action="" style="margin-top: 12px; margin-left: 12px; margin-right:12px; padding-bottom: 40px;">
                     <div class="reset-table">
-                        Reset Tabel Jadwal Mengajar
+                        Reset Tabel User
                         <div class="reset-table-content" style="margin-top: 8px;">
-                        Kamu bisa mereset tabel jadwal mengajar secara permanen dengan menekan tombol reset dibawah ini.
+                        Kamu bisa mereset tabel user secara permanen dengan menekan tombol reset dibawah ini.
                         </div>
                     </div>
-                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="submitForm()">
+                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('user')">
                 </form>
             </div>
     </div>
@@ -125,13 +125,13 @@
 <script>
     const url = window.location.origin+"/reset";
 
-    function reset(name) {
+    async function reset(name) {
         event.preventDefault(); // prevent form submission
         try {
             const response = await fetch(url+"/"+name, {
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-Token": {{ csrf_token() }}
+                    "X-CSRF-Token": "{{ csrf_token() }}"
                 },
                 method: "delete",
                 credentials: "same-origin",

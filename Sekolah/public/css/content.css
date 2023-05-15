@@ -105,7 +105,7 @@
     text-align: center;
 }
 
-#tbl tbody tr:not(:last-child){
+#tbl tbody tr{
     border-bottom: 1px solid var(--color-tertiary);
 }
 #tbl tbody td{
@@ -124,7 +124,7 @@
     border-radius: 10px;
     overflow: hidden;
     margin-top: 16px;
-    border: 1px solid var(--color-tertiary);
+    border-inline: 1px solid var(--color-tertiary);
 }
 
 .flex-row{

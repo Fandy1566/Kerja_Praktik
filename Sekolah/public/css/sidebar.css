@@ -44,7 +44,7 @@ a{
 
 
 .active{
-    background-color: #274B6F;
+    background-color: #274B6F !important;
 }
 
 .menu:hover{
@@ -66,7 +66,7 @@ a{
 } */
 
 .active a{
-    color: white;
+    color: white !important;
 }
 
 .logout{

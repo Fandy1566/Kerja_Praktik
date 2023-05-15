@@ -34,11 +34,11 @@
         Guru
     </div>
     <div class="table-top" style="margin-left: 12px;">
-        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_kelas')" placeholder="Cari Kelas">
-        <button class="clickable-cari">Cari</button>
+        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_kelas')" placeholder="Cari Kelas" id="search">
+        <button class="clickable-cari" onclick="search('nama_kelas')">Cari</button>
         <button class="clickable-import">Import</button>
         <button class="clickable-export">Export</button>
-        <button class="clickable-delete" onclick="deleteSelected('kelas')">Delete</button>
+        <button class="clickable-delete" onclick="deleteSelected('guru')">Delete</button>
     </div>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">
@@ -75,12 +75,13 @@
             let row = "";
             data.data.forEach((element, idx) => {
                 const newRow = `
+                
                 <tr>
+                <td class="center-text"><input type="checkbox"></td>
                 <td>${++idx}</td>
-                <td>${element.kode_kelas}</td>
-                <td>${element.nama_kelas}</td>
+                <td id="nama_kelas">${element.nama_kelas}</td>
+                <td></td>
                 <td>
-                    <button onclick="deleteData(${element.id})">Delete</button>
                     <button onclick="updateData(${element.id})">Update</button>
                 </td>
                 </tr>

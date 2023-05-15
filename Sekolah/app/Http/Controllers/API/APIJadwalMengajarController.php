@@ -132,4 +132,22 @@ class APIJadwalMengajarController extends Controller
         }
         
     }
+
+    public function reset()
+    {
+        try {
+            $jadwalMengajar = new JadwalMengajar;
+            DB::table($jadwalMengajar->getTable())->truncate();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Semua data berhasil dihapus',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Data gagal dihapus',
+                'error' => $e
+            ],400);
+        }
+    }
 }

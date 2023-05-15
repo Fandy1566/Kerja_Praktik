@@ -53,8 +53,8 @@
         Guru
     </div>
     <div class="table-top" style="margin-left: 12px;">
-        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_guru')" placeholder="Cari Guru">
-        <button class="clickable-cari">Cari</button>
+        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_guru')" placeholder="Cari Guru" id="search">
+        <button class="clickable-cari" onclick="search('nama_guru')">Cari</button>
         <button class="clickable-import">Import</button>
         <button class="clickable-export">Export</button>
         <button class="clickable-delete" onclick="deleteSelected('guru')">Delete</button>
@@ -82,7 +82,9 @@
 @section('script')
 <script>
     $(document).ready(function() {
-      $('#select-multiple').select2();
+      $('#select-multiple').select2({
+        placeholder: "Pilih Mata Pelajaran.."
+      });
     });
     
     window.addEventListener('load', function() {
@@ -96,7 +98,7 @@
         try {
             const response = await fetch(window.location.origin+"/api/mata_pelajaran");
             const data = await response.json();
-            const select = document.querySelector('#select-mapel');
+            const select = document.querySelector('#select-multiple');
             let options = "";
             data.data.forEach(element => {
                 const newOption = `
@@ -134,7 +136,7 @@
                         <td>${element.id}</td>
                         <td id="nama_guru">${element.nama_guru}</td>
                         <td>${element.guru_mata_pelajaran.map(mp => mp.mata_pelajaran.nama_mata_pelajaran).join(', ')}</td>
-                        <td id="kode_guru">${element.is_guru_tetap}</td>
+                        <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap': 'Guru Honorer'}</td>
                         <td>
                             <button onclick="updateData(${element.id})">Update</button>
                         </td>
@@ -147,22 +149,5 @@
             console.error('Error:', error);
         }
     }
-
-    function search(col_name) {
-        const row = document.querySelector('#tbl tbody tr');
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementById(col_name);
-            console.log(td);
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }       
-        }
-    }
-
 </script>
 @endsection

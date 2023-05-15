@@ -130,4 +130,22 @@ class APIMataPelajaranController extends Controller
         }
         
     }
+
+    public function reset()
+    {
+        try {
+            $mataPelajaran = new MataPelajaran;
+            DB::table($mataPelajaran->getTable())->truncate();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Semua data berhasil dihapus',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Data gagal dihapus',
+                'error' => $e
+            ],400);
+        }
+    }
 }

@@ -26,8 +26,12 @@
 <body>
     <div class="modal hidden">
         <div class="modal-content">
-            <span class="close" onclick="modalLogoutToggle()">&times;</span>
-            <p>Some text in the Modal..</p>
+            <h2>Keluar Akun</h2>
+            <p>Apakah kamu yakin mau keluar dari akun?</p>
+            <div class="button">
+                <button onclick="modalLogoutToggle()">Batal</button>
+                <button onclick="window.loc = '{{ route('logout') }}';">Keluar</button>
+            </div>
         </div>
     </div>
     <div class="sidebar">
@@ -242,6 +246,24 @@
     function modalLogoutToggle() {
         const modal = document.querySelector('.modal');
         modal.classList.toggle('hidden');
+    }
+
+    function search(col_name) {
+        const row = document.querySelectorAll('#tbl tbody tr');
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        for (i = 0; i < row.length; i++) {
+            td = row[i].querySelector('td#'+col_name);
+            console.log(td);
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    row[i].style.display = "";
+                } else {
+                    row[i].style.display = "none";
+                }
+            }       
+        }
     }
 
 </script>

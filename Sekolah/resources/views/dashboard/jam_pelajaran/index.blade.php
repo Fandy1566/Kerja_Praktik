@@ -39,8 +39,8 @@
         Jam Pelajaran
     </div>
     <div class="table-top" style="margin-left: 12px;">
-        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_guru')" placeholder="Cari Hari..">
-        <button class="clickable-cari">Cari</button>
+        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_hari')" placeholder="Cari Hari.." id="search">
+        <button class="clickable-cari" onclick="search('nama_hari')">Cari</button>
         <button class="clickable-import">Import</button>
         <button class="clickable-export">Export</button>
         <button class="clickable-delete" onclick="deleteSelected('guru')">Delete</button>
@@ -84,10 +84,9 @@
                 const newRow = `
                 <tr>
                     <td class="center-text"><input type="checkbox" nama="id_guru[]" value="${element.id}"></td>
-                    <td>${element.nama_hari}</td>
-                    <td>${element.waktu_awal} - ${element.waktu_akhir}</td>
+                    <td id="nama_hari">${element.nama_hari}</td>
+                    <td id="waktu">${element.waktu_awal} - ${element.waktu_akhir}</td>
                     <td>
-                        <button onclick="deleteData(${element.id})">Delete</button>
                         <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>
                 </tr>
