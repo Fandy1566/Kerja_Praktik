@@ -135,7 +135,8 @@ class APIMataPelajaranController extends Controller
     {
         try {
             $mataPelajaran = new MataPelajaran;
-            DB::table($mataPelajaran->getTable())->truncate();
+            DB::delete('DELETE FROM '.$mataPelajaran->getTable().';');
+            DB::statement('ALTER TABLE '.$mataPelajaran->getTable().' AUTO_INCREMENT = 1;');
             return response()->json([
                 'status' => 200,
                 'message' => 'Semua data berhasil dihapus',

@@ -137,7 +137,8 @@ class APIJadwalMengajarController extends Controller
     {
         try {
             $jadwalMengajar = new JadwalMengajar;
-            DB::table($jadwalMengajar->getTable())->truncate();
+            DB::delete('DELETE FROM '.$jadwalMengajar->getTable().';');
+            DB::statement('ALTER TABLE '.$jadwalMengajar->getTable().' AUTO_INCREMENT = 1;');
             return response()->json([
                 'status' => 200,
                 'message' => 'Semua data berhasil dihapus',

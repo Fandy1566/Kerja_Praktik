@@ -7,7 +7,7 @@
         Input Mata Pelajaran
     </div>
     <div class="form-area">
-        <form class="store">
+        <form class="store flex-row">
             <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
             <div class="left-side-form">
                 <div class="pengaturan-username">

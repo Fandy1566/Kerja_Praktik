@@ -63,7 +63,7 @@
     margin-left: 12px;
 }
 
-.form-area form{
+.form-area{
     display: flex;
     position: relative;
 }
@@ -355,3 +355,9 @@ input[type="radio"] {
     padding-left: 8px;
     padding-right: 8px;
   }
+
+.form-area.reset{
+    margin-top: 12px;
+    margin-block: 12px;
+    padding-bottom: 40px;
+}

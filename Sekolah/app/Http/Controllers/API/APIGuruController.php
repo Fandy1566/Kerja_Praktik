@@ -146,7 +146,8 @@ class APIGuruController extends Controller
     {
         try {
             $guru = new Guru;
-            DB::table($guru->getTable())->truncate();
+            DB::delete('DELETE FROM '.$guru->getTable().';');
+            DB::statement('ALTER TABLE '.$guru->getTable().' AUTO_INCREMENT = 1;');
             return response()->json([
                 'status' => 200,
                 'message' => 'Semua data berhasil dihapus',

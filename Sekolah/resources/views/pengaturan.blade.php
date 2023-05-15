@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="form-area" style="margin-left: 12px;">
-            <form action="" style="padding-bottom: 40px">
+            <form style="padding-bottom: 40px">
                 <div class="flex-row" style="margin-top: 24px; gap:20px; align-items: center;">
                     <div class="pengaturan-username">
                             <label for="">Username</label>
@@ -38,7 +38,7 @@
             Reset Tabel
         </div>
         <div class="form-area">
-            <form action="" style="margin-top: 12px; margin-left: 12px; margin-right:12px; padding-bottom: 40px;">
+            <form style="margin-top: 12px; margin-left: 12px; margin-right:12px; padding-bottom: 40px;">
                 <div class="reset-table">
                     Reset Semua Tabel
                     <div class="reset-table-content" style="margin-top: 8px;">
@@ -56,64 +56,56 @@
         <div class="title-card">
         Reset Tabel
         </div>
-            <div class="form-area">
-                <form action="" style="margin-top: 12px; margin-left: 12px; margin-right:12px; padding-bottom: 40px;">
-                    <div class="reset-table">
-                        Reset Tabel Guru
-                        <div class="reset-table-content" style="margin-top: 8px;">
-                        Kamu bisa mereset tabel Guru secara permanen dengan menekan tombol reset dibawah ini.
-                        </div>
+            <div class="form-area reset">
+                <div class="reset-table">
+                    Reset Tabel Guru
+                    <div class="reset-table-content" style="margin-top: 8px;">
+                    Kamu bisa mereset tabel Guru secara permanen dengan menekan tombol reset dibawah ini.
                     </div>
-                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('guru')">
-                </form>
+                </div>
+                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('guru')">
             </div>
     </div>
     <div id="form-layout" class="container card pengaturan-2" style="width: 400px; height: fit-content">
         <div class="title-card">
         Reset Tabel
         </div>
-            <div class="form-area">
-                <form action="" style="margin-top: 12px; margin-left: 12px; margin-right:12px; padding-bottom: 40px;">
-                    <div class="reset-table">
-                        Reset Tabel Jam Pembelajaran
-                        <div class="reset-table-content" style="margin-top: 8px;">
-                        Kamu bisa mereset tabel jam pembelajaran secara permanen dengan menekan tombol reset dibawah ini.
-                        </div>
+            <div class="form-area reset">
+                <div class="reset-table">
+                    Reset Tabel Jam Pembelajaran
+                    <div class="reset-table-content" style="margin-top: 8px;">
+                    Kamu bisa mereset tabel jam pembelajaran secara permanen dengan menekan tombol reset dibawah ini.
                     </div>
-                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('jadwal_mengajar')">
-                </form>
+                </div>
+                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('jadwal_mengajar')">
             </div>  
     </div>
     <div id="form-layout" class="container card pengaturan-3" style="width: 400px; height: fit-content">
         <div class="title-card">
         Reset Tabel
         </div>
-            <div class="form-area">
-                <form action="" style="margin-top: 12px; margin-left: 12px; margin-right:12px; padding-bottom: 40px;">
-                    <div class="reset-table">
-                        Reset Tabel Mata Pelajaran
-                        <div class="reset-table-content" style="margin-top: 8px;">
-                        Kamu bisa mereset tabel mata pelajaran secara permanen dengan menekan tombol reset dibawah ini.
-                        </div>
+            <div class="form-area reset">
+                <div class="reset-table">
+                    Reset Tabel Mata Pelajaran
+                    <div class="reset-table-content" style="margin-top: 8px;">
+                    Kamu bisa mereset tabel mata pelajaran secara permanen dengan menekan tombol reset dibawah ini.
                     </div>
-                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('mata_pelajaran')">
-                </form>
+                </div>
+                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('mata_pelajaran')">
             </div>
     </div>
     <div id="form-layout" class="container card pengaturan-4" style="width: 400px; height: fit-content">
         <div class="title-card">
         Reset Tabel
         </div>
-            <div class="form-area">
-                <form action="" style="margin-top: 12px; margin-left: 12px; margin-right:12px; padding-bottom: 40px;">
-                    <div class="reset-table">
-                        Reset Tabel User
-                        <div class="reset-table-content" style="margin-top: 8px;">
-                        Kamu bisa mereset tabel user secara permanen dengan menekan tombol reset dibawah ini.
-                        </div>
+            <div class="form-area reset">
+                <div class="reset-table">
+                    Reset Tabel User
+                    <div class="reset-table-content" style="margin-top: 8px;">
+                    Kamu bisa mereset tabel user secara permanen dengan menekan tombol reset dibawah ini.
                     </div>
-                    <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('user')">
-                </form>
+                </div>
+                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('user')">
             </div>
     </div>
 
@@ -123,7 +115,8 @@
 @section('script')
 
 <script>
-    const url = window.location.origin+"/reset";
+    const url = window.location.origin+"/api/reset";
+    console.log(url);
 
     async function reset(name) {
         event.preventDefault(); // prevent form submission

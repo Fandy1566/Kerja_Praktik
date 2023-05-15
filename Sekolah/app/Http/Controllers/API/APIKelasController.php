@@ -137,7 +137,8 @@ class APIKelasController extends Controller
     {
         try {
             $kelas = new Kelas;
-            DB::table($kelas->getTable())->truncate();
+            DB::delete('DELETE FROM '.$kelas->getTable().';');
+            DB::statement('ALTER TABLE '.$kelas->getTable().' AUTO_INCREMENT = 1;');
             return response()->json([
                 'status' => 200,
                 'message' => 'Semua data berhasil dihapus',
