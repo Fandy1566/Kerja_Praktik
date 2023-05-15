@@ -40,10 +40,10 @@
     </div>
     <div class="table-top" style="margin-left: 12px;">
         <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_hari')" placeholder="Cari Hari.." id="search">
-        <button class="clickable-cari" onclick="search('nama_hari')">Cari</button>
-        <button class="clickable-import">Import</button>
-        <button class="clickable-export">Export</button>
-        <button class="clickable-delete" onclick="deleteSelected('guru')">Delete</button>
+        <button class="clickable cari" onclick="search('nama_hari')">Cari</button>
+        <button class="clickable import">Import</button>
+        <button class="clickable export">Export</button>
+        <button class="clickable delete" onclick="deleteSelected('guru')">Delete</button>
     </div>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">

@@ -273,7 +273,7 @@ select#hari{
     background-color: transparent !important;
 }
 
-.clickable-cari
+.cari
 {
     background-color: var(--color-secondary);
     border-radius: 5px;
@@ -288,7 +288,7 @@ select#hari{
     margin-left: 8px;
 }
 
-.clickable-import
+.import
 {
     background-color: #FAC822;
     border-radius: 5px;
@@ -303,7 +303,7 @@ select#hari{
     margin-left: 8px;
 }
 
-.clickable-export
+.export
 {
     background-color: #60CA4F;
     border-radius: 5px;
@@ -318,7 +318,7 @@ select#hari{
     margin-left: 8px;
 }
 
-.clickable-delete
+.delete
 {
     background-color: #BB1818;
     border-radius: 5px;

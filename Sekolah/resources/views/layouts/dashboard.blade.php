@@ -254,7 +254,6 @@
         filter = input.value.toUpperCase();
         for (i = 0; i < row.length; i++) {
             td = row[i].querySelector('td#'+col_name);
-            console.log(td);
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
