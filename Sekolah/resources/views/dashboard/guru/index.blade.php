@@ -33,25 +33,31 @@
                 <div class="pengaturan-rb">
                     <label>Kategori</label>
                 </div>
-                <input type="radio" name="is_guru_tetap" id="" checked value="1">
-                <label for="" style="margin-left: 4px; margin-right: 4px;">Guru Tetap</label>
-                <input type="radio" name="is_guru_tetap" id="" value="0">
-                <label for="" style="margin-left: 4px; margin-right: 4px;">Guru Honorer</label>
+                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                    <input type="radio" name="is_guru_tetap" id="" checked value="1">
+                    <label for="" style="margin-left: 12px;">Guru Tetap</label>
+                </div>
+                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                    <input type="radio" name="is_guru_tetap" id="" value="0">
+                    <label for="" style="margin-left: 12px;">Guru Honorer</label>
+                </div>
             </div>
             <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
         </form>
     </div>
 </div>
+
+
 <div class="card m-32">
     <div class="title-card">
         Guru
     </div>
     <div class="table-top" style="margin-left: 12px;">
         <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_guru')" placeholder="Cari Guru">
-        <button class="clickable">Cari</button>
-        <button class="clickable">Import</button>
-        <button class="clickable">Export</button>
-        <button class="clickable" onclick="deleteSelected('guru')">Delete</button>
+        <button class="clickable-cari">Cari</button>
+        <button class="clickable-import">Import</button>
+        <button class="clickable-export">Export</button>
+        <button class="clickable-delete" onclick="deleteSelected('guru')">Delete</button>
     </div>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">
@@ -71,6 +77,7 @@
         </table>
     </div>
 </div>
+
 @endsection
 @section('script')
 <script>

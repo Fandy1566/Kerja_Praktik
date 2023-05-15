@@ -2,7 +2,7 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Mata Pelajaran'])
-<div id="form-layout" class="card m-20" style="width: 600px">
+<div id="form-layout" class="card m-20" style="width: 55%">
     <div class="title-card">
         Input Mata Pelajaran
     </div>
@@ -10,36 +10,53 @@
         <form class="store">
             <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
             <div class="left-side-form">
-                <label>Mata Pelajaran</label><br>
-                <input type="text" name="nama_mata_pelajaran" placeholder="Masukkan nama Mata Pelajaran.."><br>
-                <label>Total Jam</label> <br>
-                <input type="text" name="banyak" placeholder="Masukkan Total Jam.."><br>
-                <br>
+                <div class="pengaturan-username">
+                    <label>Mata Pelajaran</label>
+                    <input type="text" name="nama_mata_pelajaran" placeholder="Masukkan nama Mata Pelajaran..">
+                </div>
+                <div class="pengaturan-username" style="margin-top: 12px;">
+                    <label>Total Jam</label>
+                    <input type="text" name="banyak" placeholder="Masukkan Total Jam..">
+                </div>
             </div>
-            <div class="right-side-form">
-                <label>Kategori</label><br>
-                <input type="checkbox" name="tingkat" checked value="7"><label for="">Kelas VII</label><br>
-                <input type="checkbox" name="tingkat" checked value="8"><label for="">Kelas VIII</label><br>
-                <input type="checkbox" name="tingkat" checked value="9"><label for="">Kelas IX</label><br>
+            <div class="right-side-form" style="margin-left: 32px;">
+                <div class="pengaturan-rb">
+                    <label>Kategori</label>
+                </div>
+                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                    <input type="Checkbox" name="tingkat" id="" checked value="7">
+                    <label for="" style="margin-left: 12px;">Kelas VII</label>
+                </div>
+                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                    <input type="Checkbox" name="tingkat" id="" value="8">
+                    <label for="" style="margin-left: 12px;">Kelas VIII</label>
+                </div>
+                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                    <input type="Checkbox" name="tingkat" id="" value="9">
+                    <label for="" style="margin-left: 12px;">Kelas IX</label>
+                </div>
             </div>
             <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
         </form>
     </div>
 </div>
+
 <div class="card m-32">
     <div class="title-card">
         Mata Pelajaran
     </div>
-    <input class="search" type="text" name="" id="" placeholder="Cari Guru">
-    <button class="clickable">Cari</button>
-    <button class="clickable">Import</button>
-    <button class="clickable">Export</button>
-    <button class="clickable" onclick="deleteSelected('mata_pelajaran')">Delete</button>
-    <div class="table-container">
+    <div class="table-top" style="margin-left: 12px;">
+        <input class="search" style="width: 70%;" type="text" onkeyup="search('mata_pelajaran')" placeholder="Cari mata pelajaran..">
+        <button class="clickable-cari">Cari</button>
+        <button class="clickable-import">Import</button>
+        <button class="clickable-export">Export</button>
+        <button class="clickable-delete" onclick="deleteSelected('mata_pelajaran')">Delete</button>
+    </div>
+    <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">
             <thead>
                 <tr>
-                    <th><input type="checkbox" onchange="checkAll(this)"></th>
+                    <th><input type="checkbox" onchange="checkAll()"></th>
                     <th>ID Mata Pelajaran</th>
                     <th>Mata Pelajaran</th>
                     <th>Total Jam / Minggu</th>
@@ -47,10 +64,12 @@
                 </tr>
             </thead>
             <tbody>
+                
             </tbody>
         </table>
     </div>
 </div>
+
 @endsection
 @section('script')
 <script>

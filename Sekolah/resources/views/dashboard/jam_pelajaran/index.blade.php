@@ -5,39 +5,47 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Jam Pelajaran'])
-<div id="form-layout" class="card m-20" style="width: 400px">
-    <div class="title-card" style="padding-inline: 10px;">
+<div id="form-layout" class="card m-20" style="width: 55%">
+    <div class="title-card">
         Input Jam Pelajaran
     </div>
     <div class="form-area">
         <form class="store">
             <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
             <div class="left-side-form">
-                <label>Hari</label><br>
-                <select name="id_hari" id="hari">
+                <div class="pengaturan-username">
+                    <label>Hari</label>
+                    <select name="id_hari" id="hari">
                     <option value="" style="display: none;">Pilih Hari</option>
                     @foreach ($hari as $item)
                         <option value="{{$item->id}}">{{$item->nama_hari}}</option>
                     @endforeach
-                </select><br>
-                <label>Jam Pelajaran</label><br>
-                <input type="time" name="waktu_awal"> - <input type="time" name="waktu_akhir">
-                <br>
+                </select>
+                </div>
+                <div class="pengaturan-username" style="margin-top: 12px;">
+                    <label>Jam Pembelajaran</label>
+                    <div class="" style="display: flex;">
+                    <input type="time" name="waktu_awal" style="margin-right: 12px;"> - <input type="time" name="waktu_akhir" style="margin-left: 12px;">
+                    </div>
+                </div>
             </div>
-            <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
+            <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
         </form>
     </div>
 </div>
+
 <div class="card m-32">
     <div class="title-card">
-        Guru
+        Jam Pelajaran
     </div>
-    <input class="search" type="text" name="" id="" placeholder="Cari disini">
-    <button class="clickable">Cari</button>
-    <button class="clickable">Import</button>
-    <button class="clickable">Export</button>
-    <button class="clickable" onclick="deleteSelected()">Delete</button>
-    <div class="table-container">
+    <div class="table-top" style="margin-left: 12px;">
+        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_guru')" placeholder="Cari Hari..">
+        <button class="clickable-cari">Cari</button>
+        <button class="clickable-import">Import</button>
+        <button class="clickable-export">Export</button>
+        <button class="clickable-delete" onclick="deleteSelected('guru')">Delete</button>
+    </div>
+    <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">
             <thead>
                 <tr>
@@ -49,7 +57,6 @@
                 </tr>
             </thead>
             <tbody>
-                
             </tbody>
         </table>
     </div>
