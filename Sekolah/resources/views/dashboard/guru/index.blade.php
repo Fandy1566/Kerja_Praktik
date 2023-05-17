@@ -75,8 +75,12 @@
             </tbody>
         </table>
     </div>
-    <button id="prevButton">Previous</button> 
-    <button id="nextButton">Next</button> 
+    <div class="page">
+        <button id="prevButton" ><img src="{{asset('image/icon/back.svg')}}" alt=""></button>
+        <div id="pagination" class="flex-row" style = "font-size: 12px; color: #587693; font-weight:500; align-items: center; gap: 12px;">
+        </div>
+        <button id="nextButton"><img src="{{asset('image/icon/next.svg')}}" alt=""></button>
+    </div> 
 </div>
 
 @endsection
@@ -86,11 +90,45 @@
     document.querySelector('#nextButton').addEventListener('click', nextPage, false);
     document.querySelector('#prevButton').addEventListener('click', previousPage, false);
 
+
     $(document).ready(function() {
         $('#select-multiple').select2({
             placeholder: "Pilih Mata Pelajaran.."
         });
     });
+
+    function setCurrentPage(num){
+        curPage = num;
+        renderTable();
+    }
+
+    function getLengthPage(){
+        const input = document.getElementById("search");
+        let filter = input.value.toUpperCase();
+
+        if (filter !=="" || filter !== null) {
+            let totalData = table_data.filter(item => {
+                const value = item[input.dataset.colName].toUpperCase();
+                return value.includes(filter);
+            }).length
+        return Math.ceil(totalData/pageSize);
+        }
+        else{
+            return Math.ceil(table_data/pageSize);
+        }
+        
+    }
+
+    function renderPagination(){
+        const pagination = document.getElementById("pagination");
+        let number = "";
+        for (let index = 1; index <= getLengthPage(); index++) {
+            number += `
+            <div class="prevent-select clickable" onclick="setCurrentPage(${index})">${index}</div>
+            `
+        }
+        pagination.innerHTML = number;
+    }
 
     function renderTable() {
         const tblBody = document.querySelector('#tbl tbody');
@@ -120,6 +158,7 @@
                 </tr>
                 `;
             });
+            renderPagination();
         } else {
             // Render table without filtering
             table_data.filter((row, index) => {
@@ -140,6 +179,7 @@
                 </tr>
                 `;
             });
+            renderPagination();
         }
 
         tblBody.innerHTML = result;

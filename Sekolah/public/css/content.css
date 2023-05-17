@@ -265,7 +265,8 @@ select#hari{
 #select-multiple + .select2-container{
     border-radius: 10px;
     border: 1px solid #587693 !important;
-    height: 30px;
+    height: fit-content;
+    color: #587693;
 }
 
 .select2-selection--multiple{
@@ -361,3 +362,62 @@ input[type="radio"] {
     margin-block: 12px;
     padding-bottom: 40px;
 }
+
+input:focus {
+    outline-color: #345678;
+  }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: white !important;
+    border: 1px solid #587693 !important;
+    font-size: 12px;
+    font-weight: 500;
+    color: #274B6F !important;
+}
+
+td{
+    font-size: 13px;
+    color: #587693;
+    font-weight: 500;
+}
+
+#tbl button{
+    background-color: #5AA0D4;
+    border-radius: 5px;
+    color: white;
+    width: fit-content;
+    padding-inline: 10px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: 400;
+    outline: 0;
+    border: 0;
+}
+
+button#prevButton{
+    display: grid;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+}
+
+button#nextButton{
+    display: grid;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+}
+
+
+.page{
+    display: flex;
+    justify-content: flex-end;
+    margin: 12px;
+    gap: 20px;
+}
+
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+  }
