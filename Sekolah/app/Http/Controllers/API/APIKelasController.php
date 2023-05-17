@@ -48,7 +48,7 @@ class APIKelasController extends Controller
             $kelas->save();
             return response()->json([
                 'status' => 200,
-                'message' => 'Data berhasil di simpan',
+                'message' => 'Data '.$kelas->nama_kelas.' berhasil di simpan',
                 'data' => $kelas,
             ]);
         } catch (\Exception $e) {
@@ -67,10 +67,11 @@ class APIKelasController extends Controller
             $kelas = Kelas::find($id);
             if ($kelas) {
                 $kelas->nama_kelas = $request->nama_kelas;
+                $kelas->tingkat = $request->tingkat;
                 $kelas->save();
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Data berhasil di update',
+                    'message' => 'Data '.$kelas->nama_kelas.' berhasil di update',
                     'data' => $kelas
                 ]);
             } else {

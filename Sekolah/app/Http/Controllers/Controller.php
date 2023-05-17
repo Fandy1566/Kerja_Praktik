@@ -10,10 +10,6 @@ use DB;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-    protected $loc;
 
-    public function getTableColumns($table)
-    {
-        return DB::getSchemaBuilder()->getColumnListing($table);
-    }
+    
 }

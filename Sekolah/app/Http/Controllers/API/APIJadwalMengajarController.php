@@ -110,7 +110,7 @@ class APIJadwalMengajarController extends Controller
             if ($i > 0) {
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Data tidak ditemukan',
+                    'message' => 'Data berhasil dihapus',
                     'data' => array(
                         "Berhasil" => $berhasil,
                         "Gagal" => $gagal

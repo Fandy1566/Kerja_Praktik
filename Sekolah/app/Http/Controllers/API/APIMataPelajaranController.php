@@ -46,13 +46,13 @@ class APIMataPelajaranController extends Controller
             }
             return response()->json([
                 'status' => 200,
-                'message' => 'Data berhasil di simpan',
+                'message' => 'Data '.$mataPelajaran->nama_mata_pelajaran.' berhasil ditambah',
                 'data' => $data
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 400,
-                'message' => 'Data gagal di simpan',
+                'message' => 'Data gagal ditambah',
                 'error' => $e,
                 'request' => $request->all()
             ],400);
@@ -108,7 +108,7 @@ class APIMataPelajaranController extends Controller
             if ($i > 0) {
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Data tidak ditemukan',
+                    'message' => 'Data berhasil dihapus',
                     'data' => array(
                         "Berhasil" => $berhasil,
                         "Gagal" => $gagal
