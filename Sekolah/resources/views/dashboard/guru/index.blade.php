@@ -97,39 +97,6 @@
         });
     });
 
-    function setCurrentPage(num){
-        curPage = num;
-        renderTable();
-    }
-
-    function getLengthPage(){
-        const input = document.getElementById("search");
-        let filter = input.value.toUpperCase();
-
-        if (filter !=="" || filter !== null) {
-            let totalData = table_data.filter(item => {
-                const value = item[input.dataset.colName].toUpperCase();
-                return value.includes(filter);
-            }).length
-        return Math.ceil(totalData/pageSize);
-        }
-        else{
-            return Math.ceil(table_data/pageSize);
-        }
-        
-    }
-
-    function renderPagination(){
-        const pagination = document.getElementById("pagination");
-        let number = "";
-        for (let index = 1; index <= getLengthPage(); index++) {
-            number += `
-            <div class="prevent-select clickable" onclick="setCurrentPage(${index})">${index}</div>
-            `
-        }
-        pagination.innerHTML = number;
-    }
-
     function renderTable() {
         const tblBody = document.querySelector('#tbl tbody');
         const input = document.getElementById("search");
