@@ -1,7 +1,16 @@
 @extends('layouts.dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Pengaturan'])
-<link rel="stylesheet" href="{{asset('css/content.css')}}"> 
+<div class="modal hidden">
+    <div class="modal-content">
+        <h2>Reset <table></table></h2>
+        <p>Apakah kamu yakin ingin mereset tabel ini?</p>
+        <div class="button">
+            <button onclick="">Batal</button>
+            <button onclick="">Keluar</button>
+        </div>
+    </div>
+</div>
 <div class="pengaturan-top flex-row" style="gap:20px">
     <div id="form-layout" class="card m-20" style="width: 700px">
         <div class="title-card">
@@ -63,7 +72,7 @@
                     Kamu bisa mereset tabel Guru secara permanen dengan menekan tombol reset dibawah ini.
                     </div>
                 </div>
-                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('guru')">
+                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="modalResetToggle('guru')">
             </div>
     </div>
     <div id="form-layout" class="container card pengaturan-2" style="width: 400px; height: fit-content">
@@ -77,7 +86,7 @@
                     Kamu bisa mereset tabel jam pembelajaran secara permanen dengan menekan tombol reset dibawah ini.
                     </div>
                 </div>
-                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('jadwal_mengajar')">
+                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="modalResetToggle('jadwal_mengajar')">
             </div>  
     </div>
     <div id="form-layout" class="container card pengaturan-3" style="width: 400px; height: fit-content">
@@ -91,7 +100,7 @@
                     Kamu bisa mereset tabel mata pelajaran secara permanen dengan menekan tombol reset dibawah ini.
                     </div>
                 </div>
-                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('mata_pelajaran')">
+                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="modalResetToggle('mata_pelajaran')">
             </div>
     </div>
     <div id="form-layout" class="container card pengaturan-4" style="width: 400px; height: fit-content">
@@ -105,7 +114,7 @@
                     Kamu bisa mereset tabel user secara permanen dengan menekan tombol reset dibawah ini.
                     </div>
                 </div>
-                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="reset('user')">
+                <input class="clickable form-button title-card-reset" type="submit" value="reset" onclick="modalResetToggle('user')">
             </div>
     </div>
 
@@ -118,6 +127,21 @@
     const url = window.location.origin+"/api/reset";
     console.log(url);
 
+    function modalResetToggle(name = null) {
+        const modal = document.querySelector('.modal');
+        modal.classList.toggle('hidden');
+        modal.innerHTML =`
+        <div class="modal-content">
+            <h2>Reset <table></table></h2>
+            <p>Apakah kamu yakin ingin mereset tabel ini?</p>
+            <div class="button">
+                <button data-type="close" onclick="modalResetToggle()">Batal</button>
+                <button data-type="reset" onclick="reset(${name})">Keluar</button>
+            </div>
+        </div>
+        `;
+    }
+    
     async function reset(name) {
         event.preventDefault(); // prevent form submission
         try {
