@@ -34,8 +34,8 @@
         Guru
     </div>
     <div class="table-top" style="margin-left: 12px;">
-        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_kelas')" placeholder="Cari Kelas" id="search">
-        <button class="clickable cari" onclick="search('nama_kelas')">Cari</button>
+        <input data-col-name="nama_kelas" class="search" style="width: 70%;" type="text" onkeyup="renderTable()" placeholder="Cari Kelas" id="search">
+        <button class="clickable cari" onclick="renderTable()">Cari</button>
         <button class="clickable import">Import</button>
         <button class="clickable export">Export</button>
         <button class="clickable delete" onclick="deleteSelected('guru')">Delete</button>
@@ -56,43 +56,70 @@
             </tbody>
         </table>
     </div>
+    <button id="prevButton">Previous</button> 
+    <button id="nextButton">Next</button> 
 </div>
 @endsection
 @section('script')
 <script>
     
+    document.querySelector('#nextButton').addEventListener('click', nextPage, false);
+    document.querySelector('#prevButton').addEventListener('click', previousPage, false);
+
     window.onload = () => {
         getData();
     }
     const url = window.location.origin+"/api/kelas";
 
-    function getData() {
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            const tblBody = document.querySelector('#tbl tbody');
-            let row = "";
-            data.data.forEach((element, idx) => {
-                const newRow = `
-                
+    function renderTable() {
+        const tblBody = document.querySelector('#tbl tbody');
+        const input = document.getElementById("search");
+        let filter = input.value.toUpperCase();
+        let result = '';
+
+        if (filter !=="" || filter !== null) {
+            table_data.filter(item => {
+                const value = item[input.dataset.colName].toUpperCase();
+                return value.includes(filter);
+            }).filter((row, index) => {
+                let start = (curPage - 1) * pageSize;
+                let end = curPage * pageSize;
+                if (index >= start && index < end) return true;
+            }).forEach(element => {
+                result += `
                 <tr>
-                <td class="center-text"><input type="checkbox"></td>
-                <td>${++idx}</td>
-                <td id="nama_kelas">${element.nama_kelas}</td>
-                <td></td>
-                <td>
-                    <button onclick="updateData(${element.id})">Update</button>
-                </td>
+                    <td class="center-text"><input type="checkbox"></td>
+                    <td>${element.id}</td>
+                    <td id="nama_kelas">${element.nama_kelas}</td>
+                    <td></td>
+                    <td>
+                        <button onclick="updateData(${element.id})">Update</button>
+                    </td>
                 </tr>
-            `;
-            row += newRow;
+                `;
             });
-            tblBody.innerHTML = row
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        } else {
+            // Render table without filtering
+            table_data.filter((row, index) => {
+                let start = (curPage - 1) * pageSize;
+                let end = curPage * pageSize;
+                if (index >= start && index < end) return true;
+            }).forEach(element => {
+                result += `
+                <tr>
+                    <td class="center-text"><input type="checkbox"></td>
+                    <td>${element.id}</td>
+                    <td id="nama_kelas">${element.nama_kelas}</td>
+                    <td></td>
+                    <td>
+                        <button onclick="updateData(${element.id})">Update</button>
+                    </td>
+                </tr>
+                `;
+            });
+        }
+
+        tblBody.innerHTML = result;
     }
 </script>
 @endsection

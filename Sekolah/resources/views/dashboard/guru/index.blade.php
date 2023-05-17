@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 @section('head')
-<script src="{{ asset('js/jquery.min.js')}}"></script>
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 <script src="{{ asset('js/select2.min.js') }}"></script>
 @endsection
@@ -53,8 +52,8 @@
         Guru
     </div>
     <div class="table-top" style="margin-left: 12px;" >
-        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_guru')" placeholder="Cari Guru" id="search">
-        <button class="clickable cari" onclick="search('nama_guru')">Cari</button>
+        <input data-col-name="nama_guru" class="search" style="width: 70%;" type="text" onkeyup="renderTable('nama_guru')" placeholder="Cari Guru" id="search">
+        <button class="clickable cari" onclick="renderTable('nama_guru')">Cari</button>
         <button class="clickable import">Import</button>
         <button class="clickable export">Export</button>
         <button class="clickable delete" onclick="deleteSelected('guru')">Delete</button>
@@ -64,10 +63,10 @@
             <thead>
                 <tr>
                     <th><input type="checkbox" onchange="checkAll()"></th>
-                    <th>ID  Guru</th>
-                    <th>Nama Guru</th>
-                    <th>Mata Pelajaran</th>
-                    <th>Status</th>
+                    <th data-sort="id">ID  Guru</th>
+                    <th data-sort="nama_guru">Nama Guru</th>
+                    <th data-sort="guru_mata_pelajaran">Mata Pelajaran</th>
+                    <th data-sort="is_guru_tetap">Status</th>
                     <th>Edit</th>
                 </tr>
             </thead>
@@ -76,17 +75,76 @@
             </tbody>
         </table>
     </div>
+    <button id="prevButton">Previous</button> 
+    <button id="nextButton">Next</button> 
 </div>
 
 @endsection
 @section('script')
 <script>
+
+    document.querySelector('#nextButton').addEventListener('click', nextPage, false);
+    document.querySelector('#prevButton').addEventListener('click', previousPage, false);
+
     $(document).ready(function() {
-      $('#select-multiple').select2({
-        placeholder: "Pilih Mata Pelajaran.."
-      });
+        $('#select-multiple').select2({
+            placeholder: "Pilih Mata Pelajaran.."
+        });
     });
-    
+
+    function renderTable() {
+        const tblBody = document.querySelector('#tbl tbody');
+        const input = document.getElementById("search");
+        let filter = input.value.toUpperCase();
+        let result = '';
+
+        if (filter !=="" || filter !== null) {
+            table_data.filter(item => {
+                const value = item[input.dataset.colName].toUpperCase();
+                return value.includes(filter);
+            }).filter((row, index) => {
+                let start = (curPage - 1) * pageSize;
+                let end = curPage * pageSize;
+                if (index >= start && index < end) return true;
+            }).forEach(element => {
+                result += `
+                <tr>
+                    <td class="center-text"><input type="checkbox" value="${element.id}"></td>
+                    <td>${element.id}</td>
+                    <td id="nama_guru">${element.nama_guru}</td>
+                    <td>${element.guru_mata_pelajaran.map(mp => mp.mata_pelajaran.nama_mata_pelajaran).join(', ')}</td>
+                    <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
+                    <td>
+                    <button onclick="updateData(${element.id})">Update</button>
+                    </td>
+                </tr>
+                `;
+            });
+        } else {
+            // Render table without filtering
+            table_data.filter((row, index) => {
+                let start = (curPage - 1) * pageSize;
+                let end = curPage * pageSize;
+                if (index >= start && index < end) return true;
+            }).forEach(element => {
+                result += `
+                <tr>
+                    <td class="center-text"><input type="checkbox" value="${element.id}"></td>
+                    <td>${element.id}</td>
+                    <td id="nama_guru">${element.nama_guru}</td>
+                    <td>${element.guru_mata_pelajaran.map(mp => mp.mata_pelajaran.nama_mata_pelajaran).join(', ')}</td>
+                    <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
+                    <td>
+                    <button onclick="updateData(${element.id})">Update</button>
+                    </td>
+                </tr>
+                `;
+            });
+        }
+
+        tblBody.innerHTML = result;
+    }
+
     window.addEventListener('load', function() {
         getData();
         getMapel();
@@ -123,31 +181,5 @@
         }
     }
 
-    async function getData() {
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            const tblBody = document.querySelector('#tbl tbody');
-            let row = "";
-            data.data.forEach((element, idx) => {
-                const newRow = `
-                    <tr>
-                        <td class="center-text"><input type="checkbox" value="${element.id}"></td>
-                        <td>${element.id}</td>
-                        <td id="nama_guru">${element.nama_guru}</td>
-                        <td>${element.guru_mata_pelajaran.map(mp => mp.mata_pelajaran.nama_mata_pelajaran).join(', ')}</td>
-                        <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap': 'Guru Honorer'}</td>
-                        <td>
-                            <button onclick="updateData(${element.id})">Update</button>
-                        </td>
-                    </tr>
-                `;
-                row += newRow;
-            });
-            tblBody.innerHTML = row;
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
 </script>
 @endsection

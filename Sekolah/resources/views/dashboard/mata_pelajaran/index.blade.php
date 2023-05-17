@@ -46,8 +46,8 @@
         Mata Pelajaran
     </div>
     <div class="table-top" style="margin-left: 12px;">
-        <input class="search" style="width: 70%;" type="text" onkeyup="search('nama_guru')" placeholder="Cari Mata Pelajaran" id="search">
-        <button class="clickable cari" onclick="search('nama_guru')">Cari</button>
+        <input data-col-name="nama_mata_pelajaran" class="search" style="width: 70%;" type="text" onkeyup="renderTable()" placeholder="Cari Mata Pelajaran" id="search">
+        <button class="clickable cari" onclick="renderTable()">Cari</button>
         <button class="clickable import">Import</button>
         <button class="clickable export">Export</button>
         <button class="clickable delete" onclick="deleteSelected('guru')">Delete</button>
@@ -79,15 +79,22 @@
     
     const url = window.location.origin+"/api/mata_pelajaran";
 
-    function getData() {
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            const tblBody = document.querySelector('#tbl tbody');
-            let row = "";
-            data.data.forEach((element, idx) => {
-                const newRow = `
+    function renderTable() {
+        const tblBody = document.querySelector('#tbl tbody');
+        const input = document.getElementById("search");
+        let filter = input.value.toUpperCase();
+        let result = '';
+
+        if (filter !=="" || filter !== null) {
+            table_data.filter(item => {
+                const value = item[input.dataset.colName].toUpperCase();
+                return value.includes(filter);
+            }).filter((row, index) => {
+                let start = (curPage - 1) * pageSize;
+                let end = curPage * pageSize;
+                if (index >= start && index < end) return true;
+            }).forEach(element => {
+                result += `
                 <tr>
                     <td class="center-text"><input type="checkbox" value="${element.id}"></td>
                     <td>${element.id}</td>
@@ -109,14 +116,42 @@
                         <button onclick="updateData(${element.id})">Update</button>
                     </td>
                 </tr>
-            `;
-            row += newRow;
+                `;
             });
-            tblBody.innerHTML = row
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        } else {
+            // Render table without filtering
+            table_data.filter((row, index) => {
+                let start = (curPage - 1) * pageSize;
+                let end = curPage * pageSize;
+                if (index >= start && index < end) return true;
+            }).forEach(element => {
+                result += `
+                <tr>
+                    <td class="center-text"><input type="checkbox" value="${element.id}"></td>
+                    <td>${element.id}</td>
+                    <td>${element.nama_mata_pelajaran} (${(() => {
+                        switch (element.tingkat) {
+                        case "7":
+                            return "VII";
+                        case "8":
+                            return "VIII";
+                        case "9":
+                            return "IX";
+                        default:
+                            return "?";
+                    }
+                    })()})</td>
+                    <td>${element.banyak}</td>
+                    <td>
+                        <button onclick="deleteData(${element.id})">Delete</button>
+                        <button onclick="updateData(${element.id})">Update</button>
+                    </td>
+                </tr>
+                `;
+            });
+        }
+
+        tblBody.innerHTML = result;
     }
 </script>
 @endsection

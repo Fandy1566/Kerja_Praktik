@@ -14,12 +14,13 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    @yield('head')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ asset('js/jquery.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('css/dashboard.css')}}">
     <link rel="stylesheet" href="{{asset('css/sidebar.css')}}"> 
     <link rel="stylesheet" href="{{asset('css/content.css')}}"> 
     <link rel="stylesheet" href="{{asset('css/modal.css')}}"> 
+    @yield('head')
 
     <title>Document</title>
 </head>
@@ -67,9 +68,48 @@
         @yield('content')
     </div>
 </body>
-@yield('script')
 <script>
 
+    // Table Script
+    function previousPage() {
+        if(curPage > 1) curPage--;
+        renderTable();
+    }
+
+    function nextPage() {
+        if((curPage * pageSize) < table_data.length) curPage++;
+        renderTable();
+    }
+
+    let sortCol;
+    let sortAsc = false;
+    
+    let pageSize = 10;
+    let curPage = 1;
+
+    let table_data = [];
+
+    function sort(e) {
+        let thisSort = e.target.dataset.sort;
+        if(sortCol === thisSort) sortAsc = !sortAsc;
+        sortCol = thisSort;
+        table_data.sort((a, b) => {
+            if(a[sortCol] < b[sortCol]) return sortAsc?1:-1;
+            if(a[sortCol] > b[sortCol]) return sortAsc?-1:1;
+            return 0;
+        });
+        renderTable();
+    }
+
+    $(document).ready(function() {
+        document.querySelectorAll('#tbl thead th:not(:first-child)').forEach(th => {
+            th.addEventListener('click', sort, false);
+        });
+    });
+
+</script>
+@yield('script')
+<script>
     function formDataToObject(formData) {
         let object = {}
 
@@ -248,22 +288,32 @@
         modal.classList.toggle('hidden');
     }
 
-    function search(col_name) {
-        const row = document.querySelectorAll('#tbl tbody tr');
-        input = document.getElementById("search");
-        filter = input.value.toUpperCase();
-        for (i = 0; i < row.length; i++) {
-            td = row[i].querySelector('td#'+col_name);
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    row[i].style.display = "";
-                } else {
-                    row[i].style.display = "none";
-                }
-            }       
+    // function search(col_name) {
+    //     const row = document.querySelectorAll('#tbl tbody tr');
+    //     input = document.getElementById("search");
+    //     filter = input.value.toUpperCase();
+    //     for (i = 0; i < row.length; i++) {
+    //         td = row[i].querySelector('td#'+col_name);
+    //         if (td) {
+    //             txtValue = td.textContent || td.innerText;
+    //             if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    //                 row[i].style.display = "";
+    //             } else {
+    //                 row[i].style.display = "none";
+    //             }
+    //         }       
+    //     }
+    // }
+
+    async function getData() {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            table_data = data.data;
+            await renderTable();
+        } catch (error) {
+            console.error('Error:', error);
         }
     }
-
 </script>
 </html>
