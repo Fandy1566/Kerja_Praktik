@@ -56,7 +56,7 @@ class APIGuruController extends Controller
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Data berhasil di simpan',
+                'message' => 'Data '.$guru->nama_guru.' berhasil di simpan',
                 'data' => $guru
             ]);
         } catch (\Exception $e) {
@@ -79,7 +79,7 @@ class APIGuruController extends Controller
                 $guru->save();
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Data berhasil di update',
+                    'message' => 'Data '.$guru->nama_guru.' berhasil di update',
                     'data' => $guru
                 ]);
             } else {
