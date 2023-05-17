@@ -2,22 +2,48 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Jadwal Mengajar'])
-<div class="title-content">
-    
+<div id="form-layout" class="card m-20">
+    <div class="form-nav flex-row">
+        <div class="center-text button button-active" onclick="showSimple()" style="width: fit-content; padding-inline: 28px">
+            Simple
+        </div>
+        <div class="center-text button" onclick="showAdvance()">
+            Advance
+        </div>
+    </div>
+    <h2>Advance</h2>
+    <div class="form-area">
+        <form class="store flex-row">
+            <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+            
+            <div class="left-side-form" >
+                <div class="pengaturan-username">
+                    <label>Pc</label>
+                    <input type="number" name="pc" placeholder="Masukan Probabilitas Crossover">
+                </div>
+                <div class="pengaturan-username" style="margin-top: 12px;">
+                    <label>Pm</label>
+                    <input type="number" name="pm" placeholder="Masukan Probabilitas Mutasi">
+                    </select>
+                </div>
+            </div>
+            <div class="right-side-form" style="margin-left: 32px;">
+                <div class="pengaturan-username">
+                    <label>Jumlah Generasi</label>
+                    <input type="number" name="ngener" placeholder="Masukan Jumlah Generasi">
+                </div>
+                <div class="pengaturan-username" style="margin-top: 12px;">
+                    <label>Ukuran Populasi</label>
+                    <input type="number" name="ngener" placeholder="Masukan Ukuran Populasi">
+                </div>
+            </div>
+            <input class="clickable form-button title-card" type="submit" value="Generate" id="submit">
+        </form>
+    </div>
 </div>
-<div class="card">
-
-    <label for="pop_size">Population Size</label><br>
-    <input type="text" name="pop_size"><br>
-    <label for="pc">Pc</label><br>
-    <input type="text" name="pc"><br>
-    <label for="pm">Pm</label><br>
-    <input type="text" name="pm"><br>
-    <label for="ngener">ngener</label><br>
-    <input type="text" name="ngener"><br>
-    <button id="submit">Submit</button><br>
-    <p>guru >= kelas</p>
-    <p>waktu_mata_pelajaran >= jumlah jadwal_mengajar</p>
+<div class="card m-32">
+    {{-- <p>guru >= kelas</p>
+    <p>waktu_mata_pelajaran >= jumlah jadwal_mengajar</p> --}}
     {{-- total banyak jam guru >= kelas * count($jumlah_jadwal) --}}
     <table id="tbl">
         <thead>
@@ -31,12 +57,21 @@
 <script>
     const baseUrl = window.location.origin;
     const submitBtn = document.getElementById("submit");
+    const form-area = document.querySelector(".form-area")
 
     //data
     let guru, kelas, jadwalMengajar;
 
     //genetic algorithm variables
     let pop_size, pc, pm, ngener;
+
+    function showSimple() {
+
+    }
+
+    function showAdvance() {
+        
+    }
 
     main();
 
