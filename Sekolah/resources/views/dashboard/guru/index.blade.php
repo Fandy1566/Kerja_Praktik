@@ -76,10 +76,10 @@
         </table>
     </div>
     <div class="page">
-        <button id="prevButton" ><img src="{{asset('image/icon/back.svg')}}" alt=""></button>
+        <button class="clickable" id="prevButton" ><img src="{{asset('image/icon/back.svg')}}" alt=""></button>
         <div id="pagination" class="flex-row" style = "font-size: 12px; color: #587693; font-weight:500; align-items: center; gap: 12px;">
         </div>
-        <button id="nextButton"><img src="{{asset('image/icon/next.svg')}}" alt=""></button>
+        <button class="clickable" id="nextButton"><img src="{{asset('image/icon/next.svg')}}" alt=""></button>
     </div> 
 </div>
 
@@ -102,6 +102,7 @@
         const input = document.getElementById("search");
         let filter = input.value.toUpperCase();
         let result = '';
+        checkIfOffset()
 
         if (filter !=="" || filter !== null) {
             table_data.filter(item => {

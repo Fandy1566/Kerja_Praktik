@@ -421,3 +421,7 @@ button#nextButton{
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
   }
+
+.pagination-active {
+    color: var(--color-primary);
+}

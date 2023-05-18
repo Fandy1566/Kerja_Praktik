@@ -56,8 +56,12 @@
             </tbody>
         </table>
     </div>
-    <button id="prevButton">Previous</button> 
-    <button id="nextButton">Next</button> 
+    <div class="page">
+        <button class="clickable" id="prevButton" ><img src="{{asset('image/icon/back.svg')}}" alt=""></button>
+        <div id="pagination" class="flex-row" style = "font-size: 12px; color: #587693; font-weight:500; align-items: center; gap: 12px;">
+        </div>
+        <button class="clickable" id="nextButton"><img src="{{asset('image/icon/next.svg')}}" alt=""></button>
+    </div> 
 </div>
 @endsection
 @section('script')
@@ -76,6 +80,7 @@
         const input = document.getElementById("search");
         let filter = input.value.toUpperCase();
         let result = '';
+        checkIfOffset()
 
         if (filter !=="" || filter !== null) {
             table_data.filter(item => {
@@ -97,6 +102,7 @@
                     </td>
                 </tr>
                 `;
+                renderPagination();
             });
         } else {
             // Render table without filtering
@@ -116,6 +122,7 @@
                     </td>
                 </tr>
                 `;
+                renderPagination();
             });
         }
 

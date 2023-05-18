@@ -57,7 +57,7 @@
 <script>
     const baseUrl = window.location.origin;
     const submitBtn = document.getElementById("submit");
-    const form-area = document.querySelector(".form-area")
+    const formArea = document.querySelector(".form-area")
 
     //data
     let guru, kelas, jadwalMengajar;
