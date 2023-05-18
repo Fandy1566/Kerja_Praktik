@@ -6,45 +6,43 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('/css/login.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/font.css') }}" rel="stylesheet">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
-    <div class="circle">
-
+    <div class="left-side" style="width:60vw; height:100%; background-color: white;">
+        <img src="{{asset('image/picture/login2.png')}}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
-    <div class="orang">
-        <img src="{{ asset('buk_ery.png') }}" alt="">
-    </div>
-    <div class="container">
+    <div class="right-side" style="width:40vw; height:100%; background-color: white; padding-top: 100px; padding-bottom: 100px">
+        <div class="title-login">
+            Time Schedule Jadwal Pembelajaran SMP Negeri 23 Palembang
+        </div>
         <div class="logo">
-            <div class="logo-border">
-                <img src="{{ asset('logo.png') }}" alt="">
+            <div class="logo-smp"><img src="{{asset('image/picture/Logo.png')}}" alt=""></div>
+        </div>
+        <div class="sub-title-login">
+            <div class="sub-title-primary">
+                Hello Admin!
+            </div>
+            <div class="sub-title-sub-primary">
+                Lakukan pembuatan jadwal pembelajaran yang efisien
             </div>
         </div>
-        <div class="welcome">
-            Hello Admin!
+        <div class="login-input">
+                <label for="">Email</label>
+                <input type="email" name="" id="">
+                <label for="">Password</label>
+                <input type="password" name="" id="">
         </div>
-        <form action="" method="post">
-            @csrf
-            <label for="Email">Email</label>
-            <div class="input-border">
-                <input type="text" name="email">
-                <img src="{{ asset('person.png') }}" alt="">
+        <div class="login-help">
+            <div class="remember-me">
+                <input type="checkbox" name="" id="">
+                <div class="rem-title">Remember Me</div>
             </div>
-            <label for="Password">Password</label>
-            <div class="input-border">
-                <input type="password" name="password"> 
-                <img src="{{ asset('password.png') }}" alt="">
+            <div class="" style="display: flex; align-items: center;">
+                <button id="recorvery">Recorvery Password?</button>
             </div>
-            <div class="options">
-                <div class="container-remember-me">
-                    <input type="checkbox" name="rememberPassword">
-                    <span class="remember-me">Remember Me</span>
-                </div>
-                <a href="#" class="recovery-password">Recovery Password ?</a>
-            </div>
-            <input type="submit" value="Login">
-        </form>
+        </div>
+        <button type="submit">Login</button>
     </div>
 </body>
 </html>
