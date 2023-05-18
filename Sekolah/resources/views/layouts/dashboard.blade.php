@@ -143,7 +143,6 @@
                     <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
                     `;
                 }
-
                 number += `
                     <div> ... </div>
                     <div class="prevent-select clickable ${pageLength == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${pageLength})">${pageLength}</div>
