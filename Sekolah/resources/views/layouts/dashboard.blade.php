@@ -133,50 +133,50 @@
         const pagination = document.getElementById("pagination");
         let number = "";
         let pageLength = getLengthPage();
-        // if (pageLength >= 5) {
-        //     let maxstart = curPage -2;
-        //     let maxend = curPage + 2;
-        //     let maxPage = 3;
-        //     if (maxstart > 0  && maxend <= pageLength) {
-        //         for (let index = maxstart+1; index <= maxend-1; index++) {
-        //             number += `
-        //             <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
-        //             `;
-        //         }
+        if (pageLength >= 5) {
+            let maxstart = curPage -2;
+            let maxend = curPage + 2;
+            let maxPage = 3;
+            if (maxstart > 0  && maxend <= pageLength) {
+                for (let index = maxstart+1; index <= maxend-1; index++) {
+                    number += `
+                    <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
+                    `;
+                }
 
-        //         number += `
-        //             <div> ... </div>
-        //             <div class="prevent-select clickable ${pageLength == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${pageLength})">${pageLength}</div>
-        //             `;
-        //     } else if (curPage == pageLength) {
-        //         number += `
-        //             <div class="prevent-select clickable ${1 == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${1})">${1}</div>
-        //             <div> ... </div>
-        //             `;
-        //         for (let index = pageLength-2; index <= pageLength; index++) {
-        //             number += `
-        //             <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
-        //             `;
-        //         }
-        //     } else {
-        //         for (let index = 1; index <= maxPage; index++) {
-        //             number += `
-        //             <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
-        //             `;
-        //         }
-        //         number += `
-        //             <div> ... </div>
-        //             <div class="prevent-select clickable ${pageLength == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${pageLength})">${pageLength}</div>
-        //             `;
-        //     }
+                number += `
+                    <div> ... </div>
+                    <div class="prevent-select clickable ${pageLength == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${pageLength})">${pageLength}</div>
+                    `;
+            } else if (curPage+1 == pageLength || curPage == pageLength) {
+                number += `
+                    <div class="prevent-select clickable ${1 == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${1})">${1}</div>
+                    <div> ... </div>
+                    `;
+                for (let index = pageLength-2; index <= pageLength; index++) {
+                    number += `
+                    <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
+                    `;
+                }
+            } else {
+                for (let index = 1; index <= maxPage; index++) {
+                    number += `
+                    <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
+                    `;
+                }
+                number += `
+                    <div> ... </div>
+                    <div class="prevent-select clickable ${pageLength == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${pageLength})">${pageLength}</div>
+                    `;
+            }
 
-        // } else {
+        } else {
             for (let index = 1; index <= getLengthPage(); index++) {
                 number += `
                 <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
                 `;
             }
-        // }
+        }
         pagination.innerHTML = number;
     }
 
