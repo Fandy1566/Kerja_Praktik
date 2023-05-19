@@ -209,3 +209,22 @@ a{
     font-weight: 500;
     color: var(--color-tertiary);
 }
+
+.dashboard-kelas{
+    text-align: center;
+    color: #274B6F;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 24px;
+}
+
+.dashboard-jam-kelas{
+    text-align: center;
+    color: #274B6F;
+    font-size: 32px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+}
