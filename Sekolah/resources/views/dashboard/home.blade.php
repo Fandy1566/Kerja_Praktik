@@ -63,9 +63,30 @@
                 <div class="item2">37</div>
             </div>
             <div class="content-jam">
-                <div class="content-jam-kelas"></div>
-                <div class="content-jam-kelas"></div>
-                <div class="content-jam-kelas"></div>
+                <div class="content-jam-kelas">
+                    <div class="dashboard-kelas">
+                        Kelas VII
+                    </div>
+                    <div class="dashboard-jam-kelas">
+                        20/37
+                    </div>
+                </div>
+                <div class="content-jam-kelas">
+                <div class="dashboard-kelas">
+                        Kelas VIII
+                    </div>
+                    <div class="dashboard-jam-kelas">
+                        37/37
+                    </div>
+                </div>
+                <div class="content-jam-kelas">
+                <div class="dashboard-kelas">
+                        Kelas IX
+                    </div>
+                    <div class="dashboard-jam-kelas">
+                        40/37
+                    </div>
+                </div>
             </div>
             <div class="content-jam-bot">Note : Capai 37 jam mengajar agar mendapat hasil penjadwalan yang lebih baik</div>
         </div>
