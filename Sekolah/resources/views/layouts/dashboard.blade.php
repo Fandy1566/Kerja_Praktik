@@ -137,7 +137,7 @@
             let maxstart = curPage -2;
             let maxend = curPage + 2;
             let maxPage = 3;
-            if (maxstart > 0  && maxend <= pageLength) {
+            if (maxstart > 0  && maxend+1 <= pageLength) {
                 for (let index = maxstart+1; index <= maxend-1; index++) {
                     number += `
                     <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
@@ -147,12 +147,12 @@
                     <div> ... </div>
                     <div class="prevent-select clickable ${pageLength == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${pageLength})">${pageLength}</div>
                     `;
-            } else if (curPage+1 == pageLength || curPage == pageLength) {
+            } else if (curPage+2 >= pageLength) {
                 number += `
                     <div class="prevent-select clickable ${1 == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${1})">${1}</div>
                     <div> ... </div>
                     `;
-                for (let index = pageLength-2; index <= pageLength; index++) {
+                for (let index = pageLength-3; index <= pageLength; index++) {
                     number += `
                     <div class="prevent-select clickable ${index == curPage ? 'pagination-active':''}" onclick="setCurrentPage(${index})">${index}</div>
                     `;

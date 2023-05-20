@@ -19,11 +19,11 @@
             <div class="left-side-form" >
                 <div class="pengaturan-username">
                     <label>Pc</label>
-                    <input type="number" name="pc" placeholder="Masukan Probabilitas Crossover">
+                    <input type="number" name="pc" step="any" placeholder="Masukan Probabilitas Crossover">
                 </div>
                 <div class="pengaturan-username" style="margin-top: 12px;">
                     <label>Pm</label>
-                    <input type="number" name="pm" placeholder="Masukan Probabilitas Mutasi">
+                    <input type="number" name="pm" step="any" placeholder="Masukan Probabilitas Mutasi">
                     </select>
                 </div>
             </div>
@@ -34,11 +34,12 @@
                 </div>
                 <div class="pengaturan-username" style="margin-top: 12px; margin-bottom: 12px;">
                     <label>Ukuran Populasi</label>
-                    <input type="number" name="ngener" placeholder="Masukan Ukuran Populasi">
+                    <input type="number" name="pop_size" placeholder="Masukan Ukuran Populasi">
                 </div>
             </div>
             <input class="clickable form-button title-card" type="submit" value="Generate" id="submit" style="margin-bottom: 8px;">
         </form>
+        <button class="clickable form-button title-card" type="button" id="submit">Generate</button>
     </div>
 </div>
 <div class="card m-32">
@@ -60,7 +61,7 @@
     const formArea = document.querySelector(".form-area")
 
     //data
-    let guru, kelas, jadwalMengajar;
+    let guru, kelas, jadwalMengajar, mata_pelajaran;
 
     //genetic algorithm variables
     let pop_size, pc, pm, ngener;
@@ -81,44 +82,45 @@
         pm = document.getElementsByName("pm")[0].value;
         ngener = document.getElementsByName("ngener")[0].value;
         
-        if (guru.length >= kelas.length && guru.length != 0) {
-            const newPop = geneticAlgorithm();
+        // if (guru.length >= kelas.length && guru.length != 0) {
+        //     const newPop = geneticAlgorithm();
     
-            result = [];
-            for(let i = 0; i < newPop.length; i++){
-                for (let j = 0; j < guru.length; j++) {
-                    if (newPop[i].includes(guru[j].id)) {
-                        result.push([guru[j].id, guru[j].nama_guru]);
-                    }
-                }
-            }
+        //     result = [];
+        //     for(let i = 0; i < newPop.length; i++){
+        //         for (let j = 0; j < guru.length; j++) {
+        //             if (newPop[i].includes(guru[j].id)) {
+        //                 result.push([guru[j].id, guru[j].nama_guru]);
+        //             }
+        //         }
+        //     }
     
-            newArr = [];
-            while (result.length) {
-                newArr.push(result.splice(0,kelas.length));
-            }
+        //     newArr = [];
+        //     while (result.length) {
+        //         newArr.push(result.splice(0,kelas.length));
+        //     }
     
-            tBody = document.querySelector("tbody")
-            let row = `<tr>`;
-            jadwalMengajar.forEach((element, i) => {
-                let newRow = `
-                    <td>${element.nama_hari}</td>
-                    <td>${element.waktu_awal} - ${element.waktu_akhir}</td>
-                `
-                newArr[i].forEach(element2 => {
-                    newRow += `
-                        <td>${element2[1]}</td>
-                    `
-                });
-                row += newRow;
-                row +=`</tr>`;
-            });
+        //     tBody = document.querySelector("tbody")
+        //     let row = `<tr>`;
+        //     jadwalMengajar.forEach((element, i) => {
+        //         let newRow = `
+        //             <td>${element.nama_hari}</td>
+        //             <td>${element.waktu_awal} - ${element.waktu_akhir}</td>
+        //         `
+        //         newArr[i].forEach(element2 => {
+        //             newRow += `
+        //                 <td>${element2[1]}</td>
+        //             `
+        //         });
+        //         row += newRow;
+        //         row +=`</tr>`;
+        //     });
             
-            tBody.innerHTML = row;
-        } else {
-            alert("BANYAK GURU Tidak Boleh Kurang dari BANYAK KELAS")
-        }
-
+        //     tBody.innerHTML = row;
+        // } else {
+        //     alert("BANYAK GURU Tidak Boleh Kurang dari BANYAK KELAS")
+        // }
+        pop = createPopulation()
+        console.log(pop);
     })
 
     // ==========================================================================
@@ -166,14 +168,15 @@
 
     function geneticAlgorithm() {
         let population = createPopulation();
-        for (let i = 0; i < ngener; i++) {
-            const fitnesses = fitness_evaluation(population);
-            const selected = selection(population, fitnesses);
-            const offspring = crossover(selected);
-            const mutated = mutation(offspring);
-            population = replacement(population, mutated)
-        }
-        return population[0];
+        // for (let i = 0; i < ngener; i++) {
+        //     const fitnesses = fitness_evaluation(population);
+        //     const selected = selection(population, fitnesses);
+        //     const offspring = crossover(selected);
+        //     const mutated = mutation(offspring);
+        //     population = replacement(population, mutated)
+        // }
+        // return population[0];
+        return population;
     }
 
     async function getData() {
@@ -181,37 +184,119 @@
             const data = await Promise.all([
                 fetch(baseUrl+"/api/guru").then(response => response.json()),
                 fetch(baseUrl+"/api/kelas").then(response => response.json()),
-                fetch(baseUrl+"/api/jadwal_mengajar").then(response => response.json())
+                fetch(baseUrl+"/api/jadwal_mengajar").then(response => response.json()),
+                fetch(baseUrl+"/api/mata_pelajaran").then(response => response.json())
             ]);
 
             guru = data[0].data;
             kelas = data[1].data;
             jadwalMengajar = data[2].data;
+            mata_pelajaran = data[3].data;
+
+            // console.log(mata_pelajaran);
+
         } catch (error) {
             console.error('Error:', error);
         }
     }
 
+    // function createPopulation() {
+    //     //population
+    //     let population = [];
+    //     for (let i = 0; i < pop_size; i++) {
+    //         //individual
+    //         let individual = [];
+    //         for (let j = 0; j < jadwalMengajar.length; j++) {
+    //             //chromosome
+    //             let chromosome = [];
+    //             let genes = randomizeArray(guru);
+    //             for (let k = 0; k < kelas.length; k++) {
+    //                 //genes
+    //                 chromosome.push(genes[k].id);
+    //                 // console.log({k});
+    //             }
+    //             individual.push(chromosome);
+    //         }
+    //         population.push(individual);
+    //     }
+    //     console.log(population);
+    //     return population;
+    // }
+
     function createPopulation() {
         //population
+        // console.log(mata_pelajaran);
+        const countByTingkat = kelas.reduce((count, obj) => {
+            if (count[obj.tingkat]) {
+                count[obj.tingkat] += 1;
+            } else {
+                count[obj.tingkat] = 1;
+            }
+            return count;
+        }, {});
+        const uniqueTingkatValues = [...new Set(kelas.map(obj => obj.tingkat))];
+        console.log(countByTingkat);
         let population = [];
         for (let i = 0; i < pop_size; i++) {
-            //individual
+            
             let individual = [];
-            for (let j = 0; j < jadwalMengajar.length; j++) {
-                //chromosome
-                let chromosome = [];
-                let genes = randomizeArray(guru);
-                for (let k = 0; k < kelas.length; k++) {
-                    //genes
-                    chromosome.push(genes[k].id);
-                    // console.log({k});
+            
+            // countByTingkat[uniqueTingkatValues]
+            uniqueTingkatValues.forEach(element => {
+                for (let j = 0; j < countByTingkat[element]; j++) {
+                    let chromosome = [];
+                    let genes = randomizeArray(mata_pelajaran.filter( obj =>
+                        obj.tingkat == element
+                    ));
+                    for (let k = 0; k < genes.length; k++) {
+                        // console.log(genes[k]);
+                        data = genes[k];
+
+                        if (data.banyak > 3) {
+                            quotient = Math.ceil(data.banyak/2)
+                            chromosome.push([data.id, data.nama_mata_pelajaran, data.tingkat, quotient]);
+                            chromosome.push([data.id, data.nama_mata_pelajaran, data.tingkat, data.banyak - quotient]);
+                        } else {
+                            chromosome.push([data.id, data.nama_mata_pelajaran, data.tingkat, data.banyak]);
+                        }
+                    }
+                    individual.push(randomizeArray(chromosome));
                 }
-                individual.push(chromosome);
-            }
-            population.push(individual);
+            });
+            population.push(individual)
         }
-        console.log(population);
+        // let population = [];
+
+        // console.log(kelas);
+        // for (let i = 0; i < pop_size; i++) {
+        //     //individual
+        //     let individual = [];
+            
+        //     for (let j = 0; j < kelas.length; j++) {
+        //         //chromosome
+        //         let chromosome = [];
+        //         const filteredArray = mata_pelajaran.filter((obj, index, self) => {
+        //             return index === self.findIndex((el) => (
+        //                 el.nama_mata_pelajaran === obj.nama_mata_pelajaran
+        //             ));
+        //         });
+                
+
+        //         let genes = randomizeArray(mata_pelajaran);
+        //         // console.log(genes);
+        //         for (let k = 0; k < jadwalMengajar.length; k++) {
+        //             //genes
+        //             try {
+        //                 chromosome.push(genes[k].nama_mata_pelajaran);
+        //             } catch (error) {
+        //                 continue;
+        //             }
+        //             // console.log({k});
+        //         }
+        //         individual.push(chromosome);
+        //     }
+        //     population.push(individual);
+        // }
         return population;
     }
 
