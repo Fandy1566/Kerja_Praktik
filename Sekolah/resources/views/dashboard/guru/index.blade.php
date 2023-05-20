@@ -25,10 +25,6 @@
                 </div>
             </div>
             <div class="right-side-form" style="margin-left: 32px;">
-                {{-- <label>Kelas</label><br>
-                <label for="">Kelas VII</label><input type="number" name="kelas_7">
-                <label for="">Kelas VIII</label><input type="number" name="kelas_8">
-                <label for="">Kelas IX</label><input type="number" name="kelas_9"><br> --}}
                 <div class="pengaturan-rb">
                     <label>Kategori</label>
                 </div>
@@ -41,7 +37,7 @@
                     <label for="" style="margin-left: 12px;">Guru Honorer</label>
                 </div>
             </div>
-            <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
+            <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
         </form>
     </div>
 </div>
@@ -90,6 +86,8 @@
     document.querySelector('#nextButton').addEventListener('click', nextPage, false);
     document.querySelector('#prevButton').addEventListener('click', previousPage, false);
 
+    const formArea = document.querySelector('#form-layout');
+    const formStore = formArea.innerHTML;
 
     $(document).ready(function() {
         $('#select-multiple').select2({
@@ -121,7 +119,7 @@
                     <td>${element.guru_mata_pelajaran.map(mp => mp.mata_pelajaran.nama_mata_pelajaran).join(', ')}</td>
                     <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
                     <td>
-                    <button onclick="updateData(${element.id})">Update</button>
+                    <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>
                 </tr>
                 `;
@@ -142,7 +140,7 @@
                     <td>${element.guru_mata_pelajaran.map(mp => mp.mata_pelajaran.nama_mata_pelajaran).join(', ')}</td>
                     <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
                     <td>
-                    <button onclick="updateData(${element.id})">Update</button>
+                    <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>
                 </tr>
                 `;
@@ -187,6 +185,54 @@
         } catch (error) {
             console.error('Error:', error);
         }
+    }
+
+    function Edit(obj) {
+        formArea.innerHTML = "";
+        const formEdit = `
+        <div class="title-card">
+        Edit Guru
+        </div>
+        <div class="form-area">
+            <form class="edit flex-row">
+                <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+                <div class="left-side-form" >
+                    <div class="pengaturan-username">
+                        <label>Nama Guru</label>
+                        <input type="text" name="nama_guru" placeholder="Masukkan nama guru.." value ="${obj.nama_guru}">
+                    </div>
+                    <div class="pengaturan-username" style="margin-top: 12px;">
+                        <label>Mata Pelajaran</label>
+                        <select id="select-multiple" name="id_mata_pelajaran[]" multiple="multiple" placeholder="Masukan mata pelajaran..">
+                        </select>
+                    </div>
+                </div>
+                <div class="right-side-form" style="margin-left: 32px;">
+                    <div class="pengaturan-rb">
+                        <label>Kategori</label>
+                    </div>
+                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                        <input type="radio" name="is_guru_tetap" id="" ${obj.is_guru_tetap == 1?'checked':''} value="1">
+                        <label for="" style="margin-left: 12px;">Guru Tetap</label>
+                    </div>
+                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                        <input type="radio" name="is_guru_tetap" id="" ${obj.is_guru_tetap == 0?'checked':''}  value="0">
+                        <label for="" style="margin-left: 12px;">Guru Honorer</label>
+                    </div>
+                </div>
+                <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="updateData(${obj.id})">
+            </form>
+        </div>
+        `;
+        document.querySelector('.content').scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+        formArea.innerHTML = formEdit;
+    }
+
+    function showFormStore() {
+        formArea.innerHTML = formStore;
     }
 
 </script>

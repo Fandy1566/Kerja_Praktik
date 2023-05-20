@@ -7,24 +7,28 @@
         Input Kelas
     </div>
     <div class="form-area">
-        <form class="store" style="flex-direction: column;">
+        <form class="store" style="display: flex; flex-direction: row;">
             <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-            <div class="pengaturan-rb">
-                    <label>Tambah Kelas</label>
-                </div>
-                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                    <input type="radio" name="tingkat" id="" checked value="7">
-                    <label for="" style="margin-left: 12px;">Kelas VII</label>
-                </div>
-                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                    <input type="radio" name="tingkat" id="" value="8">
-                    <label for="" style="margin-left: 12px;">Kelas VIII</label>
-                </div>
-                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                    <input type="radio" name="tingkat" id="" value="9">
-                    <label for="" style="margin-left: 12px;">Kelas IX</label>
-                </div>
-            <input class="clickable form-button title-card" type="submit" value="Submit" onclick="submitForm()">
+            <div class="left-side-form">
+                <label>Tambah Kelas</label>
+                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                        <input type="radio" name="tingkat" id="" checked value="7">
+                        <label for="" style="margin-left: 12px;">Kelas VII</label>
+                    </div>
+                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                        <input type="radio" name="tingkat" id="" value="8">
+                        <label for="" style="margin-left: 12px;">Kelas VIII</label>
+                    </div>
+                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                        <input type="radio" name="tingkat" id="" value="9">
+                        <label for="" style="margin-left: 12px;">Kelas IX</label>
+                    </div>
+            </div>
+            <div class="right-side-form flex-column" style="margin-left: 64px; margin-top: 4px;">
+                <label for="" style="margin-bottom: 12px;">Lantai Kelas</label>
+                <input type="number" name="lantai" id="" min="1" placeholder="Masukan Lantai.." value="1">
+            </div>
+            <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
         </form>
     </div>
 </div>
@@ -70,6 +74,9 @@
     document.querySelector('#nextButton').addEventListener('click', nextPage, false);
     document.querySelector('#prevButton').addEventListener('click', previousPage, false);
 
+    const formArea = document.querySelector('#form-layout');
+    const formStore = formArea.innerHTML;
+
     window.onload = () => {
         getData();
     }
@@ -96,9 +103,9 @@
                     <td class="center-text"><input type="checkbox"></td>
                     <td>${element.id}</td>
                     <td id="nama_kelas">${element.nama_kelas}</td>
-                    <td></td>
+                    <td id="lantai">${element.lantai}</td>
                     <td>
-                        <button onclick="updateData(${element.id})">Update</button>
+                    <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>
                 </tr>
                 `;
@@ -116,9 +123,9 @@
                     <td class="center-text"><input type="checkbox"></td>
                     <td>${element.id}</td>
                     <td id="nama_kelas">${element.nama_kelas}</td>
-                    <td></td>
+                    <td id="lantai">${element.lantai}</td>
                     <td>
-                        <button onclick="updateData(${element.id})">Update</button>
+                    <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>
                 </tr>
                 `;
@@ -128,5 +135,49 @@
 
         tblBody.innerHTML = result;
     }
+
+    function Edit(obj) {
+        formArea.innerHTML = "";
+        const formEdit = `
+        <div class="title-card">
+        Input Kelas
+        </div>
+        <div class="form-area">
+            <form class="edit" style="display: flex; flex-direction: row;">
+                <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+                <div class="left-side-form">
+                    <label>Tambah Kelas</label>
+                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                            <input type="radio" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="7">
+                            <label for="" style="margin-left: 12px;">Kelas VII</label>
+                        </div>
+                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                            <input type="radio" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="8">
+                            <label for="" style="margin-left: 12px;">Kelas VIII</label>
+                        </div>
+                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                            <input type="radio" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="9">
+                            <label for="" style="margin-left: 12px;">Kelas IX</label>
+                        </div>
+                </div>
+                <div class="right-side-form flex-column" style="margin-left: 64px; margin-top: 4px;">
+                    <label for="" style="margin-bottom: 12px;">Lantai Kelas</label>
+                    <input type="number" name="lantai" id="" min="1" placeholder="Masukan Lantai.." value="${obj.lantai}">
+                </div>
+                <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="updateData(${obj.id})">
+            </form>
+        </div>
+        `;
+        document.querySelector('.content').scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+        formArea.innerHTML = formEdit;
+    }
+
+    function showFormStore() {
+        formArea.innerHTML = formStore;
+    }
+
 </script>
 @endsection

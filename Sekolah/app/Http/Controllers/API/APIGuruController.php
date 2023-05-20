@@ -75,7 +75,7 @@ class APIGuruController extends Controller
             $guru = Guru::find($id);
             if ($guru) {
                 $guru->nama_guru = $request->nama_guru;
-                $guru->banyak_jam = $request->banyak;
+                $guru->is_guru_tetap = $request->is_guru_tetap;$guru->nama_guru = $request->nama_guru;
                 $guru->save();
                 return response()->json([
                     'status' => 200,

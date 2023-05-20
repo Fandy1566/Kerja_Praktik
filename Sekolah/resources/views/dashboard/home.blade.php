@@ -30,10 +30,38 @@
                     <div class="item2">54</div>
                 </div>
                 <div class="right-item">
-                    <div class="pb-mapel">
-                        <div class="pb"></div>
+                    <div class="pb-mapel" style="background-color: #A6CDE5;">
+                        <div class="pb-mapel" style="background-color: #274B6F; width: 33.3%;">
+                        <div class="pb-persen">33.3%</div>
+                        </div>
                     </div>
                     <div class="content-mapel">Capaian mata pelajaran yang dibutuhkan tiap kelas</div>
+                </div>
+            </div>
+            <div class="pb-all-mapel">
+                <div class="pb-title" style="margin-top: 16px;">
+                    Kelas VII
+                    <div class="pb-mapel2" style="background-color: #FFAEAE; margin-top: 12px;">
+                        <div class="pb-mapel2" style="background-color: #BB1818; width: 75%;">
+                        <div class="pb-persen2">75%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-title" style="margin-top: 16px;">
+                    Kelas VIII
+                    <div class="pb-mapel2" style="background-color: #FFD95A; margin-top: 12px;">
+                        <div class="pb-mapel2" style="background-color: #FCD552; width: 100%;">
+                        <div class="pb-persen2">110%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-title" style="margin-top: 16px;">
+                    Kelas IX
+                    <div class="pb-mapel2" style="background-color: #A6CDE5; margin-top: 12px;">
+                        <div class="pb-mapel2" style="background-color: #479D39; width: 100%;">
+                        <div class="pb-persen2">100%</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,6 +121,27 @@
         <div class="container item-7">
             <div class="item-title3">
                 <div class="title2">Peringatan!!</div>
+            </div>
+            <div class="content-peringatan1">
+            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
+            </div>
+            <div class="content-peringatan">
+            Kurangkan waktu mata pelajaran pada kelas 8
+            </div>
+            <div class="content-peringatan1">
+            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
+            </div>
+            <div class="content-peringatan">
+            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
+            </div>
+            <div class="content-peringatan1">
+            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
+            </div>
+            <div class="content-peringatan">
+            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
+            </div>
+            <div class="content-peringatan1">
+            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
             </div>
         </div>
     </div>

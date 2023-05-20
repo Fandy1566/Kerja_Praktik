@@ -38,6 +38,12 @@
     padding-inline: 15px ;
 }
 
+.card1{
+    background-color: var(--sidebar-color);
+    border-radius: 10px;
+    padding-inline: 15px ;
+}
+
 .m-20{
     margin-top: 20px;
 }
@@ -424,4 +430,104 @@ button#nextButton{
 
 .pagination-active {
     color: var(--color-primary);
+}
+
+input[type="number"] {
+    accent-color: #274B6F;
+    width: 200px;
+    height: 25px;
+    border-radius: 5px;
+    border: 0.5px solid #587693;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+.pb-mapel{
+    height: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+.pb-mapel2{
+    height: 15px;
+    border-radius: 10px;
+    border: none;
+}
+
+.pb-persen{
+    text-align: end;
+    font-size: 8px;
+    color: white;
+    padding-right: 8px;
+    padding-top: -1px;
+}
+
+.pb-all-mapel{
+    margin: 12px;
+}
+
+.pb-title{
+    font-size: 16;
+    font-weight: 500;
+    color: #0C2A58;
+}
+
+.pb-persen2{
+    text-align: end;
+    font-size: 10px;
+    color: white;
+    padding-right: 8px;
+    padding-top: -1px;
+}
+
+.content-peringatan{
+    display: flex;
+    margin-left: 12px;
+    margin-right: 12px;
+    color: #5D7893;
+    width: 100%;
+    height: 45px;
+    padding-left: 12px;
+    font-size: 10px;
+    align-items: center;
+
+}
+
+.content-peringatan1{
+    display: flex;
+    margin-left: 12px;
+    margin-right: 12px;
+    background-color: #5D7893;
+    color: white;
+    width: 100%;
+    height: 45px;
+    padding-left: 12px;
+    font-size: 10px;
+    align-items: center;
+
+}
+
+.center-text1{
+    background-color: var(--color-secondary);
+    border-radius: 5px;
+    color: white;
+    min-width: 100px;
+    width: fit-content;
+    padding-inline: 10px;
+    height: 25px;
+    font-size: 12px;
+    display: grid;
+    place-items: center;
+    font-weight: 400;
+    outline: 0;
+    border: 0;
+    margin-left: 12px;
+}
+
+h2#title-penjadwalan{
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-top: 12px;
 }

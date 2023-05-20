@@ -161,7 +161,10 @@ a{
 }
 
 .item-title3{
-    margin: 15px;
+    margin-top: 15px;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-bottom: 12px;
     border-bottom: 0.031rem solid #D1D1D1;
     position: relative;
     padding-bottom: 15px;
@@ -227,4 +230,54 @@ a{
     justify-content: center;
     align-items: center;
     height: 130px;
+}
+
+.menu-8{
+    font-size: 14px;
+    color: #5D7893;
+    padding-block: 7px;
+    width: 100%;
+    display: block;
+    font-weight: 500;
+    display: flex;
+
+}
+
+h2{
+    font-size: 24px;
+    color: #274B6F;
+    font-weight: 500;
+}
+
+p{
+    font-size: 12px;
+    color: #5D7893;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-weight: 500;
+}
+
+.button{
+    margin-top: 20px;
+}
+
+button#batal{
+    margin-right: 8px;
+    width: 100px;
+    height: 30px;
+    color: #0C2A58;
+    background-color: #EBF7FF;
+    border-radius: 5px;
+    border: 0.5px solid #5D7893;
+
+}
+
+button#Keluar{
+    margin-left: 8px;
+    width: 100px;
+    height: 30px;
+    color: white;
+    background-color: #BB1818;
+    border-radius: 5px;
+    border: 0.5px solid #BB1818;
 }

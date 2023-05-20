@@ -26,12 +26,12 @@
 </head>
 <body>
     <div class="modal hidden">
-        <div class="modal-content">
+        <div class="modal-content" style="gap: 8x;">
             <h2>Keluar Akun</h2>
             <p>Apakah kamu yakin mau keluar dari akun?</p>
             <div class="button">
-                <button onclick="modalLogoutToggle()">Batal</button>
-                <button onclick="window.loc = '{{ route('logout') }}';">Keluar</button>
+                <button id="batal" onclick="modalLogoutToggle()">Batal</button>
+                <button id="Keluar" onclick="window.loc = '{{ route('logout') }}';">Keluar</button>
             </div>
         </div>
     </div>
@@ -300,6 +300,7 @@
             const data = await response.json();
             await getData();
             showFormStore();
+            renderTable();
         } catch (error) {
             console.error(error);
         }

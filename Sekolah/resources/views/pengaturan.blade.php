@@ -2,14 +2,6 @@
 @section('content')
 @include('layouts.header', ['title' => 'Pengaturan'])
 <div class="modal hidden">
-    <div class="modal-content">
-        <h2>Reset <table></table></h2>
-        <p>Apakah kamu yakin ingin mereset tabel ini?</p>
-        <div class="button">
-            <button onclick="">Batal</button>
-            <button onclick="">Keluar</button>
-        </div>
-    </div>
 </div>
 <div class="pengaturan-top flex-row" style="gap:20px">
     <div id="form-layout" class="card m-20" style="width: 700px">
@@ -135,8 +127,8 @@
             <h2>Reset <table></table></h2>
             <p>Apakah kamu yakin ingin mereset tabel ini?</p>
             <div class="button">
-                <button data-type="close" onclick="modalResetToggle()">Batal</button>
-                <button data-type="reset" onclick="reset(${name})">Keluar</button>
+                <button id="batal" data-type="close" onclick="modalResetToggle()">Batal</button>
+                <button id="Keluar" data-type="reset" onclick="reset(${name})">Keluar</button>
             </div>
         </div>
         `;

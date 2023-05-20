@@ -82,6 +82,12 @@
     window.onload = () => {
         getData();
     }
+
+    document.querySelector('#nextButton').addEventListener('click', nextPage, false);
+    document.querySelector('#prevButton').addEventListener('click', previousPage, false);
+
+    const formArea = document.querySelector('#form-layout');
+    const formStore = formArea.innerHTML;
     
     const url = window.location.origin+"/api/mata_pelajaran";
 
@@ -119,8 +125,7 @@
                     })()})</td>
                     <td>${element.banyak}</td>
                     <td>
-                        <button onclick="deleteData(${element.id})">Delete</button>
-                        <button onclick="updateData(${element.id})">Update</button>
+                        <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>
                 </tr>
                 `;
@@ -151,8 +156,7 @@
                     })()})</td>
                     <td>${element.banyak}</td>
                     <td>
-                        <button onclick="deleteData(${element.id})">Delete</button>
-                        <button onclick="updateData(${element.id})">Update</button>
+                        <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>
                 </tr>
                 `;
@@ -162,5 +166,57 @@
 
         tblBody.innerHTML = result;
     }
+
+    function Edit(obj) {
+        formArea.innerHTML = "";
+        const formEdit = `
+        <div class="title-card">
+        Input Mata Pelajaran
+        </div>
+        <div class="form-area">
+            <form class="edit flex-row">
+                <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+                <div class="left-side-form">
+                    <div class="pengaturan-username">
+                        <label>Mata Pelajaran</label>
+                        <input type="text" name="nama_mata_pelajaran" placeholder="Masukkan nama Mata Pelajaran.." value ="${obj.nama_mata_pelajaran}">
+                    </div>
+                    <div class="pengaturan-username" style="margin-top: 12px;">
+                        <label>Total Jam</label>
+                        <input type="text" name="banyak" placeholder="Masukkan Total Jam.." value ="v">
+                    </div>
+                </div>
+                <div class="right-side-form" style="margin-left: 32px;">
+                    <div class="pengaturan-rb">
+                        <label>Kategori</label>
+                    </div>
+                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                        <input type="Checkbox" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="7">
+                        <label for="" style="margin-left: 12px;">Kelas VII</label>
+                    </div>
+                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                        <input type="Checkbox" name="tingkat" id="" ${obj.tingkat == 8?'checked':''} value="8">
+                        <label for="" style="margin-left: 12px;">Kelas VIII</label>
+                    </div>
+                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                        <input type="Checkbox" name="tingkat" id="" ${obj.tingkat == 9?'checked':''} value="9">
+                        <label for="" style="margin-left: 12px;">Kelas IX</label>
+                    </div>
+                </div>
+                <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="updateData(${obj.id})">
+            </form>
+        </div>
+        `;
+        document.querySelector('.content').scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+        formArea.innerHTML = formEdit;
+    }
+
+    function showFormStore() {
+        formArea.innerHTML = formStore;
+    }
+
 </script>
 @endsection

@@ -15,6 +15,7 @@ return new class extends Migration
                 $table->id();
                 $table->string('nama_'.$this->tableName, 50);
                 $table->enum('tingkat', [7,8,9]);
+                $table->tinyInteger('lantai')->default(1);
                 $table->timestamps();
             });
         }

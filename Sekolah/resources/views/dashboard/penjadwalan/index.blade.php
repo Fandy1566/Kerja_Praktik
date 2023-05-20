@@ -2,18 +2,18 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Jadwal Mengajar'])
-<div id="form-layout" class="card m-20">
-    <div class="form-nav flex-row">
-        <div class="center-text button button-active" onclick="showSimple()" style="width: fit-content; padding-inline: 28px">
-            Simple
-        </div>
-        <div class="center-text button" onclick="showAdvance()">
+<div id="form-layout" class="card1 m-20" style="width: 55%;">
+    <div class="form-nav flex-row" style="gap: 12px; margin-right: 12px;">
+        <div class="center-text1 button button-active" onclick="showSimple()" style="width: fit-content; padding-inline: 28px">
             Advance
         </div>
+        <div class="center-text1 button" onclick="showAdvance()">
+            Simple
+        </div>
     </div>
-    <h2>Advance</h2>
+    <h2 id="title-penjadwalan">Advance</h2>
     <div class="form-area">
-        <form class="store flex-row">
+        <form class="store flex-row" style="margin-top: 8px;">
             <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
             
             <div class="left-side-form" >
@@ -32,12 +32,12 @@
                     <label>Jumlah Generasi</label>
                     <input type="number" name="ngener" placeholder="Masukan Jumlah Generasi">
                 </div>
-                <div class="pengaturan-username" style="margin-top: 12px;">
+                <div class="pengaturan-username" style="margin-top: 12px; margin-bottom: 12px;">
                     <label>Ukuran Populasi</label>
                     <input type="number" name="ngener" placeholder="Masukan Ukuran Populasi">
                 </div>
             </div>
-            <input class="clickable form-button title-card" type="submit" value="Generate" id="submit">
+            <input class="clickable form-button title-card" type="submit" value="Generate" id="submit" style="margin-bottom: 8px;">
         </form>
     </div>
 </div>

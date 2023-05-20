@@ -43,7 +43,8 @@ class APIKelasController extends Controller
                 $kelas->nama_kelas = "VIII.".$count;
             } if ($request->tingkat == 9) {
                 $kelas->nama_kelas = "IX.".$count;
-            }
+            }          
+            $kelas->lantai = $request->lantai;
             $kelas->tingkat = $request->tingkat;
             $kelas->save();
             return response()->json([
@@ -66,8 +67,7 @@ class APIKelasController extends Controller
         try {
             $kelas = Kelas::find($id);
             if ($kelas) {
-                $kelas->nama_kelas = $request->nama_kelas;
-                $kelas->tingkat = $request->tingkat;
+                $kelas->lantai = $request->lantai;
                 $kelas->save();
                 return response()->json([
                     'status' => 200,
