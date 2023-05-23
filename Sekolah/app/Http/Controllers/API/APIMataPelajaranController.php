@@ -149,4 +149,33 @@ class APIMataPelajaranController extends Controller
             ],400);
         }
     }
+
+    public function getGuruMengajar()
+    {
+        try {
+            $mata_pelajaran = MataPelajaran::with(['GuruMataPelajaran' => function ($query) {
+                $query->with('Guru');
+            }])->get();
+
+            if ($mata_pelajaran) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Data berhasil ditampilkan',
+                    'data' => $mata_pelajaran
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Data tidak ditemukan',
+                ],400);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Data gagal ditampilkan',
+                'error' => $e
+            ],400);
+        }
+    }
 }

@@ -14,53 +14,60 @@ class GuruSeeder extends Seeder
     public function run(): void
     {
         $nama_guru =[
-            "Jani Suspandi, S.Pd.I.",
-            "Rama Hardiansyah, S.Pd",
-            "Elfa Yuliana, S.Ag",
-            "Asih Frakensi, M.Pd",
-            "Sri Madarni, S.Pd.",
-            "Safiq Farisi Sayoga, S.Pd.",
-            "Eulis Kurniati, S.Pd",
-            "Hj. Dewi Muryani, S.Pd",
-            "Andiyati",
-            "Helga Amanda, S.Pd",
-            "Weni Agustin, S.Pd",
-            "Karina Balqis, M.Pd",
-            "Maryati, S.Pd",
-            "Hj. Nelyati, S.Pd",
-            "M. Arif, S.Pd",
-            "Erniwati, A.Md",
-            "Hj. Yarnani, S.Pd",
-            "Rahyuni, S.Pd",
-            "Kartini, S.Pd",
-            "Nadia Arisma, S.Pd",
-            "Renawati, M.Pd",
-            "Masniza, S.Pd",
-            "Bun Yana, S.Pd",
-            "Sriyati, S.Pd",
-            "Chika Pramudya Putri, S.Pd",
-            "Lista Oktaria Dwi P., S.Pd",
-            "Amriyani, S.Pd",
-            "Desna Puspitasari, S.Pd",
-            "Celsi Cecilia, S.Pd",
-            "Dewi Astuti, S.Pd",
-            "Suharna, S.Pd",
-            "Doni Daruri, S.Pd.",
-            "Hafiiz Artama, S.Pd.",
-            "Sri Hartanti, A.Ma",
-            "Chandra Wijaya, S.Pd",
-            "Anitawati, S.Pd",
-            "Amalia Amini, S.Pd",
-            "Drs. Joko Wahyono",
-            "Husni Roaina, S.Pd",
-            "Sri Dewi Sartika Sari, ST"
+            ["Jani Suspandi, S.Pd.I.",[1]],
+            ["Rama Hardiansyah, S.Pd",[2,3]],
+            ["Elfa Yuliana, S.Ag",[2]],
+            ["Asih Frakensi, M.Pd",[3]],
+            ["Sri Madarni, S.Pd.",[6]],
+            ["Safiq Farisi Sayoga, S.Pd.",[4,5]],
+            ["Eulis Kurniati, S.Pd",[4,20]],
+            ["Hj. Dewi Muryani, S.Pd",[9]],
+            ["Andiyati",[8]],
+            ["Helga Amanda, S.Pd"],
+            ["Weni Agustin, S.Pd"],
+            ["Karina Balqis, M.Pd"],
+            ["Maryati, S.Pd"],
+            ["Hj. Nelyati, S.Pd"],
+            ["M. Arif, S.Pd"],
+            ["Erniwati, A.Md"],
+            ["Hj. Yarnani, S.Pd"],
+            ["Rahyuni, S.Pd"],
+            ["Kartini, S.Pd"],
+            ["Nadia Arisma, S.Pd"],
+            ["Renawati, M.Pd"],
+            ["Masniza, S.Pd"],
+            ["Bun Yana, S.Pd"],
+            ["Sriyati, S.Pd"],
+            ["Chika Pramudya Putri, S.Pd"],
+            ["Lista Oktaria Dwi P., S.Pd"],
+            ["Amriyani, S.Pd"],
+            ["Desna Puspitasari, S.Pd"],
+            ["Celsi Cecilia, S.Pd"],
+            ["Dewi Astuti, S.Pd"],
+            ["Suharna, S.Pd"],
+            ["Doni Daruri, S.Pd."],
+            ["Hafiiz Artama, S.Pd."],
+            ["Sri Hartanti, A.Ma"],
+            ["Chandra Wijaya, S.Pd"],
+            ["Anitawati, S.Pd"],
+            ["Amalia Amini, S.Pd"],
+            ["Drs. Joko Wahyono"],
+            ["Husni Roaina, S.Pd"],
+            ["Sri Dewi Sartika Sari, ST"]
         ];
 
         foreach ($nama_guru as $nama) {
             DB::table('guru')->insert([
-                'nama_guru' => $nama,
+                'nama_guru' => $nama[0],
                 'is_guru_tetap' => 1,
             ]);
+            try {
+                foreach ($nama[1] as $id_mapel) {
+                    # code...
+                }
+            } catch (\Exception $e) {
+                continue;
+            }
         }
     }
 }
