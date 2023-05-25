@@ -36,6 +36,8 @@ Route::controller(APIGuruController::class)->group( function() {
     Route::delete('delete/guru', 'destroy');
 
     Route::delete('reset/guru', 'reset');
+    Route::get('get_guru_detail', 'getGuruDetail');
+    
 });
 
 use App\Http\Controllers\API\APIKelasController;

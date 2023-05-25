@@ -160,4 +160,23 @@ class APIGuruController extends Controller
             ],400);
         }
     }
+
+    public function getGuruDetail()
+    {
+        try {
+            $guru = GuruMataPelajaran::with('Guru','MataPelajaran')->get();
+            return response()->json([
+                'status' => 200,
+                'message' => 'berhasil ditampilkan',
+                'data' => $guru
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Data gagal dihapus',
+                'error' => $e
+            ],400);
+        }
+        
+    }
 }
