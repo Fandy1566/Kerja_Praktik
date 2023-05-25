@@ -56,9 +56,8 @@ Route::get('/jam_pelajaran', function () {
     return view('dashboard.jam_pelajaran.index', compact('hari'));
 })->name('jampel');
 
-Route::get('/penjadwalan', function () {
-    return view('dashboard.penjadwalan.index');
-})->name('jadwal');
+use App\Http\Controllers\PenjadwalanController;
+Route::get('/penjadwalan', [PenjadwalanController::class, 'index'])->name('jadwal');
 
 Route::get('/pengaturan', function () {
     return view('pengaturan');

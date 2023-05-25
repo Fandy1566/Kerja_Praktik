@@ -10,4 +10,10 @@ class JadwalMengajar extends Model
     use HasFactory;
 
     protected $table = "jadwal_mengajar";
+
+    public function hari()
+    {
+        return $this->belongsTo(Hari::class, 'id_hari', 'id');
+
+    }
 }

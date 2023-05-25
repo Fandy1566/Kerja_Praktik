@@ -531,3 +531,49 @@ h2#title-penjadwalan{
     margin-right: 12px;
     margin-top: 12px;
 }
+
+.table-check{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table-check tbody tr{
+    height: 75px;
+}
+
+.table-check th{
+    background-color: #345678;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: start;
+}
+
+.table-check td, .table-check th{
+    border: 1px solid var(--color-tertiary);
+}
+
+.table-check select{
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.table-check td:not(:first-child):not(:nth-child(2)){
+    min-width: 200px;
+}
+
+.table-check td:first-child {
+    min-width: 100px;
+}
+
+.table-check td:nth-child(2) {
+    min-width: 150px;
+}
+
+.penjadwalan-select-guru{
+    width: 100%;
+}
+.penjadwalan-select-mata-pelajaran{
+    width: 100%;
+}

@@ -25,16 +25,15 @@ class MataPelajaranSeeder extends Seeder
             ["PJOK", 3],
             ["Prakarya", 2]
         ];
-        $tingkat = ["7","8","9"];
+        // $tingkat = ["7","8","9"];
 
         foreach ($mapel as $mapel) {
-            foreach ($tingkat as $level) {
-                DB::table('mata_pelajaran')->insert([
-                    'nama_mata_pelajaran' => $mapel[0],
-                    'tingkat' => $level,
-                    'banyak' => $mapel[1]
-                ]);
-            }
+            DB::table('mata_pelajaran')->insert([
+                'nama_mata_pelajaran' => $mapel[0],
+                'tingkat' => "7",
+                'banyak' => $mapel[1]
+            ]);
+
         }
     }
 }

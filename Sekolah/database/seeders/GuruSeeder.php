@@ -15,14 +15,14 @@ class GuruSeeder extends Seeder
     {
         $nama_guru =[
             ["Jani Suspandi, S.Pd.I.",[1]],
-            ["Rama Hardiansyah, S.Pd",[2,3]],
-            ["Elfa Yuliana, S.Ag",[2]],
-            ["Asih Frakensi, M.Pd",[3]],
-            ["Sri Madarni, S.Pd.",[6]],
-            ["Safiq Farisi Sayoga, S.Pd.",[4,5]],
-            ["Eulis Kurniati, S.Pd",[4,20]],
-            ["Hj. Dewi Muryani, S.Pd",[9]],
-            ["Andiyati",[8]],
+            ["Rama Hardiansyah, S.Pd"],
+            ["Elfa Yuliana, S.Ag"],
+            ["Asih Frakensi, M.Pd"],
+            ["Sri Madarni, S.Pd."],
+            ["Safiq Farisi Sayoga, S.Pd."],
+            ["Eulis Kurniati, S.Pd"],
+            ["Hj. Dewi Muryani, S.Pd"],
+            ["Andiyati"],
             ["Helga Amanda, S.Pd"],
             ["Weni Agustin, S.Pd"],
             ["Karina Balqis, M.Pd"],
@@ -62,9 +62,7 @@ class GuruSeeder extends Seeder
                 'is_guru_tetap' => 1,
             ]);
             try {
-                foreach ($nama[1] as $id_mapel) {
-                    # code...
-                }
+
             } catch (\Exception $e) {
                 continue;
             }

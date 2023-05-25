@@ -14,12 +14,12 @@
                     <label>Mata Pelajaran</label>
                     <input type="text" name="nama_mata_pelajaran" placeholder="Masukkan nama Mata Pelajaran..">
                 </div>
-                <div class="pengaturan-username" style="margin-top: 12px;">
+                {{-- <div class="pengaturan-username" style="margin-top: 12px;">
                     <label>Total Jam</label>
                     <input type="text" name="banyak" placeholder="Masukkan Total Jam..">
-                </div>
+                </div> --}}
             </div>
-            <div class="right-side-form" style="margin-left: 32px;">
+            {{-- <div class="right-side-form" style="margin-left: 32px;">
                 <div class="pengaturan-rb">
                     <label>Kategori</label>
                 </div>
@@ -35,7 +35,7 @@
                     <input type="Checkbox" name="tingkat" id="" value="9">
                     <label for="" style="margin-left: 12px;">Kelas IX</label>
                 </div>
-            </div>
+            </div> --}}
             <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
         </form>
     </div>
@@ -59,7 +59,7 @@
                     <th><input type="checkbox" onchange="checkAll()"></th>
                     <th>ID Mata Pelajaran</th>
                     <th>Mata Pelajaran</th>
-                    <th>Total Jam / Minggu</th>
+                    {{-- <th>Total Jam / Minggu</th> --}}
                     <th>Edit</th>
                 </tr>
             </thead>
@@ -123,7 +123,6 @@
                             return "?";
                     }
                     })()})</td>
-                    <td>${element.banyak}</td>
                     <td>
                         <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>
@@ -154,7 +153,6 @@
                             return "?";
                     }
                     })()})</td>
-                    <td>${element.banyak}</td>
                     <td>
                         <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>
@@ -181,27 +179,6 @@
                         <label>Mata Pelajaran</label>
                         <input type="text" name="nama_mata_pelajaran" placeholder="Masukkan nama Mata Pelajaran.." value ="${obj.nama_mata_pelajaran}">
                     </div>
-                    <div class="pengaturan-username" style="margin-top: 12px;">
-                        <label>Total Jam</label>
-                        <input type="text" name="banyak" placeholder="Masukkan Total Jam.." value ="v">
-                    </div>
-                </div>
-                <div class="right-side-form" style="margin-left: 32px;">
-                    <div class="pengaturan-rb">
-                        <label>Kategori</label>
-                    </div>
-                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                        <input type="Checkbox" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="7">
-                        <label for="" style="margin-left: 12px;">Kelas VII</label>
-                    </div>
-                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                        <input type="Checkbox" name="tingkat" id="" ${obj.tingkat == 8?'checked':''} value="8">
-                        <label for="" style="margin-left: 12px;">Kelas VIII</label>
-                    </div>
-                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                        <input type="Checkbox" name="tingkat" id="" ${obj.tingkat == 9?'checked':''} value="9">
-                        <label for="" style="margin-left: 12px;">Kelas IX</label>
-                    </div>
                 </div>
                 <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="updateData(${obj.id})">
             </form>
@@ -217,6 +194,5 @@
     function showFormStore() {
         formArea.innerHTML = formStore;
     }
-
 </script>
 @endsection
