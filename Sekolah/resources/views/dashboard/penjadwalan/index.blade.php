@@ -280,7 +280,7 @@
             renderAllSelect(i)
         }
 
-        unction selectmp7(i,j) {
+        function selectmp7(i,j) {
             const tbl = document.querySelector(".table-7");
             array_7_mp[i][j] = parseInt(tbl.querySelector(`#select-mp-${i}-${j}`).value);
             // console.log(array_7,[i,j]);
