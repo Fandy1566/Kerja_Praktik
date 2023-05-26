@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guru_mata_pelajaran', function (Blueprint $table) {
+        Schema::create('guru_detail', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("id_guru");
             $table->foreign("id_guru")->references("id")->on("guru")->onDelete("cascade");
-            $table->unsignedBigInteger("id_mata_pelajaran");
-            $table->foreign("id_mata_pelajaran")->references("id")->on("mata_pelajaran")->onDelete("cascade");
+            $table->enum('tingkat', [7,8,9]);
             $table->timestamps();
         });
     }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\GuruMapelDetail;
+use App\Models\GuruKelasDetail;
 use App\Models\GuruMataPelajaran;
 use Illuminate\Http\Request;
 use App\Models\Guru;
@@ -41,6 +41,8 @@ class APIGuruController extends Controller
     public function store(Request $request)
     {
         try {
+            DB::beginTransaction(); 
+        
             $guru = new Guru;
             $increment = DB::select("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA ='" . env('DB_DATABASE') . "' AND TABLE_NAME ='" . $guru->getTable() . "'")[0]->AUTO_INCREMENT;
             $guru->nama_guru = $request->nama_guru;
@@ -54,12 +56,16 @@ class APIGuruController extends Controller
                 $guruMapelDetail->save();
             }
 
+            DB::commit();
+
             return response()->json([
                 'status' => 200,
                 'message' => 'Data '.$guru->nama_guru.' berhasil di simpan',
                 'data' => $guru
             ]);
         } catch (\Exception $e) {
+            DB::rollBack();
+
             return response()->json([
                 'status' => 400,
                 'message' => 'Data gagal di simpan',
@@ -71,12 +77,24 @@ class APIGuruController extends Controller
 
     public function update(Request $request, string $id)
     {
+        DB::beginTransaction(); 
+
         try {
             $guru = Guru::find($id);
             if ($guru) {
                 $guru->nama_guru = $request->nama_guru;
-                $guru->is_guru_tetap = $request->is_guru_tetap;$guru->nama_guru = $request->nama_guru;
+                $guru->is_guru_tetap = $request->is_guru_tetap;
                 $guru->save();
+
+                foreach ($request->kelas as $value) {
+                    $guruMapelDetail = new GuruKelasDetail;
+                    $guruMapelDetail->id_guru = $id;
+                    $guruMapelDetail->kelas = $value;
+                    $guruMapelDetail->save();
+                }
+
+                DB::commit();
+
                 return response()->json([
                     'status' => 200,
                     'message' => 'Data '.$guru->nama_guru.' berhasil di update',
@@ -88,7 +106,10 @@ class APIGuruController extends Controller
                     'message' => 'Data tidak ditemukan',
                 ],400);
             }
+
         } catch (\Exception $e) {
+            DB::rollBack();
+
             return response()->json([
                 'status' => 400,
                 'message' => 'Data gagal diupdate',

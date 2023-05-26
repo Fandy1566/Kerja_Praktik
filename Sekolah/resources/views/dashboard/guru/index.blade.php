@@ -19,8 +19,11 @@
                     <input type="text" name="nama_guru" placeholder="Masukkan nama guru..">
                 </div>
                 <div class="pengaturan-username" style="margin-top: 12px;">
-                    <label>Mata Pelajaran</label>
-                    <select id="select-multiple" name="id_mata_pelajaran[]" multiple="multiple" placeholder="Masukan mata pelajaran..">
+                    <label>Kelas</label>
+                    <select id="select-multiple" name="kelas[]" multiple="multiple" placeholder="Masukan mata pelajaran..">
+                        <option value="7">Kelas 7</option>
+                        <option value="8">Kelas 8</option>
+                        <option value="9">Kelas 9</option>
                     </select>
                 </div>
             </div>
@@ -91,7 +94,7 @@
 
     $(document).ready(function() {
         $('#select-multiple').select2({
-            placeholder: "Pilih Mata Pelajaran.."
+            placeholder: "Pilih Kelas.."
         });
     });
 
@@ -158,34 +161,34 @@
 
     const url = window.location.origin+"/api/guru";
 
-    async function getMapel() {
-        try {
-            const response = await fetch(window.location.origin+"/api/mata_pelajaran");
-            const data = await response.json();
-            const select = document.querySelector('#select-multiple');
-            let options = "";
-            data.data.forEach(element => {
-                const newOption = `
-                    <option value="${element.id}">${element.nama_mata_pelajaran} (${(() => {
-                        switch (element.tingkat) {
-                        case "7":
-                            return "VII";
-                        case "8":
-                            return "VIII";
-                        case "9":
-                            return "IX";
-                        default:
-                            return "?";
-                    }
-                    })()})</option>
-                `;
-                options += newOption;
-            });
-            select.innerHTML = options;
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
+    // async function getMapel() {
+    //     try {
+    //         const response = await fetch(window.location.origin+"/api/mata_pelajaran");
+    //         const data = await response.json();
+    //         const select = document.querySelector('#select-multiple');
+    //         let options = "";
+    //         data.data.forEach(element => {
+    //             const newOption = `
+    //                 <option value="${element.id}">${element.nama_mata_pelajaran} (${(() => {
+    //                     switch (element.tingkat) {
+    //                     case "7":
+    //                         return "VII";
+    //                     case "8":
+    //                         return "VIII";
+    //                     case "9":
+    //                         return "IX";
+    //                     default:
+    //                         return "?";
+    //                 }
+    //                 })()})</option>
+    //             `;
+    //             options += newOption;
+    //         });
+    //         select.innerHTML = options;
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //     }
+    // }
 
     function Edit(obj) {
         formArea.innerHTML = "";

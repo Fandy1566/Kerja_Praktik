@@ -259,6 +259,7 @@ p{
 
 .button{
     margin-top: 20px;
+    border: 1px ;
 }
 
 button#batal{
