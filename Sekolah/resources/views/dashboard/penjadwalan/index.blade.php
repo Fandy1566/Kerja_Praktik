@@ -85,7 +85,7 @@
                                         <option value="{{$item3->id}}">{{$item3->nama_guru}}</option>
                                     @endforeach
                                 </select>
-                                <select class="clickable penjadwalan-select-mata-pelajaran" name="" id="">
+                                <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp7({{$j}},{{$i}})">
                                     <option value="">Pilih Mata Pelajaran</option>
                                     @foreach ($mataPelajaran as $item3)
                                         <option value="{{$item3->id}}">{{$item3->nama_mata_pelajaran}}</option>
@@ -134,7 +134,7 @@
                                     <option value="{{$item3->id}}">{{$item3->nama_guru}}</option>
                                 @endforeach
                             </select>
-                            <select class="clickable penjadwalan-select-mata-pelajaran" name="" id="">
+                            <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp8({{$j}},{{$i}})">
                                 <option value="">Pilih Mata Pelajaran</option>
                                 @foreach ($mataPelajaran as $item3)
                                     <option value="{{$item3->id}}">{{$item3->nama_mata_pelajaran}}</option>
@@ -183,7 +183,7 @@
                                     <option value="{{$item3->id}}">{{$item3->nama_guru}}</option>
                                 @endforeach
                             </select>
-                            <select class="clickable penjadwalan-select-mata-pelajaran" name="" id="">
+                            <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp9({{$j}},{{$i}})">
                                 <option value="">Pilih Mata Pelajaran</option>
                                 @foreach ($mataPelajaran as $item3)
                                     <option value="{{$item3->id}}">{{$item3->nama_mata_pelajaran}}</option>
@@ -203,14 +203,19 @@
         let rows = {{count($filtered_7)}};
         const columns = {{count($jadwalMengajar)}}
         const array_7 = [];
+        const array_7_mp = [];
         const array_8 = [];
+        const array_8_mp = [];
         const array_9 = [];
+        const array_9_mp = [];
 
         // Initialize the empty array
         for (let i = 0; i < columns; i++) {
             array_7[i] = [];
+            array_7_mp[i] = [];
             for (let j = 0; j < rows; j++) {
                 array_7[i][j] = null;
+                array_7_mp[i][j] = null;
             }
         }
 
@@ -218,8 +223,10 @@
 
         for (let i = 0; i < columns; i++) {
             array_8[i] = [];
+            array_8_mp[i] = [];
             for (let j = 0; j < rows; j++) {
                 array_8[i][j] = null;
+                array_8_mp[i][j] = null;
             }
         }
 
@@ -227,8 +234,10 @@
 
         for (let i = 0; i < columns; i++) {
             array_9[i] = [];
+            array_9_mp[i] = [];
             for (let j = 0; j < rows; j++) {
                 array_9[i][j] = null;
+                array_9_mp[i][j] = null;
             }
         }
 
@@ -253,21 +262,42 @@
         function select7(i,j) {
             const tbl = document.querySelector(".table-7");
             array_7[i][j] = parseInt(tbl.querySelector(`#select-${i}-${j}`).value);
-            console.log(array_7,[i,j]);
+            // console.log(array_7,[i,j]);
             renderAllSelect(i)
         }
 
         function select8(i,j) {
             const tbl = document.querySelector(".table-8");
             array_8[i][j] = parseInt(tbl.querySelector(`#select-${i}-${j}`).value);
-            console.log(array_8,[i,j]);
+            // console.log(array_8,[i,j]);
             renderAllSelect(i)
         }
 
         function select9(i,j) {
             const tbl = document.querySelector(".table-9");
             array_9[i][j] = parseInt(tbl.querySelector(`#select-${i}-${j}`).value);
-            console.log(array_9,[i,j]);
+            // console.log(array_9,[i,j]);
+            renderAllSelect(i)
+        }
+
+        unction selectmp7(i,j) {
+            const tbl = document.querySelector(".table-7");
+            array_7_mp[i][j] = parseInt(tbl.querySelector(`#select-mp-${i}-${j}`).value);
+            // console.log(array_7,[i,j]);
+            renderAllSelect(i)
+        }
+
+        function selectmp8(i,j) {
+            const tbl = document.querySelector(".table-8");
+            array_8_mp[i][j] = parseInt(tbl.querySelector(`#select-mp-${i}-${j}`).value);
+            // console.log(array_8,[i,j]);
+            renderAllSelect(i)
+        }
+
+        function selectmp9(i,j) {
+            const tbl = document.querySelector(".table-9");
+            array_9_mp[i][j] = parseInt(tbl.querySelector(`#select-mp-${i}-${j}`).value);
+            // console.log(array_9,[i,j]);
             renderAllSelect(i)
         }
 
