@@ -13,7 +13,7 @@ class APIUserController extends Controller
     public function index()
     {
         try {
-            $guru = User::with('GuruDetail')->where('is_admin','=','0')->get();
+            $guru = User::with('GuruDetail')->get();
             if ($guru) {
                 return response()->json([
                     'status' => 200,

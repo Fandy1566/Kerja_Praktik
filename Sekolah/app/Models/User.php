@@ -49,4 +49,8 @@ class User extends Authenticatable
         return $this->hasMany(GuruDetail::class, 'id_guru', 'id');
     }
 
+    public function isAdmin(){
+        return $this->is_admin == 1;
+    }
+
 }

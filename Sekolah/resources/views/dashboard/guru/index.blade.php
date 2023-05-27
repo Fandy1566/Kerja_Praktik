@@ -6,6 +6,7 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Guru'])
+@can('Admin')
 <div id="form-layout" class="card m-20" style="width: 55%">
     <div class="title-card">
         Input Guru
@@ -44,7 +45,7 @@
         </form>
     </div>
 </div>
-
+@endcan
 
 <div class="card m-32">
     <div class="title-card">
@@ -66,7 +67,9 @@
                     <th data-sort="name">Nama Guru</th>
                     <th data-sort="guru_detail">Kelas</th>
                     <th data-sort="is_guru_tetap">Status</th>
+                    @can('Admin')
                     <th>Edit</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -85,12 +88,64 @@
 @endsection
 @section('script')
 <script>
+    const isAdmin = {{ auth()->user()->can('Admin') ? 'true' : 'false' }};
 
     document.querySelector('#nextButton').addEventListener('click', nextPage, false);
     document.querySelector('#prevButton').addEventListener('click', previousPage, false);
 
-    const formArea = document.querySelector('#form-layout');
-    const formStore = formArea.innerHTML;
+    if (isAdmin) {
+        const formArea = document.querySelector('#form-layout');
+        const formStore = formArea.innerHTML;
+
+        function Edit(obj) {
+            formArea.innerHTML = "";
+            const formEdit = `
+            <div class="title-card">
+            Edit Guru
+            </div>
+            <div class="form-area">
+                <form class="edit flex-row">
+                    <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+                    <div class="left-side-form" >
+                        <div class="pengaturan-username">
+                            <label>Nama Guru</label>
+                            <input type="text" name="nama_guru" placeholder="Masukkan nama guru.." value ="${obj.nama_guru}">
+                        </div>
+                        <div class="pengaturan-username" style="margin-top: 12px;">
+                            <label>Mata Pelajaran</label>
+                            <select id="select-multiple" name="id_mata_pelajaran[]" multiple="multiple" placeholder="Masukan mata pelajaran..">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="right-side-form" style="margin-left: 32px;">
+                        <div class="pengaturan-rb">
+                            <label>Kategori</label>
+                        </div>
+                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                            <input type="radio" name="is_guru_tetap" id="" ${obj.is_guru_tetap == 1?'checked':''} value="1">
+                            <label for="" style="margin-left: 12px;">Guru Tetap</label>
+                        </div>
+                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                            <input type="radio" name="is_guru_tetap" id="" ${obj.is_guru_tetap == 0?'checked':''}  value="0">
+                            <label for="" style="margin-left: 12px;">Guru Honorer</label>
+                        </div>
+                    </div>
+                    <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="updateData(${obj.id})">
+                </form>
+            </div>
+            `;
+            document.querySelector('.content').scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+            formArea.innerHTML = formEdit;
+        }
+
+        function showFormStore() {
+            formArea.innerHTML = formStore;
+        }
+        
+    }
 
     $(document).ready(function() {
         $('#select-multiple').select2({
@@ -105,138 +160,43 @@
         let result = '';
         checkIfOffset()
 
+        let data = table_data;
+
         if (filter !=="" || filter !== null) {
-            table_data.filter(item => {
+            data = table_data.filter(item => {
                 const value = item[input.dataset.colName].toUpperCase();
                 return value.includes(filter);
-            }).filter((row, index) => {
-                let start = (curPage - 1) * pageSize;
-                let end = curPage * pageSize;
-                if (index >= start && index < end) return true;
-            }).forEach(element => {
-                result += `
-                <tr>
-                    <td class="center-text"><input type="checkbox" value="${element.id}"></td>
-                    <td>${element.id}</td>
-                    <td id="nama_guru">${element.name}</td>
-                    <td>${element.guru_detail.map(mp => mp.kelas).join(', ')}</td>
-                    <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
-                    <td>
-                    <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
-                    </td>
-                </tr>
-                `;
             });
-            renderPagination();
-        } else {
-            // Render table without filtering
-            table_data.filter((row, index) => {
-                let start = (curPage - 1) * pageSize;
-                let end = curPage * pageSize;
-                if (index >= start && index < end) return true;
-            }).forEach(element => {
-                result += `
-                <tr>
-                    <td class="center-text"><input type="checkbox" value="${element.id}"></td>
-                    <td>${element.id}</td>
-                    <td id="nama_guru">${element.name}</td>
-                    <td>${element.guru_detail.map(mp => mp.kelas).join(', ')}</td>
-                    <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
-                    <td>
-                    <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
-                    </td>
-                </tr>
-                `;
-            });
-            renderPagination();
         }
+
+        data.filter((row, index) => {
+                let start = (curPage - 1) * pageSize;
+                let end = curPage * pageSize;
+                if (index >= start && index < end) return true;
+            }).forEach(element => {
+                result += `
+                <tr>
+                    <td class="center-text"><input type="checkbox" value="${element.id}"></td>
+                    <td>${element.id}</td>
+                    <td id="nama_guru">${element.name}</td>
+                    <td>${element.guru_detail.map(mp => mp.kelas).join(', ')}</td>
+                    <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
+                    <td>
+                        ${isAdmin ? `<button onclick='Edit(${JSON.stringify(element)})'>Edit</button>` : ''}
+                    </td>
+                </tr>
+                `;
+            });
+            renderPagination();
 
         tblBody.innerHTML = result;
     }
 
     window.addEventListener('load', function() {
         getData();
-        // getMapel();
     });
 
     const url = window.location.origin+"/api/guru";
-
-    // async function getMapel() {
-    //     try {
-    //         const response = await fetch(window.location.origin+"/api/mata_pelajaran");
-    //         const data = await response.json();
-    //         const select = document.querySelector('#select-multiple');
-    //         let options = "";
-    //         data.data.forEach(element => {
-    //             const newOption = `
-    //                 <option value="${element.id}">${element.nama_mata_pelajaran} (${(() => {
-    //                     switch (element.tingkat) {
-    //                     case "7":
-    //                         return "VII";
-    //                     case "8":
-    //                         return "VIII";
-    //                     case "9":
-    //                         return "IX";
-    //                     default:
-    //                         return "?";
-    //                 }
-    //                 })()})</option>
-    //             `;
-    //             options += newOption;
-    //         });
-    //         select.innerHTML = options;
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //     }
-    // }
-
-    function Edit(obj) {
-        formArea.innerHTML = "";
-        const formEdit = `
-        <div class="title-card">
-        Edit Guru
-        </div>
-        <div class="form-area">
-            <form class="edit flex-row">
-                <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-                <div class="left-side-form" >
-                    <div class="pengaturan-username">
-                        <label>Nama Guru</label>
-                        <input type="text" name="nama_guru" placeholder="Masukkan nama guru.." value ="${obj.nama_guru}">
-                    </div>
-                    <div class="pengaturan-username" style="margin-top: 12px;">
-                        <label>Mata Pelajaran</label>
-                        <select id="select-multiple" name="id_mata_pelajaran[]" multiple="multiple" placeholder="Masukan mata pelajaran..">
-                        </select>
-                    </div>
-                </div>
-                <div class="right-side-form" style="margin-left: 32px;">
-                    <div class="pengaturan-rb">
-                        <label>Kategori</label>
-                    </div>
-                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                        <input type="radio" name="is_guru_tetap" id="" ${obj.is_guru_tetap == 1?'checked':''} value="1">
-                        <label for="" style="margin-left: 12px;">Guru Tetap</label>
-                    </div>
-                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                        <input type="radio" name="is_guru_tetap" id="" ${obj.is_guru_tetap == 0?'checked':''}  value="0">
-                        <label for="" style="margin-left: 12px;">Guru Honorer</label>
-                    </div>
-                </div>
-                <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="updateData(${obj.id})">
-            </form>
-        </div>
-        `;
-        document.querySelector('.content').scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-        formArea.innerHTML = formEdit;
-    }
-
-    function showFormStore() {
-        formArea.innerHTML = formStore;
-    }
 
 </script>
 @endsection

@@ -132,7 +132,7 @@
     }
 
     function checkIfOffset() {
-        if (curPage > getLengthPage()) {
+        if (curPage > getLengthPage() && getLengthPage() != 0 ) {
             setCurrentPage(getLengthPage());
         }
     }

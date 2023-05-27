@@ -2,36 +2,38 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Kelas'])
-<div id="form-layout" class="card m-20" style="width: 55%">
-    <div class="title-card">
-        Input Kelas
+@can('Admin')
+    <div id="form-layout" class="card m-20" style="width: 55%">
+        <div class="title-card">
+            Input Kelas
+        </div>
+        <div class="form-area">
+            <form class="store" style="display: flex; flex-direction: row;">
+                <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+                <div class="left-side-form">
+                    <label>Tambah Kelas</label>
+                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                            <input type="radio" name="tingkat" id="" checked value="7">
+                            <label for="" style="margin-left: 12px;">Kelas VII</label>
+                        </div>
+                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                            <input type="radio" name="tingkat" id="" value="8">
+                            <label for="" style="margin-left: 12px;">Kelas VIII</label>
+                        </div>
+                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                            <input type="radio" name="tingkat" id="" value="9">
+                            <label for="" style="margin-left: 12px;">Kelas IX</label>
+                        </div>
+                </div>
+                <div class="right-side-form flex-column" style="margin-left: 64px; margin-top: 4px;">
+                    <label for="" style="margin-bottom: 12px;">Lantai Kelas</label>
+                    <input type="number" name="lantai" id="" min="1" placeholder="Masukan Lantai.." value="1">
+                </div>
+                <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
+            </form>
+        </div>
     </div>
-    <div class="form-area">
-        <form class="store" style="display: flex; flex-direction: row;">
-            <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-            <div class="left-side-form">
-                <label>Tambah Kelas</label>
-                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                        <input type="radio" name="tingkat" id="" checked value="7">
-                        <label for="" style="margin-left: 12px;">Kelas VII</label>
-                    </div>
-                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                        <input type="radio" name="tingkat" id="" value="8">
-                        <label for="" style="margin-left: 12px;">Kelas VIII</label>
-                    </div>
-                    <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                        <input type="radio" name="tingkat" id="" value="9">
-                        <label for="" style="margin-left: 12px;">Kelas IX</label>
-                    </div>
-            </div>
-            <div class="right-side-form flex-column" style="margin-left: 64px; margin-top: 4px;">
-                <label for="" style="margin-bottom: 12px;">Lantai Kelas</label>
-                <input type="number" name="lantai" id="" min="1" placeholder="Masukan Lantai.." value="1">
-            </div>
-            <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
-        </form>
-    </div>
-</div>
+@endcan
 
 <div class="card m-32">
     <div class="title-card">
@@ -70,12 +72,58 @@
 @endsection
 @section('script')
 <script>
-    
+    const isAdmin = {{ auth()->user()->can('Admin') ? 'true' : 'false' }};
+
     document.querySelector('#nextButton').addEventListener('click', nextPage, false);
     document.querySelector('#prevButton').addEventListener('click', previousPage, false);
 
-    const formArea = document.querySelector('#form-layout');
-    const formStore = formArea.innerHTML;
+    if (isAdmin) {
+        const formArea = document.querySelector('#form-layout');
+        const formStore = formArea.innerHTML;
+        
+        function Edit(obj) {
+        formArea.innerHTML = "";
+            const formEdit = `
+            <div class="title-card">
+            Input Kelas
+            </div>
+            <div class="form-area">
+                <form class="edit" style="display: flex; flex-direction: row;">
+                    <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
+                    <div class="left-side-form">
+                        <label>Tambah Kelas</label>
+                            <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                                <input type="radio" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="7">
+                                <label for="" style="margin-left: 12px;">Kelas VII</label>
+                            </div>
+                            <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                                <input type="radio" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="8">
+                                <label for="" style="margin-left: 12px;">Kelas VIII</label>
+                            </div>
+                            <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                                <input type="radio" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="9">
+                                <label for="" style="margin-left: 12px;">Kelas IX</label>
+                            </div>
+                    </div>
+                    <div class="right-side-form flex-column" style="margin-left: 64px; margin-top: 4px;">
+                        <label for="" style="margin-bottom: 12px;">Lantai Kelas</label>
+                        <input type="number" name="lantai" id="" min="1" placeholder="Masukan Lantai.." value="${obj.lantai}">
+                    </div>
+                    <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="updateData(${obj.id})">
+                </form>
+            </div>
+            `;
+            document.querySelector('.content').scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+            formArea.innerHTML = formEdit;
+        }
+
+        function showFormStore() {
+            formArea.innerHTML = formStore;
+        }
+    }
 
     window.onload = () => {
         getData();
@@ -89,94 +137,35 @@
         let result = '';
         checkIfOffset()
 
+        let data = table_data;
+
         if (filter !=="" || filter !== null) {
-            table_data.filter(item => {
+            data = table_data.filter(item => {
                 const value = item[input.dataset.colName].toUpperCase();
                 return value.includes(filter);
-            }).filter((row, index) => {
-                let start = (curPage - 1) * pageSize;
-                let end = curPage * pageSize;
-                if (index >= start && index < end) return true;
-            }).forEach(element => {
-                result += `
-                <tr>
-                    <td class="center-text"><input type="checkbox"></td>
-                    <td>${element.id}</td>
-                    <td id="nama_kelas">${element.nama_kelas}</td>
-                    <td id="lantai">${element.lantai}</td>
-                    <td>
-                    <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
-                    </td>
-                </tr>
-                `;
-                renderPagination();
-            });
-        } else {
-            // Render table without filtering
-            table_data.filter((row, index) => {
-                let start = (curPage - 1) * pageSize;
-                let end = curPage * pageSize;
-                if (index >= start && index < end) return true;
-            }).forEach(element => {
-                result += `
-                <tr>
-                    <td class="center-text"><input type="checkbox"></td>
-                    <td>${element.id}</td>
-                    <td id="nama_kelas">${element.nama_kelas}</td>
-                    <td id="lantai">${element.lantai}</td>
-                    <td>
-                    <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
-                    </td>
-                </tr>
-                `;
-                renderPagination();
             });
         }
 
-        tblBody.innerHTML = result;
-    }
-
-    function Edit(obj) {
-        formArea.innerHTML = "";
-        const formEdit = `
-        <div class="title-card">
-        Input Kelas
-        </div>
-        <div class="form-area">
-            <form class="edit" style="display: flex; flex-direction: row;">
-                <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-                <div class="left-side-form">
-                    <label>Tambah Kelas</label>
-                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                            <input type="radio" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="7">
-                            <label for="" style="margin-left: 12px;">Kelas VII</label>
-                        </div>
-                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                            <input type="radio" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="8">
-                            <label for="" style="margin-left: 12px;">Kelas VIII</label>
-                        </div>
-                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                            <input type="radio" name="tingkat" id="" ${obj.tingkat == 7?'checked':''} value="9">
-                            <label for="" style="margin-left: 12px;">Kelas IX</label>
-                        </div>
-                </div>
-                <div class="right-side-form flex-column" style="margin-left: 64px; margin-top: 4px;">
-                    <label for="" style="margin-bottom: 12px;">Lantai Kelas</label>
-                    <input type="number" name="lantai" id="" min="1" placeholder="Masukan Lantai.." value="${obj.lantai}">
-                </div>
-                <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="updateData(${obj.id})">
-            </form>
-        </div>
-        `;
-        document.querySelector('.content').scrollTo({
-            top: 0,
-            behavior: "smooth"
+        data.filter((row, index) => {
+            let start = (curPage - 1) * pageSize;
+            let end = curPage * pageSize;
+            if (index >= start && index < end) return true;
+        }).forEach(element => {
+            result += `
+            <tr>
+                <td class="center-text"><input type="checkbox"></td>
+                <td>${element.id}</td>
+                <td id="nama_kelas">${element.nama_kelas}</td>
+                <td id="lantai">${element.lantai}</td>
+                <td>
+                <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
+                </td>
+            </tr>
+            `;
+            renderPagination();
         });
-        formArea.innerHTML = formEdit;
-    }
 
-    function showFormStore() {
-        formArea.innerHTML = formStore;
+        tblBody.innerHTML = result;
     }
 
 </script>
