@@ -37,7 +37,7 @@
 
 <div class="card m-32">
     <div class="title-card">
-        Guru
+        Kelas
     </div>
     <div class="table-top" style="margin-left: 12px;">
         <input data-col-name="nama_kelas" class="search" style="width: 70%;" type="text" onkeyup="renderTable()" placeholder="Cari Kelas" id="search">
@@ -50,11 +50,13 @@
         <table id="tbl">
             <thead>
                 <tr>
-                    <th><input type="checkbox" onchange="checkAll()"></th>
+                    <th style="width: 5%"><input type="checkbox" onchange="checkAll()"></th>
                     <th>ID Kelas</th>
                     <th>Kelas</th>
                     <th>Lantai</th>
+                    @can('Admin')
                     <th>Edit</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -158,7 +160,7 @@
                 <td id="nama_kelas">${element.nama_kelas}</td>
                 <td id="lantai">${element.lantai}</td>
                 <td>
-                <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
+                    ${isAdmin ? `<button onclick='Edit(${JSON.stringify(element)})'>Edit</button>` : ''}
                 </td>
             </tr>
             `;

@@ -6,6 +6,7 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Guru'])
+{{ Auth::user()->guruDetail[0]->tingkat}}
 @can('Admin')
 <div id="form-layout" class="card m-20" style="width: 55%">
     <div class="title-card">
@@ -62,11 +63,11 @@
         <table id="tbl">
             <thead>
                 <tr>
-                    <th><input type="checkbox" onchange="checkAll()"></th>
-                    <th data-sort="id">ID  Guru</th>
-                    <th data-sort="name">Nama Guru</th>
-                    <th data-sort="guru_detail">Kelas</th>
-                    <th data-sort="is_guru_tetap">Status</th>
+                    <th style="width: 5%"><input type="checkbox" onchange="checkAll()"></th>
+                    <th class="clickable prevent-select" data-sort="id">ID  Guru</th>
+                    <th class="clickable prevent-select" data-sort="name">Nama Guru</th>
+                    <th class="clickable prevent-select" data-sort="guru_detail">Kelas</th>
+                    <th class="clickable prevent-select" data-sort="is_guru_tetap">Status</th>
                     @can('Admin')
                     <th>Edit</th>
                     @endcan

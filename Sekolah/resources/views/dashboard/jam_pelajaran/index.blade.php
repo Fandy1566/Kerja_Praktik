@@ -51,10 +51,10 @@
         <table id="tbl">
             <thead>
                 <tr>
-                    <th><input type="checkbox" onchange="checkAll(this)"></th>
+                    <th style="width: 5%"><input type="checkbox" onchange="checkAll(this)"></th>
                     {{-- <th>ID Jam Pelajaran</th> --}}
-                    <th>Hari</th>
-                    <th>Waktu Pelajaran</th>
+                    <th class="clickable prevent-select" data-sort="id">Hari</th>
+                    <th class="clickable prevent-select" data-sort="waktu_awal">Waktu Pelajaran</th>
                     @can('Admin')
                     <th>Edit</th>
                     @endcan
