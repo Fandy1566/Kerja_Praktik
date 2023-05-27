@@ -31,7 +31,15 @@
             <p>Apakah kamu yakin mau keluar dari akun?</p>
             <div class="button">
                 <button id="batal" onclick="modalLogoutToggle()">Batal</button>
-                <button id="Keluar" onclick="window.loc = '{{ route('logout') }}';">Keluar</button>
+                <form id="keluar" method="POST" action="{{ route('logout') }}">
+                    @csrf
+                
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </a>
+                </form>                
             </div>
         </div>
     </div>
@@ -389,6 +397,7 @@
             const response = await fetch(url);
             const data = await response.json();
             table_data = data.data;
+            console.log(data);
             await renderTable();
         } catch (error) {
             console.error('Error:', error);

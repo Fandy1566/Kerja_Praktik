@@ -14,8 +14,6 @@ return new class extends Migration
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
                 $table->string('nama_'.$this->tableName, 50);
-                $table->enum('tingkat', [7,8,9]);
-                $table->integer('banyak');
                 $table->timestamps();
             });
         }

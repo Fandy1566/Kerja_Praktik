@@ -44,4 +44,9 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
+    public function GuruDetail()
+    {
+        return $this->hasMany(GuruDetail::class, 'id_guru', 'id');
+    }
+
 }

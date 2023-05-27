@@ -4,7 +4,7 @@
     </div>
     <div class="right-side">
     <div class="logo-smp"><img src="{{asset('image/picture/Logo.png')}}" alt=""></div>
-        Administrator
+        {{ Auth::user()->name }}
     </div>
 </div>
 <hr id="header-line">

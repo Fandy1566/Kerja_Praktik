@@ -111,18 +111,7 @@
                 <tr>
                     <td class="center-text"><input type="checkbox" value="${element.id}"></td>
                     <td>${element.id}</td>
-                    <td>${element.nama_mata_pelajaran} (${(() => {
-                        switch (element.tingkat) {
-                        case "7":
-                            return "VII";
-                        case "8":
-                            return "VIII";
-                        case "9":
-                            return "IX";
-                        default:
-                            return "?";
-                    }
-                    })()})</td>
+                    <td>${element.nama_mata_pelajaran}</td>
                     <td>
                         <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
                     </td>

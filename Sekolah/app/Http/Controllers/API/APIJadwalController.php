@@ -67,7 +67,7 @@ class APIJadwalController extends Controller
                     $jadwalDetail->id_jam = ($i+1);
                     $jadwalDetail->id_guru = $request->array8[$i][$j];
                     $jadwalDetail->id_mata_pelajaran = $request->array8_mp[$i][$j];
-                    $jadwalDetail->id_kelas = ($j+1+$count8);
+                    $jadwalDetail->id_kelas = ($j+1+$count8); // slh
                     $jadwalDetail->save();
                 }
             }

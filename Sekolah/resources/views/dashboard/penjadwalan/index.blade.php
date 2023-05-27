@@ -79,18 +79,20 @@
                         <td>{{$item->waktu_awal}} - {{$item->waktu_akhir}}</td>
                         @foreach ($filtered_7 as $i => $item2)
                             <td>
-                                <select class="clickable penjadwalan-select-guru" name="" id="select-{{$j}}-{{$i}}" onchange="select7({{$j}},{{$i}})">
-                                    <option value="">Pilih Guru</option>
-                                    @foreach ($guru as $item3)
-                                        <option value="{{$item3->id}}">{{$item3->nama_guru}}</option>
-                                    @endforeach
-                                </select>
-                                <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp7({{$j}},{{$i}})">
-                                    <option value="">Pilih Mata Pelajaran</option>
-                                    @foreach ($mataPelajaran as $item3)
-                                        <option value="{{$item3->id}}">{{$item3->nama_mata_pelajaran}}</option>
-                                    @endforeach
-                                </select>
+                                <div class="flex-column" style="gap:10px; padding-inline: 10px">
+                                    <select class="clickable penjadwalan-select-guru" name="" id="select-{{$j}}-{{$i}}" onchange="select7({{$j}},{{$i}})">
+                                        <option value="">Pilih Guru</option>
+                                        @foreach ($guru as $item3)
+                                            <option value="{{$item3->id}}">({{$item3->id}}) {{$item3->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp7({{$j}},{{$i}})">
+                                        <option value="">Pilih Mata Pelajaran</option>
+                                        @foreach ($mataPelajaran as $item3)
+                                            <option value="{{$item3->id}}">{{$item3->nama_mata_pelajaran}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </td>
                         @endforeach
                     </tr>
@@ -131,7 +133,7 @@
                             <select class="clickable penjadwalan-select-guru" id="select-{{$j}}-{{$i}}" onchange="select8({{$j}},{{$i}})">
                                 <option value="">Pilih Guru</option>
                                 @foreach ($guru as $item3)
-                                    <option value="{{$item3->id}}">{{$item3->nama_guru}}</option>
+                                    <option value="{{$item3->id}}">({{$item3->id}}) {{$item3->name}}</option>
                                 @endforeach
                             </select>
                             <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp8({{$j}},{{$i}})">
@@ -180,7 +182,7 @@
                             <select class="clickable penjadwalan-select-guru" id="select-{{$j}}-{{$i}}" onchange="select9({{$j}},{{$i}})">
                                 <option value="">Pilih Guru</option>
                                 @foreach ($guru as $item3)
-                                    <option value="{{$item3->id}}">{{$item3->nama_guru}}</option>
+                                    <option value="{{$item3->id}}">({{$item3->id}}) {{$item3->name}}</option>
                                 @endforeach
                             </select>
                             <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp9({{$j}},{{$i}})">
@@ -322,7 +324,7 @@
             option.forEach((element) => {
                 options +=`
                     <option value="${element.id}">
-                        ${element.nama_guru}
+                        (${element.id}) ${element.name}
                     </option>
                 `
             });

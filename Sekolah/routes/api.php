@@ -28,8 +28,8 @@ Route::controller(APIJadwalMengajarController::class)->group( function() {
     Route::delete('reset/jadwal_mengajar', 'reset');
 });
 
-use App\Http\Controllers\API\APIGuruController;
-Route::controller(APIGuruController::class)->group( function() {
+use App\Http\Controllers\API\APIUserController;
+Route::controller(APIUserController::class)->group( function() {
     Route::get('guru', 'index');
     Route::post('guru', 'store');
     Route::post('guru/{id}', 'update');

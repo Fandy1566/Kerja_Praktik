@@ -1,3 +1,23 @@
+@php
+
+    $tingkat = [];
+    for ($i=0; $i < count($kelas); $i++) { 
+        if (!isset($tingkat[$kelas[$i]->tingkat])) {
+            $tingkat[$kelas[$i]->tingkat] = 0;
+        }
+        $tingkat[$kelas[$i]->tingkat] += 1;
+    }
+
+    $guru_kelas = [];
+    for ($i=0; $i < count($guruDetail); $i++) { 
+        if (!isset($guru_kelas[$guruDetail->kelas])) {
+            $guru_kelas[$guruDetail[$i]->kelas] = 0;
+        }
+        $guru_kelas[$guruDetail[$i]->kelas] += 1;
+    }
+
+@endphp
+
 @extends('layouts.dashboard')
 @section('title', 'Dashboard')
 @section('content')
@@ -6,28 +26,28 @@
         <div class="container item-1">
             <div class="item-title">
                 <div class="title1">Jumlah Guru</div>
-                <div class="item1">30</div>
+                <div class="item1">{{count($guru)}}</div>
                 <img src="{{asset('image/icon/guru.svg')}}" style="bottom:10px" alt="">
             </div>
             <div class="item-bot">
-                <a href="">Lihat Detail Guru</a>
+                <a href="{{ route('guru')}}">Lihat Detail Guru</a>
             </div>
         </div>
         <div class="container item-2">
             <div class="item-title">
                 <div class="title1">Jumlah Kelas</div>
-                <div class="item1">23</div>
+                <div class="item1">{{count($kelas)}}</div>
                 <img src="{{asset('image/icon/kelas.svg')}}" style="bottom:10px" alt="">
             </div>
             <div class="item-bot">
-                <a href="">Lihat Detail Kelas</a>
+                <a href="{{ route('kelas')}}">Lihat Detail Kelas</a>
             </div>
         </div>
         <div class="container item-3">
             <div class="item-title2">
                 <div class="left-item">
                     <div class="title2">Mata Pelajaran</div>
-                    <div class="item2">54</div>
+                    <div class="item2">102</div>
                 </div>
                 <div class="right-item">
                     <div class="pb-mapel" style="background-color: #A6CDE5;">
@@ -68,27 +88,27 @@
         <div class="container item-4">
             <div class="item-title">
                 <div class="title1">Mata Pelajaran</div>
-                <div class="item1">54</div>
+                <div class="item1">{{$mataPelajaran}}</div>
                 <img src="{{asset('image/icon/mapel.svg')}}" style="bottom:10px" alt="">
             </div>
             <div class="item-bot">
-                <a href="">Lihat Detail Mata Pelajaran</a>
+                <a href="{{ route('mapel')}}">Lihat Detail Mata Pelajaran</a>
             </div>
         </div>
         <div class="container item-5">
             <div class="item-title">
                 <div class="title1">Jam Pelajaran</div>
-                <div class="item1">37</div>
+                <div class="item1">{{$jadwalMengajar}}</div>
                 <img src="{{asset('image/icon/jampel.svg')}}" style="bottom:10px" alt="">
             </div>
             <div class="item-bot">
-                <a href="">Lihat Detail Jam Pelajaran</a>
+                <a href="{{ route('jampel')}}">Lihat Detail Jam Pelajaran</a>
             </div>
         </div>
         <div class="container item-6">
             <div class="item-title2-1">
-                <div class="title2">Jumlah Jam Mengajar Guru</div>
-                <div class="item2">37</div>
+                <div class="title2">Jumlah Persebaran Guru</div>
+                <div class="item2">{{count($guru)}}</div>
             </div>
             <div class="content-jam">
                 <div class="content-jam-kelas">
@@ -96,7 +116,7 @@
                         Kelas VII
                     </div>
                     <div class="dashboard-jam-kelas">
-                        20/37
+                        {{$guru_kelas["7"] ?? 0}}/{{$tingkat["7"] ?? 0}}
                     </div>
                 </div>
                 <div class="content-jam-kelas">
@@ -104,7 +124,7 @@
                         Kelas VIII
                     </div>
                     <div class="dashboard-jam-kelas">
-                        37/37
+                        {{$guru_kelas["8"] ?? 0}}/{{$tingkat["8"] ?? 0}}
                     </div>
                 </div>
                 <div class="content-jam-kelas">
@@ -112,37 +132,36 @@
                         Kelas IX
                     </div>
                     <div class="dashboard-jam-kelas">
-                        40/37
+                        {{$guru_kelas["9"] ?? 0}}/{{$tingkat["9"] ?? 0}}
                     </div>
                 </div>
             </div>
-            <div class="content-jam-bot">Note : Capai 37 jam mengajar agar mendapat hasil penjadwalan yang lebih baik</div>
+            <div class="content-jam-bot">Note : Capai target jumlah guru agar mendapat hasil penjadwalan yang lebih baik</div>
         </div>
         <div class="container item-7">
             <div class="item-title3">
                 <div class="title2">Peringatan!!</div>
             </div>
-            <div class="content-peringatan1">
-            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
-            </div>
-            <div class="content-peringatan">
-            Kurangkan waktu mata pelajaran pada kelas 8
-            </div>
-            <div class="content-peringatan1">
-            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
-            </div>
-            <div class="content-peringatan">
-            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
-            </div>
-            <div class="content-peringatan1">
-            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
-            </div>
-            <div class="content-peringatan">
-            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
-            </div>
-            <div class="content-peringatan1">
-            Tambahkan Guru baru agar penjadwalan dapat bekerja lebih maksimal
-            </div>
+            @if (($guru_kelas["7"] ?? 0) < ($tingkat["7"] ?? 0))
+                <div class="content-peringatan">
+                    Tambahkan Guru pada kelas 7 agar penjadwalan dapat bekerja lebih maksimal
+                </div>
+            @endif
+            @if (($guru_kelas["8"] ?? 0) < ($tingkat["8"] ?? 0))
+                <div class="content-peringatan">
+                    Tambahkan Guru pada kelas 8 agar penjadwalan dapat bekerja lebih maksimal
+                </div>
+            @endif
+            @if (($guru_kelas["9"] ?? 0) < ($tingkat["9"] ?? 0))
+                <div class="content-peringatan">
+                    Tambahkan Guru pada kelas 9 agar penjadwalan dapat bekerja lebih maksimal
+                </div>
+            @endif
+            @if ((count($guru) ?? 0) < (count($kelas) ?? 0))
+                <div class="content-peringatan">
+                    Tambahkan Guru Baru
+                </div>
+            @endif
         </div>
     </div>
 @endsection

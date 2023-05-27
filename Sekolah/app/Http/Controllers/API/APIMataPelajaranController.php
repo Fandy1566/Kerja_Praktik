@@ -36,25 +36,19 @@ class APIMataPelajaranController extends Controller
     public function store(Request $request)
     {
         try {
-            foreach ($request->tingkat as $value) {
-                $mataPelajaran = new MataPelajaran;
-                $mataPelajaran->nama_mata_pelajaran = $request->nama_mata_pelajaran;
-                $mataPelajaran->tingkat = $value;
-                $mataPelajaran->banyak = $request->banyak;
-                $mataPelajaran->save();
-                $data[] = $mataPelajaran;
-            }
+            $mataPelajaran = new MataPelajaran;
+            $mataPelajaran->nama_mata_pelajaran = $request->nama_mata_pelajaran;
+            $mataPelajaran->save();
+
             return response()->json([
                 'status' => 200,
                 'message' => 'Data '.$mataPelajaran->nama_mata_pelajaran.' berhasil ditambah',
-                'data' => $data
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 400,
                 'message' => 'Data gagal ditambah',
                 'error' => $e,
-                'request' => $request->all()
             ],400);
         }        
     }

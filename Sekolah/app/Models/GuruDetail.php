@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GuruKelasDetail extends Model
+class GuruDetail extends Model
 {
     use HasFactory;
-    protected $table = 'guru_mata_pelajaran';
+    protected $table = 'guru_detail';
 
     public function Guru()
     {

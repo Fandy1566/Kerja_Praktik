@@ -51,7 +51,7 @@
         Guru
     </div>
     <div class="table-top" style="margin-left: 12px;" >
-        <input data-col-name="nama_guru" class="search" style="width: 70%;" type="text" onkeyup="renderTable('nama_guru')" placeholder="Cari Guru" id="search">
+        <input data-col-name="name" class="search" style="width: 70%;" type="text" onkeyup="renderTable('nama_guru')" placeholder="Cari Guru" id="search">
         <button class="clickable cari" onclick="renderTable('nama_guru')">Cari</button>
         <button class="clickable import">Import</button>
         <button class="clickable export">Export</button>
@@ -63,8 +63,8 @@
                 <tr>
                     <th><input type="checkbox" onchange="checkAll()"></th>
                     <th data-sort="id">ID  Guru</th>
-                    <th data-sort="nama_guru">Nama Guru</th>
-                    <th data-sort="guru_mata_pelajaran">Mata Pelajaran</th>
+                    <th data-sort="name">Nama Guru</th>
+                    <th data-sort="guru_detail">Kelas</th>
                     <th data-sort="is_guru_tetap">Status</th>
                     <th>Edit</th>
                 </tr>
@@ -118,8 +118,8 @@
                 <tr>
                     <td class="center-text"><input type="checkbox" value="${element.id}"></td>
                     <td>${element.id}</td>
-                    <td id="nama_guru">${element.nama_guru}</td>
-                    <td>${element.guru_mata_pelajaran.map(mp => mp.mata_pelajaran.nama_mata_pelajaran).join(', ')}</td>
+                    <td id="nama_guru">${element.name}</td>
+                    <td>${element.guru_detail.map(mp => mp.kelas).join(', ')}</td>
                     <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
                     <td>
                     <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
@@ -139,8 +139,8 @@
                 <tr>
                     <td class="center-text"><input type="checkbox" value="${element.id}"></td>
                     <td>${element.id}</td>
-                    <td id="nama_guru">${element.nama_guru}</td>
-                    <td>${element.guru_mata_pelajaran.map(mp => mp.mata_pelajaran.nama_mata_pelajaran).join(', ')}</td>
+                    <td id="nama_guru">${element.name}</td>
+                    <td>${element.guru_detail.map(mp => mp.kelas).join(', ')}</td>
                     <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
                     <td>
                     <button onclick='Edit(${JSON.stringify(element)})'>Edit</button>
@@ -156,7 +156,7 @@
 
     window.addEventListener('load', function() {
         getData();
-        getMapel();
+        // getMapel();
     });
 
     const url = window.location.origin+"/api/guru";
