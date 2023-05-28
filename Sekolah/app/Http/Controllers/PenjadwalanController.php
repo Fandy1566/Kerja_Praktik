@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwal;
+use App\Models\JadwalDetail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\JadwalMengajar;
 use App\Models\MataPelajaran;
 use App\Models\Kelas;
 use App\Models\Hari;
+use Illuminate\Support\Facades\Auth;
 // use App\Models\JadwalDetail;
 
 class PenjadwalanController extends Controller
@@ -18,10 +20,17 @@ class PenjadwalanController extends Controller
     }
     public function index()
     {
-        $penjadwalan = Jadwal::all();
         $jadwalMengajar = JadwalMengajar::all();
+        $jadwalDetails = JadwalDetail::where('id_jadwal', 1)
+            ->orderBy('id_jam', 'asc')
+            ->orderBy('id_kelas', 'asc')
+            ->get();
+        $kelas = Kelas::all();
+        $mataPelajaran = MataPelajaran::all();
+        $guru = User::all();
         $hari = Hari::all();
-        return view('dashboard.penjadwalan.index', compact('penjadwalan','jadwalMengajar','hari'));
+        $penjadwalan = Jadwal::all();
+        return view('dashboard.penjadwalan.index', compact('kelas','jadwalMengajar','hari','guru','jadwalDetails','penjadwalan','mataPelajaran'));
     }
 
     public function create()

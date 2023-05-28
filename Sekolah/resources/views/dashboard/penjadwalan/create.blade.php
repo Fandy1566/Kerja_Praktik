@@ -25,7 +25,6 @@
     </div>
     <div class="form-area">
         <form class="store" style="display: flex; flex-direction: row;">
-            <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
             <div class="left-side-form">
                 <div class="">
                     <label>Tahun</label>
@@ -38,7 +37,7 @@
                     <input type="text" name="semester">
                 </div>
             </div>
-            <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="simpanJadwal()">
+            <input class="clickable form-button title-card" type="button" value="Tambah" onclick="simpanJadwal()">
         </form>
     </div>
 </div>
@@ -342,16 +341,16 @@
 
             const tahun = document.querySelector('input[name="tahun"]').value;
             const semester = document.querySelector('input[name="semester"]').value;
-            console.log(JSON.stringify({
-                array7: array_7,
-                array7_mp: array_7_mp,
-                array8: array_8,
-                array8_mp: array_8_mp,
-                array9: array_9,
-                array9_mp: array_9_mp,
-                tahun_awal : tahun,
-                is_gasal : semester,
-            }));
+            // console.log(JSON.stringify({
+            //     array7: array_7,
+            //     array7_mp: array_7_mp,
+            //     array8: array_8,
+            //     array8_mp: array_8_mp,
+            //     array9: array_9,
+            //     array9_mp: array_9_mp,
+            //     tahun_awal : tahun,
+            //     is_gasal : semester,
+            // }));
         try {
             const response = await fetch(window.location.origin+"/api/jadwal", {
                 headers: {
@@ -372,7 +371,6 @@
                 })
             });
             const data = await response.json();
-            await getData();
         } catch (error) {
             console.error(error);
         }

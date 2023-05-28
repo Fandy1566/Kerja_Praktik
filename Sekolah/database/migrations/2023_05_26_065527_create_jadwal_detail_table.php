@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('id_guru')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('id_mata_pelajaran')->nullable();
             $table->foreign('id_mata_pelajaran')->references('id')->on('mata_pelajaran')->onDelete('cascade');
-            $table->unsignedBigInteger('id_kelas');
+            $table->unsignedBigInteger('id_kelas')->nullable();
             $table->foreign('id_kelas')->references('id')->on('kelas')->onDelete('cascade');
             $table->timestamps();
         });

@@ -49,43 +49,47 @@ class APIJadwalController extends Controller
             // $jadwal->kelas_9 = $request->array_9;
             
             //input kelas 7
-            $count7 = count($request->array7);
-            for ($i=0; $i < $count7; $i++) { 
+            $count7 = count($request->array7[0]);
+            $count7_1 = count($request->array7);
+            for ($i=0; $i < $count7_1; $i++) { 
                 for ($j=0; $j < count($request->array7[$i]); $j++) { 
                     $jadwalDetail = new JadwalDetail;
                     $jadwalDetail->id_jadwal = $increment;
-                    $jadwalDetail->id_jam = ($i+1);
+                    $jadwalDetail->id_jam = $i+1;
                     $jadwalDetail->id_guru = $request->array7[$i][$j];
                     $jadwalDetail->id_mata_pelajaran = $request->array7_mp[$i][$j];
-                    $jadwalDetail->id_kelas = ($j+1+$count7); // slh
+                    $jadwalDetail->id_kelas = $j+1; // slh
                     $jadwalDetail->save();
                 }
             }
 
-            $count8 = count($request->array8);
+            $count8 = count($request->array8[0]);
+            $count8_1 = count($request->array8);
             //input kelas 8
-            for ($i=0; $i < $count8; $i++) { 
+            for ($i=0; $i < $count8_1; $i++) { 
                 for ($j=0; $j < count($request->array8[$i]); $j++) { 
                     $jadwalDetail = new JadwalDetail;
                     $jadwalDetail->id_jadwal = $increment;
-                    $jadwalDetail->id_jam = ($i+1);
+                    $jadwalDetail->id_jam = $i+1;
                     $jadwalDetail->id_guru = $request->array8[$i][$j];
                     $jadwalDetail->id_mata_pelajaran = $request->array8_mp[$i][$j];
-                    $jadwalDetail->id_kelas = ($j+1+$count8); // slh
+                    $jadwalDetail->id_kelas = $j+1+$count8; // slh
+                    // dd($j);
                     $jadwalDetail->save();
                 }
             }
 
-            $count9 = count($request->array9);
+            $count9 = count($request->array9[0]);
+            $count9_1 = count($request->array9);
             //input kelas 9
-            for ($i=0; $i < $count9; $i++) { 
+            for ($i=0; $i < $count9_1; $i++) {
                 for ($j=0; $j < count($request->array9[$i]); $j++) { 
                     $jadwalDetail = new JadwalDetail;
                     $jadwalDetail->id_jadwal = $increment;
-                    $jadwalDetail->id_jam = ($i+1);
+                    $jadwalDetail->id_jam = $i+1;
                     $jadwalDetail->id_guru = $request->array9[$i][$j];
                     $jadwalDetail->id_mata_pelajaran = $request->array9_mp[$i][$j];
-                    $jadwalDetail->id_kelas = ($j+1+$count8+$count9);
+                    $jadwalDetail->id_kelas = $j+1+$count8+$count9;
                     $jadwalDetail->save();
                 }
             }
