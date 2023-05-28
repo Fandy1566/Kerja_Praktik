@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use DB;
@@ -65,5 +66,9 @@ class GuruSeeder extends Seeder
                 'is_guru_tetap' => 1,
             ]);
         }
+
+        $user = User::find(36);
+        $user->is_admin = 1;
+        $user->save();
     }
 }

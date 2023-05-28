@@ -21,8 +21,7 @@ class HomeController extends Controller
         $mataPelajaran = MataPelajaran::all()->count();
         $kelas = Kelas::all();
         $jadwalMengajar = JadwalMengajar::all()->count();
-        $guruDetail = GuruDetail::all();
 
-        return view('dashboard.home', compact('guru','mataPelajaran','kelas','jadwalMengajar','guruDetail'));
+        return view('dashboard.home', compact('guru','mataPelajaran','kelas','jadwalMengajar'));
     }
 }

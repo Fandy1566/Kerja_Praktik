@@ -179,10 +179,13 @@ label{
 }
 
 input[type="text"]{
-        border-radius: 10px;
-        border: 0.5px solid #587693;
-        width: 275px;
-        height: 30px;
+    border-radius: 10px;
+    border: 0.5px solid #587693;
+    width: 275px;
+    height: 30px;
+    padding-left: 5px;
+    color: #345678;
+    font-weight: 500;
 }
 
 input[type="email"]{
@@ -586,4 +589,40 @@ h2#title-penjadwalan{
     color: white;
     background-color: var(--color-secondary);
     border-radius: 5px;
+}
+
+.status-guru-container{
+    width: 125px;
+    padding: 4px 6px;
+    padding-left: 30px;
+    position: relative;
+    border-radius: 5px;
+}
+
+.status-guru-container::before{
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    top:9px;
+    left:10px;
+}
+
+.guru-honorer{
+    background-color: #FFAEAE;
+    color: #BB1818;
+}
+
+.guru-honorer::before{
+    background-color: #BB1818;
+}
+
+.guru-tetap{
+    background-color: #97FDA7;
+    color: #479D39;
+}
+
+.guru-tetap::before{
+    background-color: #479D39;
 }

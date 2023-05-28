@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('jadwal', function (Blueprint $table) {
             $table->id();
             $table->year('tahun_awal');
-            $table->year('tahun_akhir');
             $table->boolean('is_gasal');
-            $table->json('kelas_7');
-            $table->json('kelas_8');
-            $table->json('kelas_9');
+            // $table->json('kelas_7');
+            // $table->json('kelas_8');
+            // $table->json('kelas_9');
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\JadwalMengajar;
 use App\Models\MataPelajaran;
 use App\Models\Kelas;
+use App\Models\Hari;
 // use App\Models\JadwalDetail;
 
 class PenjadwalanController extends Controller
@@ -18,7 +19,9 @@ class PenjadwalanController extends Controller
     public function index()
     {
         $penjadwalan = Jadwal::all();
-        return view('dashboard.penjadwalan.index', compact('penjadwalan'));
+        $jadwalMengajar = JadwalMengajar::all();
+        $hari = Hari::all();
+        return view('dashboard.penjadwalan.index', compact('penjadwalan','jadwalMengajar','hari'));
     }
 
     public function create()
@@ -27,6 +30,6 @@ class PenjadwalanController extends Controller
         $guru = User::all();
         $jadwalMengajar = JadwalMengajar::all();
         $mataPelajaran = MataPelajaran::all();
-        return view('dashboard.penjadwalan.index', compact('kelas','guru','jadwalMengajar','mataPelajaran'));
+        return view('dashboard.penjadwalan.create', compact('kelas','guru','jadwalMengajar','mataPelajaran'));
     }
 }

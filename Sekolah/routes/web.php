@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
     })->name('jampel');
 
     Route::get('/penjadwalan', [PenjadwalanController::class, 'index'])->name('jadwal');
+    Route::get('/penjadwalan/create', [PenjadwalanController::class, 'create'])->name('jadwal.create');
 
     Route::get('/pengaturan', function () {
         return view('pengaturan');

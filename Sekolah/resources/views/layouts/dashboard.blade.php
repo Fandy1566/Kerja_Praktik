@@ -22,24 +22,20 @@
     <link rel="stylesheet" href="{{asset('css/modal.css')}}"> 
     @yield('head')
 
-    <title>Document</title>
+    <title>@yield('title')</title>
 </head>
 <body>
     <div class="modal hidden">
         <div class="modal-content" style="gap: 8x;">
             <h2>Keluar Akun</h2>
             <p>Apakah kamu yakin mau keluar dari akun?</p>
-            <div class="button">
-                <button id="batal" onclick="modalLogoutToggle()">Batal</button>
+            <div class="button flex-row">
+                <button class="clickable" id="batal" onclick="modalLogoutToggle()">Batal</button>
                 <form id="keluar" method="POST" action="{{ route('logout') }}">
                     @csrf
-                
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                                this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </a>
-                </form>                
+                    <button class="clickable" id="keluar" onclick="event.preventDefault();
+                    this.closest('form').submit();">Log Out</button>
+                </form>
             </div>
         </div>
     </div>
@@ -62,10 +58,12 @@
             </div>
         </div>
         <div class="logout">
-        <div class="menu menu-7 {{(request()->url() == route('pengaturan')) ? 'active' : '' }}"><a href="{{ route('pengaturan') }}">
+        <div class="menu menu-7 {{(request()->url() == route('pengaturan')) ? 'active' : '' }}">
+            <a href="{{ route('pengaturan') }}">
                 <img src="{{asset('image/icon/pengaturan.svg')}}" alt="">
                 Pengaturan
-            </a></div>
+            </a>
+        </div>
             <div class="menu menu-8 clickable" onclick="modalLogoutToggle()">
                 <img src="{{asset('image/icon/logout.svg')}}" alt="">
                 Logout
@@ -272,12 +270,12 @@
         const csrfToken = document.querySelector('input[name="_token"]').value;
         const form = document.querySelector('form.store');
         const formData = new FormData(form);
-        // console.log(JSON.stringify(formDataToObject(formData)));
+        console.log(JSON.stringify(formDataToObject(formData)));
         try {
             const response = await fetch(url, {
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-Token": csrfToken
+                    "X-CSRF-Token": "{{ csrf_token() }}"
                 },
                 method: "post",
                 credentials: "same-origin",
@@ -292,18 +290,18 @@
 
     async function updateData(id) {
         event.preventDefault(); // prevent form submission
-        const csrfToken = document.querySelector('input[name="_token"]').value;
+        // const csrfToken = document.querySelector('input[name="_token"]').value;
         const form = document.querySelector('form.edit');
         const formData = new FormData(form);
         try {
             const response = await fetch(url+"/"+id, {
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-Token": csrfToken
+                    "X-CSRF-Token": "{{ csrf_token() }}"
                 },
                 method: "post",
                 credentials: "same-origin",
-                body: JSON.stringify(Object.fromEntries(formData))
+                body: JSON.stringify(formDataToObject(formData))
             });
             const data = await response.json();
             await getData();

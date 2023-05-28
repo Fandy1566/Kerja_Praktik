@@ -33,7 +33,7 @@
             </form>
         </div>
     </div>
-
+@can('Admin')
     <div id="form-layout" class="card m-20" style="width: 400px; height: fit-content">
         <div class="title-card">
             Reset Tabel
@@ -111,45 +111,50 @@
     </div>
 
 </div>
+@endcan
+
 @endsection
 
 @section('script')
 
 <script>
-    const url = window.location.origin+"/api/reset";
-    console.log(url);
+    const isAdmin = {{ auth()->user()->can('Admin') ? 'true' : 'false' }};
 
-    function modalResetToggle(name = null) {
-        const modal = document.querySelector('.modal');
-        modal.classList.toggle('hidden');
-        modal.innerHTML =`
-        <div class="modal-content">
-            <h2>Reset <table></table></h2>
-            <p>Apakah kamu yakin ingin mereset tabel ini?</p>
-            <div class="button">
-                <button id="batal" data-type="close" onclick="modalResetToggle()">Batal</button>
-                <button id="Keluar" data-type="reset" onclick="reset(${name})">Keluar</button>
+    if (isAdmin) {
+        const url = window.location.origin+"/api/reset";
+        function modalResetToggle(name = null) {
+            const modal = document.querySelector('.modal');
+            modal.classList.toggle('hidden');
+            modal.innerHTML =`
+            <div class="modal-content">
+                <h2>Reset <table></table></h2>
+                <p>Apakah kamu yakin ingin mereset tabel ini?</p>
+                <div class="button">
+                    <button id="batal" data-type="close" onclick="modalResetToggle()">Batal</button>
+                    <button id="Keluar" data-type="reset" onclick="reset(${name})">Keluar</button>
+                </div>
             </div>
-        </div>
-        `;
-    }
-    
-    async function reset(name) {
-        event.preventDefault(); // prevent form submission
-        try {
-            const response = await fetch(url+"/"+name, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-Token": "{{ csrf_token() }}"
-                },
-                method: "delete",
-                credentials: "same-origin",
-            });
-            const data = await response.json();
-        } catch (error) {
-            console.error(error);
+            `;
+        }
+        
+        async function reset(name) {
+            event.preventDefault(); // prevent form submission
+            try {
+                const response = await fetch(url+"/"+name, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-Token": "{{ csrf_token() }}"
+                    },
+                    method: "delete",
+                    credentials: "same-origin",
+                });
+                const data = await response.json();
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
+
 </script>
 
 @endsection

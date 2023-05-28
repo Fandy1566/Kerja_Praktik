@@ -2,18 +2,26 @@
 
     $tingkat = [];
     for ($i=0; $i < count($kelas); $i++) { 
-        if (!isset($tingkat[$kelas[$i]->tingkat])) {
-            $tingkat[$kelas[$i]->tingkat] = 0;
+        try {
+            if (!isset($tingkat[$kelas[$i]->tingkat])) {
+                $tingkat[$kelas[$i]->tingkat] = 0;
+            }
+            $tingkat[$kelas[$i]->tingkat] += 1;
+        } catch (\Exception $e) {
+            continue;
         }
-        $tingkat[$kelas[$i]->tingkat] += 1;
     }
 
     $guru_kelas = [];
     for ($i=0; $i < count($guruDetail); $i++) { 
-        if (!isset($guru_kelas[$guruDetail->kelas])) {
-            $guru_kelas[$guruDetail[$i]->kelas] = 0;
+        try {
+            if (!isset($guru_kelas[$guruDetail->kelas])) {
+                $guru_kelas[$guruDetail[$i]->kelas] = 0;
+            }
+            $guru_kelas[$guruDetail[$i]->kelas] += 1;
+        } catch (\Exception $e) {
+            continue;
         }
-        $guru_kelas[$guruDetail[$i]->kelas] += 1;
     }
 
 @endphp

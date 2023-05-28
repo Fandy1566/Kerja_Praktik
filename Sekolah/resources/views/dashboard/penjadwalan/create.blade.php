@@ -15,6 +15,10 @@
 @section('content')
 @include('layouts.header', ['title' => 'Jadwal Mengajar'])
 
+<div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal') }}'">
+    Kembali
+</div>
+
 <div id="form-layout" class="card m-20" style="width: 55%">
     <div class="title-card">
         Tambah Penjadwalan
@@ -26,15 +30,15 @@
                 <div class="">
                     <label>Tahun</label>
                     <br>
-                    <input type="text">
+                    <input type="text" name="tahun">
                 </div>
                 <div class="">
                     <label>Semester</label>
                     <br>
-                    <input type="text">
+                    <input type="text" name="semester">
                 </div>
             </div>
-            <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
+            <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="simpanJadwal()">
         </form>
     </div>
 </div>
@@ -202,6 +206,7 @@
 @endsection
 @section('script')
     <script>
+
         let rows = {{count($filtered_7)}};
         const columns = {{count($jadwalMengajar)}}
         const array_7 = [];
@@ -332,5 +337,47 @@
         }
 
         let guru = <?php echo json_encode($guru); ?>; 
+
+        async function simpanJadwal() {
+
+            const tahun = document.querySelector('input[name="tahun"]').value;
+            const semester = document.querySelector('input[name="semester"]').value;
+            console.log(JSON.stringify({
+                array7: array_7,
+                array7_mp: array_7_mp,
+                array8: array_8,
+                array8_mp: array_8_mp,
+                array9: array_9,
+                array9_mp: array_9_mp,
+                tahun_awal : tahun,
+                is_gasal : semester,
+            }));
+        try {
+            const response = await fetch(window.location.origin+"/api/jadwal", {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-Token": "{{ csrf_token() }}"
+                },
+                method: "post",
+                credentials: "same-origin",
+                body: JSON.stringify({
+                    array7: array_7,
+                    array7_mp: array_7_mp,
+                    array8: array_8,
+                    array8_mp: array_8_mp,
+                    array9: array_9,
+                    array9_mp: array_9_mp,
+                    tahun_awal : tahun,
+                    is_gasal : semester,
+                })
+            });
+            const data = await response.json();
+            await getData();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
     </script>
 @endsection

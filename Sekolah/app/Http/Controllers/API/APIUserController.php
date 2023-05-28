@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\GuruKelasDetail;
+use App\Models\GuruDetail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
@@ -13,7 +13,7 @@ class APIUserController extends Controller
     public function index()
     {
         try {
-            $guru = User::with('GuruDetail')->get();
+            $guru = User::all();
             if ($guru) {
                 return response()->json([
                     'status' => 200,
@@ -46,14 +46,10 @@ class APIUserController extends Controller
             $guru->password = bcrypt("1234567890");
             $guru->is_guru_tetap = $request->is_guru_tetap;
             $guru->email = "guru".$increment."@smpn23.com";
+            $guru->is_guru_kelas_7 = in_array('7', $request->kelas) ? 1 : 0;
+            $guru->is_guru_kelas_8 = in_array('8', $request->kelas) ? 1 : 0;
+            $guru->is_guru_kelas_9 = in_array('9', $request->kelas) ? 1 : 0;
             $guru->save();
-
-            foreach ($request->kelas as $value) {
-                $GuruKelasDetail = new GuruKelasDetail;
-                $GuruKelasDetail->id_guru = $increment;
-                $GuruKelasDetail->tingkat = $value;
-                $GuruKelasDetail->save();
-            }
 
             DB::commit();
 
@@ -80,16 +76,12 @@ class APIUserController extends Controller
             
             $guru = User::find($id);
             if ($guru) {
-                $guru->nama_guru = $request->nama_guru;
+                $guru->name = $request->nama_guru;
                 $guru->is_guru_tetap = $request->is_guru_tetap;
+                $guru->is_guru_kelas_7 = in_array('7', $request->kelas) ? 1 : 0;
+                $guru->is_guru_kelas_8 = in_array('8', $request->kelas) ? 1 : 0;
+                $guru->is_guru_kelas_9 = in_array('9', $request->kelas) ? 1 : 0;
                 $guru->save();
-
-                foreach ($request->kelas as $value) {
-                    $guruMapelDetail = new GuruKelasDetail;
-                    $guruMapelDetail->id_guru = $id;
-                    $guruMapelDetail->kelas = $value;
-                    $guruMapelDetail->save();
-                }
 
                 DB::commit();
 
@@ -183,7 +175,7 @@ class APIUserController extends Controller
     public function getGuruDetail()
     {
         try {
-            $guru = GuruKelasDetail::with('User','MataPelajaran')->get();
+            $guru = GuruDetail::with('User','MataPelajaran')->get();
             return response()->json([
                 'status' => 200,
                 'message' => 'berhasil ditampilkan',

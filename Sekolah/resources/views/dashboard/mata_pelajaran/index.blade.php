@@ -50,17 +50,15 @@
     <div class="table-top" style="margin-left: 12px;">
         <input data-col-name="nama_mata_pelajaran" class="search" style="width: 70%;" type="text" onkeyup="renderTable()" placeholder="Cari Mata Pelajaran" id="search">
         <button class="clickable cari" onclick="renderTable()">Cari</button>
-        <button class="clickable import">Import</button>
-        <button class="clickable export">Export</button>
         <button class="clickable delete" onclick="deleteSelected('guru')">Delete</button>
     </div>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">
             <thead>
                 <tr>
-                    <th style="width: 5%"><input type="checkbox" onchange="checkAll()"></th>
-                    <th style="width: 15%">ID Mata Pelajaran</th>
-                    <th style="width: 80%">Mata Pelajaran</th>
+                    <th><input type="checkbox" onchange="checkAll()"></th>
+                    <th>ID Mata Pelajaran</th>
+                    <th>Mata Pelajaran</th>
                     {{-- <th>Total Jam / Minggu</th> --}}
                     @can('Admin')
                     <th>Edit</th>

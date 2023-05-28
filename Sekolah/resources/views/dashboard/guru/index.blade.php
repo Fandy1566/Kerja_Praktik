@@ -3,10 +3,9 @@
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 <script src="{{ asset('js/select2.min.js') }}"></script>
 @endsection
-@section('title', 'Dashboard')
+@section('title', '😀 Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Guru'])
-{{ Auth::user()->guruDetail[0]->tingkat}}
 @can('Admin')
 <div id="form-layout" class="card m-20" style="width: 55%">
     <div class="title-card">
@@ -52,11 +51,9 @@
     <div class="title-card">
         Guru
     </div>
-    <div class="table-top" style="margin-left: 12px;" >
+    <div class="table-top" style="margin-left: 12px; " >
         <input data-col-name="name" class="search" style="width: 70%;" type="text" onkeyup="renderTable('nama_guru')" placeholder="Cari Guru" id="search">
         <button class="clickable cari" onclick="renderTable('nama_guru')">Cari</button>
-        <button class="clickable import">Import</button>
-        <button class="clickable export">Export</button>
         <button class="clickable delete" onclick="deleteSelected('guru')">Delete</button>
     </div>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
@@ -102,19 +99,21 @@
             formArea.innerHTML = "";
             const formEdit = `
             <div class="title-card">
-            Edit Guru
+                Update Guru
             </div>
             <div class="form-area">
                 <form class="edit flex-row">
-                    <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
                     <div class="left-side-form" >
                         <div class="pengaturan-username">
                             <label>Nama Guru</label>
-                            <input type="text" name="nama_guru" placeholder="Masukkan nama guru.." value ="${obj.nama_guru}">
+                            <input type="text" name="nama_guru" placeholder="Masukkan nama guru.."  value ="${obj.name}">
                         </div>
                         <div class="pengaturan-username" style="margin-top: 12px;">
-                            <label>Mata Pelajaran</label>
-                            <select id="select-multiple" name="id_mata_pelajaran[]" multiple="multiple" placeholder="Masukan mata pelajaran..">
+                            <label>Kelas</label>
+                            <select id="select-multiple" name="kelas[]" multiple="multiple" placeholder="Masukan mata pelajaran..">
+                                <option value="7" ${obj.is_guru_kelas_7 ? 'selected' : ''}>Kelas 7</option>
+                                <option value="8" ${obj.is_guru_kelas_8 ? 'selected' : ''}>Kelas 8</option>
+                                <option value="9" ${obj.is_guru_kelas_9 ? 'selected' : ''}>Kelas 9</option>
                             </select>
                         </div>
                     </div>
@@ -123,15 +122,15 @@
                             <label>Kategori</label>
                         </div>
                         <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                            <input type="radio" name="is_guru_tetap" id="" ${obj.is_guru_tetap == 1?'checked':''} value="1">
+                            <input type="radio" name="is_guru_tetap" id="" checked value="1" ${obj.is_guru_tetap? 'checked' : ''}>
                             <label for="" style="margin-left: 12px;">Guru Tetap</label>
                         </div>
-                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                            <input type="radio" name="is_guru_tetap" id="" ${obj.is_guru_tetap == 0?'checked':''}  value="0">
+                        <div class="" style="display: flex; align-items: center; margin-top: 12px;" ${!obj.is_guru_tetap? 'checked' : ''}>
+                            <input type="radio" name="is_guru_tetap" id="" value="0">
                             <label for="" style="margin-left: 12px;">Guru Honorer</label>
                         </div>
                     </div>
-                    <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="updateData(${obj.id})">
+                    <input class="clickable form-button title-card" type="submit" value="Edit" onclick="updateData(${obj.id})">
                 </form>
             </div>
             `;
@@ -140,10 +139,16 @@
                 behavior: "smooth"
             });
             formArea.innerHTML = formEdit;
+            $('#select-multiple').select2({
+                placeholder: "Pilih Kelas.."
+            });
         }
 
         function showFormStore() {
             formArea.innerHTML = formStore;
+            $('#select-multiple').select2({
+                placeholder: "Pilih Kelas.."
+            });
         }
         
     }
@@ -180,8 +185,14 @@
                     <td class="center-text"><input type="checkbox" value="${element.id}"></td>
                     <td>${element.id}</td>
                     <td id="nama_guru">${element.name}</td>
-                    <td>${element.guru_detail.map(mp => mp.kelas).join(', ')}</td>
-                    <td id="kode_guru">${element.is_guru_tetap ? 'Guru Tetap' : 'Guru Honorer'}</td>
+                    <td>
+                        ${[
+                            element.is_guru_kelas_7 ? '7' : '',
+                            element.is_guru_kelas_8 ? '8' : '',
+                            element.is_guru_kelas_9 ? '9' : ''
+                        ].filter(Boolean).join(', ')}
+                    </td>
+                    <td id="kode_guru">${isGuruTetap(element.is_guru_tetap)}</td>
                     <td>
                         ${isAdmin ? `<button onclick='Edit(${JSON.stringify(element)})'>Edit</button>` : ''}
                     </td>
@@ -196,6 +207,24 @@
     window.addEventListener('load', function() {
         getData();
     });
+
+    function isGuruTetap(bool) {
+        if (bool) {
+            return `
+                <div class="status-guru-container guru-tetap">
+                    Guru Tetap
+                </div>
+            `;
+        } else {
+            return `
+                <div class="status-guru-container guru-honorer">
+                    Guru Honorer
+                </div>
+            `;
+        }
+
+
+    }
 
     const url = window.location.origin+"/api/guru";
 
