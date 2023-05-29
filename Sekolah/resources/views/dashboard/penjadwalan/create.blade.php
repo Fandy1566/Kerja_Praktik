@@ -14,8 +14,11 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Jadwal Mengajar'])
+<div class="message">
+    
+</div>
 
-<div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal') }}'">
+<div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal') }}'" style="margin-top:16px">
     Kembali
 </div>
 
@@ -29,12 +32,14 @@
                 <div class="">
                     <label>Tahun</label>
                     <br>
-                    <input type="text" name="tahun">
+                    <input type="number" min="1900" max="2099" step="1" value="2016" style="width:300px"/>
                 </div>
                 <div class="">
-                    <label>Semester</label>
-                    <br>
-                    <input type="text" name="semester">
+                    <label for="">Semester</label><br>
+                    <select name="tahun" class="select-style">
+                        <option value="1">Gasal</option>
+                        <option value="0">Genap</option>
+                    </select>
                 </div>
             </div>
             <input class="clickable form-button title-card" type="button" value="Tambah" onclick="simpanJadwal()">
@@ -56,7 +61,7 @@
 
 <div class="card m-32 tbl-jadwal table-7" style="width: 80vw;">
     <div class="table-container" style="margin-left: 12px; margin-right: 12px; overflow-x: scroll">
-        <table id="tbl7" class="table-check">
+        <table id="tbl7" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
                     <th rowspan="2">Hari</th>
@@ -107,7 +112,7 @@
 
 <div class="card m-32 tbl-jadwal table-8" style="width: 80vw; display: none;">
     <div class="table-container" style="margin-left: 12px; margin-right: 12px; overflow-x: scroll;">
-        <table id="tbl8" class="table-check">
+        <table id="tbl8" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
                     <th rowspan="2">Hari</th>
@@ -156,7 +161,7 @@
 
 <div class="card m-32 tbl-jadwal table-9" style="width: 80vw;  display: none;">
     <div class="table-container" style="margin-left: 12px; margin-right: 12px; overflow-x: scroll;">
-        <table id="tbl9" class="table-check" style= "overflow: scroll;">
+        <table id="tbl9" class="table-check jawdal minimize-th" style= "overflow: scroll;">
             <thead>
                 <tr>
                     <th rowspan="2">Hari</th>
@@ -249,20 +254,31 @@
 
         function showTable7() {
             document.querySelector(".table-7").style.display = "block";
+            document.querySelector(".btn-7").classList.add("btn-table-active")
             document.querySelector(".table-8").style.display = "none";
+            document.querySelector(".btn-8").classList.remove("btn-table-active")
             document.querySelector(".table-9").style.display = "none";
+            document.querySelector(".btn-9").classList.remove("btn-table-active")
         }
 
         function showTable8() {
             document.querySelector(".table-7").style.display = "none";
+            document.querySelector(".btn-7").classList.remove("btn-table-active")
             document.querySelector(".table-8").style.display = "block";
+            document.querySelector(".btn-8").classList.add("btn-table-active")
             document.querySelector(".table-9").style.display = "none";
+            document.querySelector(".btn-9").classList.remove("btn-table-active")
+
         }
 
         function showTable9() {
             document.querySelector(".table-7").style.display = "none";
+            document.querySelector(".btn-7").classList.remove("btn-table-active")
             document.querySelector(".table-8").style.display = "none";
+            document.querySelector(".btn-8").classList.remove("btn-table-active")
             document.querySelector(".table-9").style.display = "block";
+            document.querySelector(".btn-9").classList.add("btn-table-active")
+
         }
 
         function select7(i,j) {

@@ -5,6 +5,9 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Jam Pelajaran'])
+<div class="message">
+    
+</div>
 @can('Admin')
     <div id="form-layout" class="card m-20" style="width: 55%">
         <div class="title-card">
@@ -16,7 +19,7 @@
                 <div class="left-side-form">
                     <div class="pengaturan-username">
                         <label>Hari</label>
-                        <select name="id_hari" id="hari">
+                        <select name="id_hari" class="select-style">
                         <option value="" style="display: none;">Pilih Hari</option>
                         @foreach ($hari as $item)
                             <option value="{{$item->id}}">{{$item->nama_hari}}</option>

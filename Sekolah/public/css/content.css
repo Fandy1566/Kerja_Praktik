@@ -261,7 +261,7 @@ input[type="email"]{
     margin-bottom: 4px;
 }
 
-select#hari{
+select.select-style{
     border-radius: 10px;
     border: 1px solid #587693 !important;
     height: 30px;
@@ -625,4 +625,22 @@ h2#title-penjadwalan{
 
 .guru-tetap::before{
     background-color: #479D39;
+}
+
+.jadwal td{
+    height: 120px;
+    width: 120px;
+}
+
+.jadwal th{
+    text-align: center;
+    height: 50px;
+}
+
+.jadwal td:nth-child(1), .jadwal td:nth-child(2){
+    text-align: center;
+}
+
+table.minimize-th th{
+    height: 30px;
 }

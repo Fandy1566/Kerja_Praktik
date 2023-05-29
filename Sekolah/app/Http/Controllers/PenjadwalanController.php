@@ -18,10 +18,10 @@ class PenjadwalanController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
-    public function index()
+    public function index(Request $request)
     {
         $jadwalMengajar = JadwalMengajar::all();
-        $jadwalDetails = JadwalDetail::where('id_jadwal', 1)
+        $jadwalDetails = JadwalDetail::where('id_jadwal', $request->id)
             ->orderBy('id_jam', 'asc')
             ->orderBy('id_kelas', 'asc')
             ->get();
@@ -30,7 +30,7 @@ class PenjadwalanController extends Controller
         $guru = User::all();
         $hari = Hari::all();
         $penjadwalan = Jadwal::all();
-        return view('dashboard.penjadwalan.index', compact('kelas','jadwalMengajar','hari','guru','jadwalDetails','penjadwalan','mataPelajaran'));
+        return response()->view('dashboard.penjadwalan.index', compact('kelas','jadwalMengajar','hari','guru','jadwalDetails','penjadwalan','mataPelajaran'));
     }
 
     public function create()

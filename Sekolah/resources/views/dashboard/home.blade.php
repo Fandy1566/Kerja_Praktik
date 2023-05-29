@@ -1,6 +1,7 @@
 @php
 
     $tingkat = [];
+
     for ($i=0; $i < count($kelas); $i++) { 
         try {
             if (!isset($tingkat[$kelas[$i]->tingkat])) {
@@ -12,18 +13,40 @@
         }
     }
 
-    $guru_kelas = [];
-    for ($i=0; $i < count($guruDetail); $i++) { 
+    $guru_kelas_7 = 0;
+    for ($i=0; $i < count($guru); $i++) { 
         try {
-            if (!isset($guru_kelas[$guruDetail->kelas])) {
-                $guru_kelas[$guruDetail[$i]->kelas] = 0;
+            if ($guru[$i]->is_guru_kelas_7) {
+                $guru_kelas_7 += 1;
             }
-            $guru_kelas[$guruDetail[$i]->kelas] += 1;
         } catch (\Exception $e) {
             continue;
         }
     }
 
+    $guru_kelas_8 = 0;
+    for ($i=0; $i < count($guru); $i++) { 
+        try {
+            if ($guru[$i]->is_guru_kelas_8) {
+                $guru_kelas_8 += 1;
+            }
+        } catch (\Exception $e) {
+            continue;
+        }
+    }
+
+    $guru_kelas_9 = 0;
+    for ($i=0; $i < count($guru); $i++) {
+        try {
+            if ($guru[$i]->is_guru_kelas_9) {
+                $guru_kelas_9 += 1;
+            }
+        }
+        catch (\Exception $e) {
+            continue;
+        }
+    }
+    $guru_kelas = [$guru_kelas_7, $guru_kelas_8, $guru_kelas_9];
 @endphp
 
 @extends('layouts.dashboard')
@@ -54,40 +77,40 @@
         <div class="container item-3">
             <div class="item-title2">
                 <div class="left-item">
-                    <div class="title2">Mata Pelajaran</div>
-                    <div class="item2">102</div>
+                    <div class="title2">Guru</div>
+                    <div class="item2">{{count($guru)}}</div>
                 </div>
                 <div class="right-item">
-                    <div class="pb-mapel" style="background-color: #A6CDE5;">
+                    {{-- <div class="pb-mapel" style="background-color: #A6CDE5;">
                         <div class="pb-mapel" style="background-color: #274B6F; width: 33.3%;">
                         <div class="pb-persen">33.3%</div>
                         </div>
-                    </div>
-                    <div class="content-mapel">Capaian mata pelajaran yang dibutuhkan tiap kelas</div>
+                    </div> --}}
+                    <div class="content-mapel" style="font-size: 15px">Capaian guru yang dibutuhkan tiap kelas</div>
                 </div>
             </div>
             <div class="pb-all-mapel">
                 <div class="pb-title" style="margin-top: 16px;">
                     Kelas VII
                     <div class="pb-mapel2" style="background-color: #FFAEAE; margin-top: 12px;">
-                        <div class="pb-mapel2" style="background-color: #BB1818; width: 75%;">
-                        <div class="pb-persen2">75%</div>
+                        <div class="pb-mapel2" style="background-color: #BB1818; width: {{(($guru_kelas[0] / ($tingkat["7"] ?? 0))*100 >= 100) ? '100' : (($guru_kelas[0] / ($tingkat["7"] ?? 0))*100)}}%;">
+                        <div class="pb-persen2">{{($guru_kelas[0] / ($tingkat["7"] ?? 1))*100}}%</div>
                         </div>
                     </div>
                 </div>
                 <div class="pb-title" style="margin-top: 16px;">
                     Kelas VIII
                     <div class="pb-mapel2" style="background-color: #FFD95A; margin-top: 12px;">
-                        <div class="pb-mapel2" style="background-color: #FCD552; width: 100%;">
-                        <div class="pb-persen2">110%</div>
+                        <div class="pb-mapel2" style="background-color: #FCD552; width: {{(($guru_kelas[1] / ($tingkat["8"] ?? 0))*100 >= 100) ? '100' : (($guru_kelas[1] / ($tingkat["8"] ?? 0))*100)}}%;">
+                        <div class="pb-persen2">{{($guru_kelas[1] / ($tingkat["8"] ?? 1))*100}}%</div>
                         </div>
                     </div>
                 </div>
                 <div class="pb-title" style="margin-top: 16px;">
                     Kelas IX
                     <div class="pb-mapel2" style="background-color: #A6CDE5; margin-top: 12px;">
-                        <div class="pb-mapel2" style="background-color: #479D39; width: 100%;">
-                        <div class="pb-persen2">100%</div>
+                        <div class="pb-mapel2" style="background-color: #479D39; width: {{(($guru_kelas[2] / ($tingkat["9"] ?? 0))*100 >= 100) ? '100' : (($guru_kelas[2] / ($tingkat["9"] ?? 0))*100)}}%;">
+                        <div class="pb-persen2">{{($guru_kelas[2] / ($tingkat["9"] ?? 1))*100}}%</div>
                         </div>
                     </div>
                 </div>
@@ -124,7 +147,7 @@
                         Kelas VII
                     </div>
                     <div class="dashboard-jam-kelas">
-                        {{$guru_kelas["7"] ?? 0}}/{{$tingkat["7"] ?? 0}}
+                        {{$guru_kelas[0] ?? 0}}/{{$tingkat["7"] ?? 0}}
                     </div>
                 </div>
                 <div class="content-jam-kelas">
@@ -132,7 +155,7 @@
                         Kelas VIII
                     </div>
                     <div class="dashboard-jam-kelas">
-                        {{$guru_kelas["8"] ?? 0}}/{{$tingkat["8"] ?? 0}}
+                        {{$guru_kelas[1] ?? 0}}/{{$tingkat["8"] ?? 0}}
                     </div>
                 </div>
                 <div class="content-jam-kelas">
@@ -140,7 +163,7 @@
                         Kelas IX
                     </div>
                     <div class="dashboard-jam-kelas">
-                        {{$guru_kelas["9"] ?? 0}}/{{$tingkat["9"] ?? 0}}
+                        {{$guru_kelas[2] ?? 0}}/{{$tingkat["9"] ?? 0}}
                     </div>
                 </div>
             </div>
@@ -150,17 +173,17 @@
             <div class="item-title3">
                 <div class="title2">Peringatan!!</div>
             </div>
-            @if (($guru_kelas["7"] ?? 0) < ($tingkat["7"] ?? 0))
+            @if (($guru_kelas[0] ?? 0) < ($tingkat["7"] ?? 0))
                 <div class="content-peringatan">
                     Tambahkan Guru pada kelas 7 agar penjadwalan dapat bekerja lebih maksimal
                 </div>
             @endif
-            @if (($guru_kelas["8"] ?? 0) < ($tingkat["8"] ?? 0))
+            @if (($guru_kelas[1] ?? 0) < ($tingkat["8"] ?? 0))
                 <div class="content-peringatan">
                     Tambahkan Guru pada kelas 8 agar penjadwalan dapat bekerja lebih maksimal
                 </div>
             @endif
-            @if (($guru_kelas["9"] ?? 0) < ($tingkat["9"] ?? 0))
+            @if (($guru_kelas[2] ?? 0) < ($tingkat["9"] ?? 0))
                 <div class="content-peringatan">
                     Tambahkan Guru pada kelas 9 agar penjadwalan dapat bekerja lebih maksimal
                 </div>

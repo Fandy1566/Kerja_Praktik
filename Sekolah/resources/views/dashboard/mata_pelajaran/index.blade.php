@@ -2,6 +2,9 @@
 @section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Mata Pelajaran'])
+<div class="message">
+    
+</div>
 @can('Admin')
 <div id="form-layout" class="card m-20" style="width: 55%">
     <div class="title-card">

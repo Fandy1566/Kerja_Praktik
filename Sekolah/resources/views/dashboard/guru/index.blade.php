@@ -7,6 +7,10 @@
 @section('content')
 @include('layouts.header', ['title' => 'Guru'])
 @can('Admin')
+<div class="message">
+
+</div>
+
 <div id="form-layout" class="card m-20" style="width: 55%">
     <div class="title-card">
         Input Guru
