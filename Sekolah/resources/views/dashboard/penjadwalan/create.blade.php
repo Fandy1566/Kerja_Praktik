@@ -32,11 +32,11 @@
                 <div class="">
                     <label>Tahun</label>
                     <br>
-                    <input type="number" min="1900" max="2099" step="1" value="2016" style="width:300px"/>
+                    <input name="tahun" type="number" min="1900" max="2099" step="1" value="2016" style="width:300px"/>
                 </div>
                 <div class="">
                     <label for="">Semester</label><br>
-                    <select name="tahun" class="select-style">
+                    <select name="semester" class="select-style">
                         <option value="1">Gasal</option>
                         <option value="0">Genap</option>
                     </select>
@@ -356,7 +356,7 @@
         async function simpanJadwal() {
 
             const tahun = document.querySelector('input[name="tahun"]').value;
-            const semester = document.querySelector('input[name="semester"]').value;
+            const semester = document.querySelector('select[name="semester"]').value;
             // console.log(JSON.stringify({
             //     array7: array_7,
             //     array7_mp: array_7_mp,
@@ -387,6 +387,7 @@
                 })
             });
             const data = await response.json();
+            console.log(data);
         } catch (error) {
             console.error(error);
         }

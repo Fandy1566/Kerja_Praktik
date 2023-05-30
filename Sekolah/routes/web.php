@@ -51,6 +51,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/penjadwalan', [PenjadwalanController::class, 'index'])->name('jadwal');
     Route::get('/penjadwalan/create', [PenjadwalanController::class, 'create'])->name('jadwal.create');
+    Route::get('/penjadwalan/show', [PenjadwalanController::class, 'show'])->name('jadwal.show');
+    Route::get('/penjadwalan/edit/{id}', [PenjadwalanController::class, 'edit'])->name('jadwal.show');
+    Route::delete('/jadwal/delete/{id}', [PenjadwalanController::class, 'destroy'])->name('jadwal.delete');
 
     Route::get('/pengaturan', function () {
         return view('pengaturan');

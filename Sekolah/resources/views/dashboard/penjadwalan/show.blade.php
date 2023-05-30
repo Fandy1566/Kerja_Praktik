@@ -16,7 +16,7 @@
     </div>
     @endcan
 </div>
-<form method="get" action="/penjadwalan">
+<form method="get" action="/penjadwalan/show">
     <div class="card m-32 table-7 flex-row" style="gap:20px">
         <div>
             <label for="">Tahun ajaran</label><br>
@@ -39,14 +39,6 @@
     </div>
 </form>
 <div class="card m-32 card-to-remove">
-    @if ($jadwalDetails[0] ?? 0)
-    <form action="{{ route('jadwal.delete', ['id' => $jadwalDetails[0]->id_jadwal]) }}" method="post">
-        @csrf
-        @method('delete')
-        <input type="hidden" name="_method" value="delete">
-        <button id="btn_hapus" type="submit" class="btn btn-danger">Hapus</button>
-    </form>
-    @endif
     <div class="table-container" style="margin-left: 12px; margin-right: 12px; overflow-x: scroll;">
         <table class="table-check jadwal">
     
@@ -58,6 +50,7 @@
 <script>
 
     const isAdmin = {{ auth()->user()->can('Admin') ? 'true' : 'false' }};
+    const user = <?php echo json_encode(auth()->user()); ?>;
     const url = window.location.origin+"/api/jadwal";
     const jadwalDetails = <?php echo json_encode($jadwalDetails); ?>;
     const jadwalMengajar = <?php echo json_encode($jadwalMengajar); ?>;
@@ -65,7 +58,8 @@
     const mata_pelajaran = <?php echo json_encode($mataPelajaran); ?>;
     const hari = <?php echo json_encode($hari); ?>;
     const kelas = <?php echo json_encode($kelas); ?>;
-    // let data;
+
+    console.log(user);
 
     if (jadwalDetails.length != 0) {
         function renderTable() {
@@ -145,22 +139,29 @@
                         `;
     
                 for (let j = 0; j < Object.keys(groupedJadwal[i]).length; j++) {
-                        console.log(groupedJadwal[i.toString()][j.toString()].id_guru);
-                        table_content += `
-                            <td>
-                                <div class="flex-column" style="align-items:center">
-                                    <div>
-                                        ${groupedJadwal[i.toString()][j.toString()].name ?? ''}
+                        if (user.id == groupedJadwal[i.toString()][j.toString()].id_guru ?? '') {
+                            table_content += `
+                                <td>
+                                    <div class="flex-column" style="align-items:center">
+                                        <div>
+                                            ${groupedJadwal[i.toString()][j.toString()].name ?? ''}
+                                        </div>
+                                        <div style ="font-size: 20px">
+                                            ${groupedJadwal[i.toString()][j.toString()].id_guru ?? ''}
+                                        </div>
+                                        <div>
+                                            ${groupedJadwal[i.toString()][j.toString()].nama_mata_pelajaran ?? ''}
+                                        </div>
                                     </div>
-                                    <div style ="font-size: 20px">
-                                        ${groupedJadwal[i.toString()][j.toString()].id_guru ?? ''}
-                                    </div>
-                                    <div>
-                                        ${groupedJadwal[i.toString()][j.toString()].nama_mata_pelajaran ?? ''}
-                                    </div>
-                                </div>
-                            </td>
-                        `;
+                                </td>
+                            `;
+                        } else{
+                            table_content += `
+                                <td>
+
+                                </td>
+                            `;
+                        }
                 }
                 table_content += `
                     </tr>
@@ -184,23 +185,6 @@
         }
     }
     renderTable();
-
-    async function deleteItem(id) {
-    try {
-        const response = await fetch(window.location.origin + "/api/jadwal/delete/" + id, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            method: "delete",
-            credentials: "same-origin",
-        });
-        const data = await response.json();
-        // Handle the response data as needed
-    } catch (error) {
-        console.error(error);
-        // Handle the error condition
-    }
-}
 
 </script>
 @endsection

@@ -41,4 +41,28 @@ class PenjadwalanController extends Controller
         $mataPelajaran = MataPelajaran::all();
         return view('dashboard.penjadwalan.create', compact('kelas','guru','jadwalMengajar','mataPelajaran'));
     }
+
+    public function show(Request $request)
+    {
+        $jadwalMengajar = JadwalMengajar::all();
+        $jadwalDetails = JadwalDetail::where('id_jadwal', $request->id)
+            ->orderBy('id_jam', 'asc')
+            ->orderBy('id_kelas', 'asc')
+            ->get();
+        $kelas = Kelas::all();
+        $mataPelajaran = MataPelajaran::all();
+        $guru = User::all();
+        $hari = Hari::all();
+        $penjadwalan = Jadwal::all();
+
+        return response()->view('dashboard.penjadwalan.show', compact('kelas','jadwalMengajar','hari','guru','jadwalDetails','penjadwalan','mataPelajaran'));
+    }
+
+    public function destroy($id)
+    {
+        $jadwal = Jadwal::find($id);
+        $jadwal->delete();
+
+        return redirect()->back();
+    }
 }
