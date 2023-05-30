@@ -39,14 +39,16 @@
     </div>
 </form>
 <div class="card m-32 card-to-remove">
-    @if ($jadwalDetails[0] ?? 0)
-    <form action="{{ route('jadwal.delete', ['id' => $jadwalDetails[0]->id_jadwal]) }}" method="post">
-        @csrf
-        @method('delete')
-        <input type="hidden" name="_method" value="delete">
-        <button id="btn_hapus" type="submit" class="btn btn-danger">Hapus</button>
-    </form>
-    @endif
+    @can('Admin')
+        @if ($jadwalDetails[0] ?? 0)
+        <form action="{{ route('jadwal.delete', ['id' => $jadwalDetails[0]->id_jadwal]) }}" method="post">
+            @csrf
+            @method('delete')
+            <input type="hidden" name="_method" value="delete">
+            <button id="btn_hapus" type="submit" class="btn btn-danger">Hapus</button>
+        </form>
+        @endif
+    @endcan
     <div class="table-container" style="margin-left: 12px; margin-right: 12px; overflow-x: scroll;">
         <table class="table-check jadwal">
     
