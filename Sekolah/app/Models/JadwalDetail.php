@@ -27,4 +27,8 @@ class JadwalDetail extends Model
     {
         return $this->belongsTo(JadwalMengajar::class, 'id_jam', 'id');
     }
+    public function Jadwal()
+    {
+        return $this->belongsTo(Jadwal::class, 'id_jadwal', 'id');
+    }
 }

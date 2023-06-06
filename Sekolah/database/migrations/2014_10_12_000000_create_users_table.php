@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('foto_profil')->nullable();
             $table->boolean('is_admin')->default(0);
+            $table->boolean('is_kepala_sekolah')->default(0);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_guru_tetap')->default(1);

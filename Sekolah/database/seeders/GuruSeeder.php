@@ -70,5 +70,9 @@ class GuruSeeder extends Seeder
         $user = User::find(36);
         $user->is_admin = 1;
         $user->save();
+
+        $user = User::find(1);
+        $user->is_kepala_sekolah = 1;
+        $user->save();
     }
 }

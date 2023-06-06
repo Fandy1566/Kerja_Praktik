@@ -65,4 +65,13 @@ class PenjadwalanController extends Controller
 
         return redirect()->back();
     }
+
+    public function validasi($id)
+    {
+        $jadwal = Jadwal::find($id);
+        $jadwal->is_validated = 1;
+        $jadwal->save();
+
+        return redirect()->back();
+    }
 }

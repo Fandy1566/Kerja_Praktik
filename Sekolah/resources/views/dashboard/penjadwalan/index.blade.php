@@ -23,7 +23,7 @@
             <select name="id" class="select-style">
                 <option value="">Pilih Tahun Ajaran</option>
                 @foreach ($penjadwalan as $item)
-                    <option value="{{$item->id}}">{{$item->tahun_awal}}/{{$item->tahun_awal+1}}</option>
+                    <option value="{{$item->id}}">{{$item->tahun_awal}}/{{$item->tahun_awal+1}} ({{$item->is_validated ? "Telah divalidasi": "Belum divalidasi"}})</option>
                 @endforeach
             </select>
 
@@ -35,20 +35,32 @@
                 <option value="0">Genap</option>
             </select>
         </div>
-        <button type="submit" class="btn" style="outline: none; border: none; width:100px; height: 30px; align-self:flex-end">Cari</button>
+        <button type="submit" class="btn" style="outline: none; border: none; width:100px; height: 30px; align-self:flex-end; cursor: pointer;">Cari</button>
     </div>
 </form>
 <div class="card m-32 card-to-remove">
-    @can('Admin')
-        @if ($jadwalDetails[0] ?? 0)
-        <form action="{{ route('jadwal.delete', ['id' => $jadwalDetails[0]->id_jadwal]) }}" method="post">
-            @csrf
-            @method('delete')
-            <input type="hidden" name="_method" value="delete">
-            <button id="btn_hapus" type="submit" class="btn btn-danger">Hapus</button>
-        </form>
-        @endif
-    @endcan
+    <div class="btn-group"  style="display: flex; gap: 16px; justify-content:space-between">
+        @can('Admin')
+            @if ($jadwalDetails[0] ?? 0)
+            <form action="{{ route('jadwal.delete', ['id' => $jadwalDetails[0]->id_jadwal]) }}" method="post">
+                @csrf
+                @method('delete')
+                <input type="hidden" name="_method" value="delete">
+                <button id="btn_hapus" style="background-color: red; border: none; height:24px; cursor: pointer" type="submit" class="btn">Hapus</button>
+            </form>
+            @endif
+        @endcan
+        @can('kepala_sekolah')
+            @if(!($jadwalDetails[0]->Jadwal->is_validated ?? 0) )
+                @if ($jadwalDetails[0] ?? 0)
+                    <form action="{{ route('jadwal.validasi', ['id' => $jadwalDetails[0]->id_jadwal]) }}" method="post">
+                        @csrf
+                        <button id="btn_hapus" style="border: none; height:24px; cursor: pointer" type="submit" class="btn">Validasi</button>
+                    </form>
+                @endif
+            @endif
+        @endcan
+    </div>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px; overflow-x: scroll;">
         <table class="table-check jadwal">
     

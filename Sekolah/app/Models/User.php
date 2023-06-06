@@ -47,5 +47,8 @@ class User extends Authenticatable
     public function isAdmin(){
         return $this->is_admin == 1;
     }
+    public function isKepalaSekolah(){
+        return $this->is_kepala_sekolah == 1;
+    }
 
 }
