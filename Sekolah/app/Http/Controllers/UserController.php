@@ -15,6 +15,12 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = user::find($id);
+        if (!$request->foto_profil == null) {
+            $text = $request->foto_profil->getClientOriginalExtension();
+            $nama_file = "foto-" . time() . "." . $text;
+            $request->foto_profil->storeAs("public", $nama_file);
+            $user->foto_profil = $nama_file;
+        }
         $user->password = bcrypt($request->password);
         $user->email = $request->email;
         $user->save();
@@ -23,5 +29,7 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+
 
 }

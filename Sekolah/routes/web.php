@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PenjadwalanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
 // Route::get('/dashboard', function () {
@@ -59,8 +60,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/user/edit/{id}', [UserController::class, 'update'])->name('user.edit');
 
     Route::get('/pengaturan', function () {
-        return view('pengaturan');
+        $user = App\Models\User::find(Auth::user()->id);
+        return view('pengaturan', compact('user'));
     })->name('pengaturan');
+    
 
 });
 

@@ -153,25 +153,6 @@ class APIUserController extends Controller
         
     }
 
-    public function reset()
-    {
-        try {
-            $guru = new User;
-            DB::table($guru->getTable())->where('is_admin', 0)->delete();
-            $count = User::where('is_admin', 1)->count();
-            DB::statement('ALTER TABLE '.$guru->getTable().' AUTO_INCREMENT = '.($count+1).';');
-            return response()->json([
-                'status' => 200,
-                'message' => 'Semua data berhasil dihapus',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 400,
-                'message' => 'Data gagal dihapus',
-                'error' => $e->getMessage(),
-            ], 400);
-        }
-    }
     public function getGuruDetail()
     {
         try {
