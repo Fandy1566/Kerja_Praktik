@@ -3,6 +3,8 @@
 @section('content')
 @include('layouts.header', ['title' => 'Jadwal Mengajar'])
 
+<div class="message"></div>
+
 <div class="form-nav flex-row" style="gap: 12px; margin-right: 12px; margin-top: 16px;">
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin+'/penjadwalan';">
         Jadwal
@@ -171,6 +173,7 @@
                 </tbody>
             `;
             table.innerHTML = table_content;
+            getMessage(data.message? data.message : getError());
         }
     } else {
         function renderTable() {

@@ -388,6 +388,7 @@
             });
             const data = await response.json();
             console.log(data);
+            getMessage(data.message? data.message : getError());
         } catch (error) {
             console.error(error);
         }

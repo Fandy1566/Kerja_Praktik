@@ -196,7 +196,7 @@
                             element.is_guru_kelas_9 ? '9' : ''
                         ].filter(Boolean).join(', ')}
                     </td>
-                    <td id="kode_guru">${isGuruTetap(element.is_guru_tetap)}</td>
+                    <td id="kode_guru">${isGuruTetap(element.is_kepala_sekolah, element.is_guru_tetap, element.is_admin)}</td>
                     <td>
                         ${isAdmin ? `<button onclick='Edit(${JSON.stringify(element)})'>Edit</button>` : ''}
                     </td>
@@ -212,11 +212,18 @@
         getData();
     });
 
-    function isGuruTetap(bool) {
-        if (bool) {
+    function isGuruTetap(bool1, bool2, bool3) {
+        if (bool1) {
             return `
-                <div class="status-guru-container guru-tetap">
-                    Guru Tetap
+                <div class="status-guru-container kepala-sekolah">
+                    Kepala Sekolah
+                </div>
+            `;
+        }
+        else if (bool2) {
+            return `
+                <div class="status-guru-container ${bool3 ? `admin` : 'guru-tetap'} ">
+                    Guru  ${bool3 ? `/ Admin` : 'Tetap'}
                 </div>
             `;
         } else {
@@ -226,8 +233,6 @@
                 </div>
             `;
         }
-
-
     }
 
     const url = window.location.origin+"/api/guru";

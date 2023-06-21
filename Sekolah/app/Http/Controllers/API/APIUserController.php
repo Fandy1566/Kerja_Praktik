@@ -130,7 +130,7 @@ class APIUserController extends Controller
             if ($i > 0) {
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Data tidak ditemukan',
+                    'message' => 'Data Berhasil dihapus',
                     'data' => array(
                         "Berhasil" => $berhasil,
                         "Gagal" => $gagal

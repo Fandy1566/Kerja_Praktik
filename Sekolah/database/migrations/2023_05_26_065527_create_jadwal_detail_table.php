@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('jadwal_detail', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_jadwal');
-            $table->foreign('id_jadwal')->references('id')->on('jadwal');
+            $table->foreign('id_jadwal')->references('id')->on('jadwal')->onDelete('cascade');
             $table->unsignedBigInteger('id_jam');
             $table->foreign('id_jam')->references('id')->on('jadwal_mengajar');
             $table->unsignedBigInteger('id_guru')->nullable();

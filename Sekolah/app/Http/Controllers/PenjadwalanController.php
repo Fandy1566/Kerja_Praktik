@@ -10,6 +10,7 @@ use App\Models\JadwalMengajar;
 use App\Models\MataPelajaran;
 use App\Models\Kelas;
 use App\Models\Hari;
+use Session;
 use Illuminate\Support\Facades\Auth;
 // use App\Models\JadwalDetail;
 
@@ -63,6 +64,8 @@ class PenjadwalanController extends Controller
         $jadwal = Jadwal::find($id);
         $jadwal->delete();
 
+        Session::flash('message', 'Data Berhasil dihapus!'); 
+
         return redirect()->back();
     }
 
@@ -71,6 +74,8 @@ class PenjadwalanController extends Controller
         $jadwal = Jadwal::find($id);
         $jadwal->is_validated = 1;
         $jadwal->save();
+
+        Session::flash('message', 'Data Berhasil divalidasi!'); 
 
         return redirect()->back();
     }

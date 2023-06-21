@@ -378,6 +378,7 @@
                 });
                 const data = await response.json();
                 await getData();
+                getMessage(data.message? data.message : getError());
                 } else {
                 //kalo kurang dari 1
             }
