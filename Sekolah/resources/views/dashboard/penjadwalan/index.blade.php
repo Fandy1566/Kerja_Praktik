@@ -32,7 +32,7 @@
     <div class="card m-32 table-7 flex-row" style="gap:20px">
         <div>
             <label for="">Tahun ajaran</label><br>
-            <select name="id" class="select-style">
+            <select name="id" class="select-style ">
                 <option value="">Pilih Tahun Ajaran</option>
                 @foreach ($penjadwalan as $item)
                     <option value="{{$item->id}}">{{$item->tahun_awal}}/{{$item->tahun_awal+1}} ({{$item->is_validated ? "Telah divalidasi": "Belum divalidasi"}})</option>
