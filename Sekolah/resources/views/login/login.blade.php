@@ -47,6 +47,11 @@
             <button type="submit">
                 {{ __('Log in') }}
             </button>
+            @if ($errors->has('email'))
+                <span class="invalid-feedback" style="color:red; display:flex; justify-content:center;margin-top: 8px; font-size:10px">
+                    Email / Password Salah
+                </span>
+            @endif
         </div>
     </form>
 </body>

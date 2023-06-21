@@ -592,7 +592,7 @@ h2#title-penjadwalan{
 }
 
 .status-guru-container{
-    width: 125px;
+    width: 140px;
     padding: 4px 6px;
     padding-left: 30px;
     position: relative;
@@ -625,6 +625,24 @@ h2#title-penjadwalan{
 
 .guru-tetap::before{
     background-color: #479D39;
+}
+
+.kepala-sekolah{
+    background-color: #53d4e2;
+    color: #063448;
+}
+
+.kepala-sekolah::before{
+    background-color: #063448;
+}
+
+.admin{
+    background-color: #fcffb7;
+    color: #cdd22d;
+}
+
+.admin::before{
+    background-color: #cdd22d;
 }
 
 .jadwal td{

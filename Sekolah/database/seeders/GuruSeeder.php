@@ -16,6 +16,7 @@ class GuruSeeder extends Seeder
     {
         $nama_guru =[
             "Jani Suspandi, S.Pd.I.",
+            "Anitawati, S.Pd",
             "Rama Hardiansyah, S.Pd",
             "Elfa Yuliana, S.Ag",
             "Asih Frakensi, M.Pd",
@@ -50,7 +51,6 @@ class GuruSeeder extends Seeder
             "Hafiiz Artama, S.Pd.",
             "Sri Hartanti, A.Ma",
             "Chandra Wijaya, S.Pd",
-            "Anitawati, S.Pd",
             "Amalia Amini, S.Pd",
             "Drs. Joko Wahyono",
             "Husni Roaina, S.Pd",
@@ -66,8 +66,16 @@ class GuruSeeder extends Seeder
                 'is_guru_tetap' => 1,
             ]);
         }
+        
+        $user = User::find(2);
+        $user->is_admin = 1;
+        $user->save();
 
-        $user = User::find(36);
+        $user = User::find(3);
+        $user->is_admin = 1;
+        $user->save();
+
+        $user = User::find(4);
         $user->is_admin = 1;
         $user->save();
 

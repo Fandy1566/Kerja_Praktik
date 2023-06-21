@@ -389,6 +389,7 @@
             const data = await response.json();
             getMessage(data.message? data.message : getError());
             console.log(data);
+            getMessage(data.message? data.message : getError());
         } catch (error) {
             console.error(error);
         }

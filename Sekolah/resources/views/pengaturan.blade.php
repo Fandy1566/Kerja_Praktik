@@ -1,6 +1,17 @@
 @extends('layouts.dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Pengaturan'])
+
+@if(Session::has('message'))
+<div style="display:flex; justify-content: space-between ; background-color: #A5F2B1;border: 2px solid #479D39; color:#479D39; border-radius:5px; width:100%; height:50px; margin-top: 16px">
+    <div style="align-self:center; margin-left:10px">
+    {{ Session::get('message') }}
+    </div>
+    <span class="clickable" style="margin-right:10px; margin-top:10px" onclick="document.querySelector('.message').innerHTML =''">&#10006</span>
+</div>
+@endif
+
+
 <div class="modal hidden">
 </div>
 <div class="pengaturan-top flex-row" style="gap:20px">
@@ -18,7 +29,10 @@
             </div>
         </div>
         <div class="form-area" style="margin-left: 12px;">
-            <form style="padding-bottom: 40px">
+            <form style="padding-bottom: 40px" action="{{ route('user.edit', ['id' => Auth::user()->id]) }}" method="POST">
+            @csrf
+            @method('patch')
+            <input type="hidden" name="_method" value="PATCH">
                 <div class="flex-row" style="margin-top: 24px; gap:20px; align-items: center;">
                     <div class="pengaturan-username">
                         <label for="">Email</label>
@@ -33,10 +47,10 @@
                         height: 30px;
                         padding-left: 5px;
                         color: #345678;
-                        font-weight: 500;">
+                        font-weight: 500;" minlength="8">
                     </div>
                 </div>
-                <input class="clickable form-button title-card" type="submit" value="Simpan" onclick="submitForm()">
+                <input class="clickable form-button title-card" type="submit" value="Simpan">
             </form>
         </div>
     </div>
@@ -63,23 +77,6 @@
                 </div>
             </div>
             `;
-        }
-        
-        async function reset(name) {
-            event.preventDefault(); // prevent form submission
-            try {
-                const response = await fetch(url+"/"+name, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-Token": "{{ csrf_token() }}"
-                    },
-                    method: "delete",
-                    credentials: "same-origin",
-                });
-                const data = await response.json();
-            } catch (error) {
-                console.error(error);
-            }
         }
     }
 
