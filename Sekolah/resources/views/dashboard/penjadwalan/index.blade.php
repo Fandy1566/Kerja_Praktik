@@ -4,11 +4,13 @@
 @include('layouts.header', ['title' => 'Jadwal Mengajar'])
 
 @if(Session::has('message'))
-<div style="display:flex; justify-content: space-between ; background-color: #A5F2B1;border: 2px solid #479D39; color:#479D39; border-radius:5px; width:100%; height:50px; margin-top: 16px">
-    <div style="align-self:center; margin-left:10px">
-    {{ Session::get('message') }}
+<div class="message">
+    <div style="display:flex; justify-content: space-between ; background-color: #A5F2B1;border: 2px solid #479D39; color:#479D39; border-radius:5px; width:100%; height:50px; margin-top: 16px">
+        <div style="align-self:center; margin-left:10px">
+        {{ Session::get('message') }}
+        </div>
+        <span class="clickable" style="margin-right:10px; margin-top:10px" onclick="document.querySelector('.message').innerHTML =''">&#10006</span>
     </div>
-    <span class="clickable" style="margin-right:10px; margin-top:10px" onclick="document.querySelector('.message').innerHTML =''">&#10006</span>
 </div>
 @endif
 
