@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PenjadwalanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/penjadwalan/edit/{id}', [PenjadwalanController::class, 'edit'])->name('jadwal.show');
     Route::post('/penjadwalan/validasi/{id}', [PenjadwalanController::class, 'validasi'])->name('jadwal.validasi');
     Route::delete('/jadwal/delete/{id}', [PenjadwalanController::class, 'destroy'])->name('jadwal.delete');
+    Route::patch('/user/edit/{id}', [UserController::class, 'update'])->name('user.edit');
 
     Route::get('/pengaturan', function () {
         return view('pengaturan');
