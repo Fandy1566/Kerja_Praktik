@@ -30,7 +30,7 @@
                 </div>
                 <div class="right-side-form flex-column" style="margin-left: 64px; margin-top: 4px;">
                     <label for="" style="margin-bottom: 12px;">Lantai Kelas</label>
-                    <input type="number" name="lantai" id="" min="1" placeholder="Masukan Lantai.." value="1">
+                    <input type="number" name="lantai" id="lantai" min=1 placeholder="Masukan Lantai.." value="1" onKeyUp="checkNum()">
                 </div>
                 <input class="clickable form-button title-card" type="submit" value="Tambah" onclick="submitForm()">
             </form>
@@ -45,7 +45,7 @@
     <div class="table-top" style="margin-left: 12px;">
         <input data-col-name="nama_kelas" class="search" style="width: 70%;" type="text" onkeyup="renderTable()" placeholder="Cari Kelas" id="search">
         <button class="clickable cari" onclick="renderTable()">Cari</button>
-        <button class="clickable delete" onclick="deleteSelected('guru')">Delete</button>
+        <button class="clickable delete" onclick="deleteSelected('kelas')">Delete</button>
     </div>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">
@@ -79,6 +79,13 @@
 
     document.querySelector('#nextButton').addEventListener('click', nextPage, false);
     document.querySelector('#prevButton').addEventListener('click', previousPage, false);
+
+    function checkNum() {
+        const lt = document.querySelector('#lantai');
+        if (lt.value < 1 && lt.value !== "") {
+            lt.value = 1;
+        }
+    }
 
     if (isAdmin) {
         const formArea = document.querySelector('#form-layout');
@@ -156,7 +163,7 @@
         }).forEach(element => {
             result += `
             <tr>
-                <td class="center-text"><input type="checkbox"></td>
+                <td class="center-text"><input type="checkbox" value="${element.id}"></td>
                 <td>${element.id}</td>
                 <td id="nama_kelas">${element.nama_kelas}</td>
                 <td id="lantai">${element.lantai}</td>

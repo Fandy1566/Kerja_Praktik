@@ -17,7 +17,7 @@
 <div class="modal hidden">
 </div>
 <div class="pengaturan-top flex-row" style="gap:20px">
-    <div id="form-layout" class="card m-20" style="width: 700px">
+    <div id="form-layout" class="card m-20" style="width: 750px">
         <div class="title-card">
             Pengaturan Akun
         </div>

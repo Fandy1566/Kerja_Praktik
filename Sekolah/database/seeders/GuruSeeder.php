@@ -17,10 +17,9 @@ class GuruSeeder extends Seeder
         $nama_guru =[
             "Jani Suspandi, S.Pd.I.",
             "Anitawati, S.Pd",
-            "Rama Hardiansyah, S.Pd",
-            "Elfa Yuliana, S.Ag",
+            "Sri Madacrni, S.Pd.",
+            "Wulandari, S.Pd",
             "Asih Frakensi, M.Pd",
-            "Sri Madarni, S.Pd.",
             "Safiq Farisi Sayoga, S.Pd.",
             "Eulis Kurniati, S.Pd",
             "Hj. Dewi Muryani, S.Pd",
@@ -54,7 +53,9 @@ class GuruSeeder extends Seeder
             "Amalia Amini, S.Pd",
             "Drs. Joko Wahyono",
             "Husni Roaina, S.Pd",
-            "Sri Dewi Sartika Sari, ST"
+            "Sri Dewi Sartika Sari, ST",
+            "Rama Hardiansyah, S.Pd",
+            "Elfa Yuliana, S.Ag"
         ];
 
         foreach ($nama_guru as $i =>$nama) {

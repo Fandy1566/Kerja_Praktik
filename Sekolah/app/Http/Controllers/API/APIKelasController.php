@@ -115,12 +115,14 @@ class APIKelasController extends Controller
                     'data' => array(
                         "Berhasil" => $berhasil,
                         "Gagal" => $gagal
-                    )
+                    ),
+                    'check' => $request->checkedCheckboxes,
                 ]);
             } else {
                 return response()->json([
                     'status' => 400,
                     'message' => 'Data gagal dihapus',
+                    'check' => $request->checkedCheckboxes,
                 ],400);
             }
             
@@ -128,7 +130,8 @@ class APIKelasController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' => 'Data gagal dihapus',
-                'error' => $e
+                'error' => $e,
+                'check' => $request->checkedCheckboxes,
             ],400);
         }
         
