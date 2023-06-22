@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->year('tahun_awal');
             $table->boolean('is_gasal');
-            $table->boolean('is_validated')->nullable();
+            $table->boolean('is_validated')->default(0);
             // $table->json('kelas_7');
             // $table->json('kelas_8');
             // $table->json('kelas_9');
