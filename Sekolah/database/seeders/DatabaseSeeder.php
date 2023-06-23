@@ -20,10 +20,12 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             HariSeeder::Class,
+            RoleSeeder::Class,
             GuruSeeder::Class,
             JadwalMengajarSeeder::Class,
             MataPelajaranSeeder::class,
             KelasSeeder::Class,
+
         ]);
     }
 }

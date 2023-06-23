@@ -37,11 +37,19 @@
                     <label>Kategori</label>
                 </div>
                 <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                    <input type="radio" name="is_guru_tetap" id="" checked value="1">
+                    <input type="radio" name="role" id="" checked value="1">
+                    <label for="" style="margin-left: 12px;">Kepala Sekolah</label>
+                </div>
+                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                    <input type="radio" name="role" id="" value="2">
+                    <label for="" style="margin-left: 12px;">Admin</label>
+                </div>
+                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                    <input type="radio" name="role" id="" value="3">
                     <label for="" style="margin-left: 12px;">Guru Tetap</label>
                 </div>
                 <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                    <input type="radio" name="is_guru_tetap" id="" value="0">
+                    <input type="radio" name="role" id="" value="4">
                     <label for="" style="margin-left: 12px;">Guru Honorer</label>
                 </div>
             </div>

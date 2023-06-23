@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GuruDetail;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use DB;
 
 class APIUserController extends Controller
@@ -44,7 +45,7 @@ class APIUserController extends Controller
             $increment = DB::select("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA ='" . env('DB_DATABASE') . "' AND TABLE_NAME ='" . $guru->getTable() . "'")[0]->AUTO_INCREMENT;
             $guru->name = $request->nama_guru;
             $guru->password = bcrypt("1234567890");
-            $guru->is_guru_tetap = $request->is_guru_tetap;
+            $guru->role = $request->role;
             $guru->email = "guru".$increment."@smpn23.com";
             $guru->is_guru_kelas_7 = in_array('7', $request->kelas) ? 1 : 0;
             $guru->is_guru_kelas_8 = in_array('8', $request->kelas) ? 1 : 0;
@@ -77,7 +78,7 @@ class APIUserController extends Controller
             $guru = User::find($id);
             if ($guru) {
                 $guru->name = $request->nama_guru;
-                $guru->is_guru_tetap = $request->is_guru_tetap;
+                $guru->role = $request->role;
                 $guru->is_guru_kelas_7 = in_array('7', $request->kelas) ? 1 : 0;
                 $guru->is_guru_kelas_8 = in_array('8', $request->kelas) ? 1 : 0;
                 $guru->is_guru_kelas_9 = in_array('9', $request->kelas) ? 1 : 0;
@@ -118,7 +119,7 @@ class APIUserController extends Controller
             foreach ($request->checkedCheckboxes as $value) {
                 $guru = User::find($value);
                 if ($guru) {
-                    $guru->delete();
+                    $guru->role = 5;
                     $berhasil[$i] = $value;
                     $i++;
                 } else {

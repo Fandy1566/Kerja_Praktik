@@ -44,11 +44,19 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    public function isAdmin(){
-        return $this->is_admin == 1;
-    }
     public function isKepalaSekolah(){
-        return $this->is_kepala_sekolah == 1;
+        return $this->role == 1;
     }
-
+    public function isAdmin(){
+        return $this->role == 2;
+    }
+    public function isGuruTetap(){
+        return $this->role == 3;
+    }
+    public function isGuruHonorer(){
+        return $this->role == 4;
+    }
+    public function isBerhenti(){
+        return $this->role == 5;
+    }
 }

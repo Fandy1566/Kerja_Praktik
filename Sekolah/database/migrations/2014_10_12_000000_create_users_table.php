@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('foto_profil')->nullable();
-            $table->boolean('is_admin')->default(0);
-            $table->boolean('is_kepala_sekolah')->default(0);
+            $table->unsignedBigInteger('role');
+            $table->foreign('role')->references('id')->on('roles');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->boolean('is_guru_tetap')->default(1);
             $table->string('password');
             $table->boolean('is_guru_kelas_7')->default(1);
             $table->boolean('is_guru_kelas_8')->default(1);

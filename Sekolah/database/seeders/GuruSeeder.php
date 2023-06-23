@@ -64,24 +64,24 @@ class GuruSeeder extends Seeder
                 'email' => "guru".($i+1)."@smpn23.com",
                 // 'password' => str_replace(",", "", explode(" ", $nama)[0]),
                 'password' => bcrypt("1234567890"),
-                'is_guru_tetap' => 1,
+                'role' => 3,
             ]);
         }
         
         $user = User::find(2);
-        $user->is_admin = 1;
+        $user->role = 2;
         $user->save();
 
         $user = User::find(3);
-        $user->is_admin = 1;
+        $user->role = 2;
         $user->save();
 
         $user = User::find(4);
-        $user->is_admin = 1;
+        $user->role = 2;
         $user->save();
 
         $user = User::find(1);
-        $user->is_kepala_sekolah = 1;
+        $user->role = 1;
         $user->save();
     }
 }
