@@ -9,8 +9,8 @@
     <title>Login</title>
 </head>
 <body>
-    <div class="left-side" style="width:60vw; height:100%; background-color: white;">
-        <img src="{{asset('image/picture/login2.png')}}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+    <div class="left-side" style="width:60vw; height:100%;">
+        {{-- <img src="{{asset('image/picture/login2.png')}}" alt="" style="width: 100%; height: 100%; object-fit: cover;"> --}}
     </div>
     <form method="POST" action="{{ route('login') }}">
         @csrf
