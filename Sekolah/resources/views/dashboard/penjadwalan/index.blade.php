@@ -134,12 +134,8 @@
             table_content += `
                 <thead>
                     <tr>
-                        <th>
-                            Hari
-                        </th>
-                        <th>
-                            Jam
-                        </th>
+                        <th scope="row" style="left: 0px"rowspan="2">Hari</th>
+                        <th scope="row" style="left: 101px" rowspan="2">Waktu</th>
             `
             for (let i = 1; i <= Object.keys(groupedKelas).length; i++) {
                 table_content +=`
@@ -161,13 +157,17 @@
                     <tr>
                         `;
                     table_content += `
-                            <td>
-                                ${groupedJadwal[i.toString()][0].hari.nama_hari ?? ''}
-                            </td>
-                            <td>
-                                ${groupedJadwal[i.toString()][0].waktu_awal ?? ''} -
-                                ${groupedJadwal[i.toString()][0].waktu_akhir ?? ''}
-                            </td>
+                        <th scope="row">
+                            <div class="col-fixed" style="width: 100px">
+                            ${groupedJadwal[i.toString()][0].hari.nama_hari ?? ''}
+                            </div>
+                        </th>
+                        <th scope="row" style="left: 101px">
+                            <div class="col-fixed" style="width: 150px">
+                            ${groupedJadwal[i.toString()][0].waktu_awal ?? ''} -
+                            ${groupedJadwal[i.toString()][0].waktu_akhir ?? ''}
+                            </div>
+                        </th>
                         `;
     
                 for (let j = 0; j < Object.keys(groupedJadwal[i]).length; j++) {

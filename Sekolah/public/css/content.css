@@ -128,9 +128,10 @@
 
 .table-container{
     border-radius: 10px;
-    overflow: hidden;
+    overflow: scroll;
     margin-top: 16px;
     border-inline: 1px solid var(--color-tertiary);
+    height: 500px;
 }
 
 .flex-row{
@@ -539,12 +540,33 @@ h2#title-penjadwalan{
     height: 75px;
 }
 
-.table-check th{
+.table-check thead th{
     background-color: #345678;
     color: white;
     font-weight: 500;
     font-size: 14px;
     text-align: start;
+}
+
+.table-check thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.table-check th[scope=row]{
+    position: sticky;
+    left: 0;
+    z-index: 3;
+}
+
+.table-check tbody th[scope=row]{
+    background-color: white;
+    outline: 1px solid #345678;
+    font-size: 13px;
+    color: #587693;
+    font-weight: 500;
+    z-index: 1;
 }
 
 .table-check td, .table-check th{
@@ -655,10 +677,11 @@ h2#title-penjadwalan{
     height: 50px;
 }
 
-.jadwal td:nth-child(1), .jadwal td:nth-child(2){
-    text-align: center;
+.jadwal td:nth-child(2){
+    left: 100px;
 }
 
 table.minimize-th th{
     height: 30px;
 }
+

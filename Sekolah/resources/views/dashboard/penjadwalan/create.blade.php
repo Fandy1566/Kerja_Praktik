@@ -64,8 +64,8 @@
         <table id="tbl7" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
-                    <th rowspan="2">Hari</th>
-                    <th rowspan="2">Waktu</th>
+                    <th scope="row" style="left: 0px"rowspan="2">Hari</th>
+                    <th scope="row" style="left: 101px" rowspan="2">Waktu</th>
                     <th colspan ="{{$tingkat["7"]}}">Kelas</th>
                 </tr>
                 @php
@@ -76,15 +76,23 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_7 as $item)
-                        <th>{{$item->nama_kelas}}</th>
+                        <th style="top: 30px">{{$item->nama_kelas}}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jadwalMengajar as $j => $item)
                     <tr>
-                        <td>{{$item->hari->nama_hari}}</td>
-                        <td>{{$item->waktu_awal}} - {{$item->waktu_akhir}}</td>
+                        <th scope="row">
+                            <div class="col-fixed" style="width: 100px">
+                                {{$item->hari->nama_hari}}
+                            </div>
+                        </th>
+                        <th scope="row" style="left: 101px">
+                            <div class="col-fixed" style="width: 150px">
+                                {{$item->waktu_awal}} - {{$item->waktu_akhir}}
+                            </div>
+                        </th>
                         @foreach ($filtered_7 as $i => $item2)
                             <td>
                                 <div class="flex-column" style="gap:10px; padding-inline: 10px">
@@ -115,8 +123,8 @@
         <table id="tbl8" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
-                    <th rowspan="2">Hari</th>
-                    <th rowspan="2">Waktu</th>
+                    <th scope="row" style="left: 0px"rowspan="2">Hari</th>
+                    <th scope="row" style="left: 101px" rowspan="2">Waktu</th>
                     <th colspan ="{{$tingkat["8"]}}">Kelas</th>
                 </tr>
                 @php
@@ -127,15 +135,23 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_8 as $item)
-                        <th>{{$item->nama_kelas}}</th>
+                        <th style="top: 30px">{{$item->nama_kelas}}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jadwalMengajar as $j => $item)
                     <tr>
-                        <td>{{$item->hari->nama_hari}}</td>
-                        <td>{{$item->waktu_awal}} - {{$item->waktu_akhir}}</td>
+                        <th scope="row">
+                            <div class="col-fixed" style="width: 100px">
+                                {{$item->hari->nama_hari}}
+                            </div>
+                        </th>
+                        <th scope="row" style="left: 101px">
+                            <div class="col-fixed" style="width: 150px">
+                                {{$item->waktu_awal}} - {{$item->waktu_akhir}}
+                            </div>
+                        </th>
                         @foreach ($filtered_8 as $i => $item2)
                         <td>
                             <select class="clickable penjadwalan-select-guru" id="select-{{$j}}-{{$i}}" onchange="select8({{$j}},{{$i}})">
@@ -164,8 +180,8 @@
         <table id="tbl9" class="table-check jawdal minimize-th" style= "overflow: scroll;">
             <thead>
                 <tr>
-                    <th rowspan="2">Hari</th>
-                    <th rowspan="2">Waktu</th>
+                    <th scope="row" style="left: 0px"rowspan="2">Hari</th>
+                    <th scope="row" style="left: 101px" rowspan="2">Waktu</th>
                     <th colspan ="{{$tingkat["9"]}}">Kelas</th>
                 </tr>
                 @php
@@ -176,15 +192,23 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_9 as $item)
-                        <th>{{$item->nama_kelas}}</th>
+                        <th style="top: 30px">{{$item->nama_kelas}}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jadwalMengajar as $j => $item)
                     <tr>
-                        <td>{{$item->hari->nama_hari}}</td>
-                        <td>{{$item->waktu_awal}} - {{$item->waktu_akhir}}</td>
+                        <th scope="row">
+                            <div class="col-fixed" style="width: 100px">
+                                {{$item->hari->nama_hari}}
+                            </div>
+                        </th>
+                        <th scope="row" style="left: 101px">
+                            <div class="col-fixed" style="width: 150px">
+                                {{$item->waktu_awal}} - {{$item->waktu_akhir}}
+                            </div>
+                        </th>
                         @foreach ($filtered_9 as $i => $item2)
                         <td>
                             <select class="clickable penjadwalan-select-guru" id="select-{{$j}}-{{$i}}" onchange="select9({{$j}},{{$i}})">
@@ -389,7 +413,6 @@
             const data = await response.json();
             getMessage(data.message? data.message : getError());
             console.log(data);
-            getMessage(data.message? data.message : getError());
         } catch (error) {
             console.error(error);
         }
