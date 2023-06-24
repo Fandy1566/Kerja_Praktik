@@ -47,16 +47,19 @@ class User extends Authenticatable
     public function isKepalaSekolah(){
         return $this->role == 1;
     }
-    public function isAdmin(){
+    public function isWakilKepalaSekolah(){
         return $this->role == 2;
     }
-    public function isGuruTetap(){
+    public function isAdmin(){
         return $this->role == 3;
     }
-    public function isGuruHonorer(){
+    public function isGuruTetap(){
         return $this->role == 4;
     }
-    public function isBerhenti(){
+    public function isGuruHonorer(){
         return $this->role == 5;
+    }
+    public function isDihapus(){
+        return $this->role == 6;
     }
 }

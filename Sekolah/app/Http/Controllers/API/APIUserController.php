@@ -119,7 +119,8 @@ class APIUserController extends Controller
             foreach ($request->checkedCheckboxes as $value) {
                 $guru = User::find($value);
                 if ($guru) {
-                    $guru->role = 5;
+                    $guru->role = 6;
+                    $guru->save();
                     $berhasil[$i] = $value;
                     $i++;
                 } else {

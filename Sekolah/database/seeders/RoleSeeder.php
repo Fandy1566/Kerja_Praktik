@@ -15,10 +15,11 @@ class RoleSeeder extends Seeder
     {
         $roles = [
             "Kepala Sekolah",
+            "Wakil Kepala Sekolah",
             "Admin",
             "Guru Tetap",
             "Guru Honorer",
-            "Berhenti",
+            "Dihapus",
         ];
 
         foreach ($roles as $role) {

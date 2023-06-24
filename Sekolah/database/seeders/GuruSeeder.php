@@ -64,7 +64,7 @@ class GuruSeeder extends Seeder
                 'email' => "guru".($i+1)."@smpn23.com",
                 // 'password' => str_replace(",", "", explode(" ", $nama)[0]),
                 'password' => bcrypt("1234567890"),
-                'role' => 3,
+                'role' => 4,
             ]);
         }
         
@@ -73,11 +73,11 @@ class GuruSeeder extends Seeder
         $user->save();
 
         $user = User::find(3);
-        $user->role = 2;
+        $user->role = 3;
         $user->save();
 
         $user = User::find(4);
-        $user->role = 2;
+        $user->role = 3;
         $user->save();
 
         $user = User::find(1);

@@ -30,5 +30,17 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('kepala_sekolah', function (User $user) {
             return $user->isKepalaSekolah();
         });
+        Gate::define('wakil_kepala_sekolah', function (User $user) {
+            return $user->isKepalaSekolah();
+        });
+        Gate::define('guru_tetap', function (User $user) {
+            return $user->isGuruTetap();
+        });
+        Gate::define('guru_honorer', function (User $user) {
+            return $user->isGuruHonorer();
+        });
+        Gate::define('dihapus', function (User $user) {
+            return $user->isDihapus();
+        });
     }
 }
