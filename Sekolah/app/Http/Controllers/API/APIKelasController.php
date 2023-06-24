@@ -11,7 +11,9 @@ class APIKelasController extends Controller
     public function index()
     {
         try {
-            $kelas = DB::select("SELECT * FROM kelas ORDER BY tingkat ASC, nama_kelas ASC");
+            $kelas = Kelas::orderBy('tingkat', 'asc')
+            ->orderBy('nama_kelas', 'asc')
+            ->get();
             if ($kelas) {
                 return response()->json([
                     'status' => 200,
