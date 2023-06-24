@@ -104,10 +104,10 @@
             table_content += `
                 <thead>
                     <tr>
-                        <th class="freeze-vertical freeze-horizontal">
+                        <th scope="row" class="freeze-vertical freeze-horizontal">
                             Hari
                         </th>
-                        <th class="freeze-vertical freeze-horizontal">
+                        <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px">
                             Jam
                         </th>
             `
@@ -136,7 +136,7 @@
                                 ${groupedJadwal[i.toString()][0].hari.nama_hari ?? ''}
                                 </div>
                             </th>
-                            <th scope="row" class="freeze-horizontal table-body">
+                            <th scope="row" style="left: 102px" class="freeze-horizontal table-body">
                                 <div class="col-fixed" style="width: 100px">
                                 ${groupedJadwal[i.toString()][0].waktu_awal ?? ''} -
                                 ${groupedJadwal[i.toString()][0].waktu_akhir ?? ''}

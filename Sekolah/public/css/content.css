@@ -552,14 +552,14 @@ h2#title-penjadwalan{
 th.freeze-vertical {
     position: sticky;
     outline: 1px solid #345678; 
-    top: 0;
+    top: 1px;
     z-index: 2;
 }
 
 th[scope=row].freeze-horizontal{
     position: sticky;
     outline: 1px solid #345678;
-    left: 0;
+    left: 1px;
     z-index: 3;
 }
 

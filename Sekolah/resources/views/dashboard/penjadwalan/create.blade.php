@@ -64,8 +64,8 @@
         <table id="tbl7" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 0px"rowspan="2">Hari</th>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 101px" rowspan="2">Waktu</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 1px"rowspan="2">Hari</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px" rowspan="2">Waktu</th>
                     <th class="freeze-vertical" colspan ="{{$tingkat["7"]}}">Kelas</th>
                 </tr>
                 @php
@@ -76,7 +76,7 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_7 as $item)
-                        <th class="freeze-vertical" style="top: 30px">{{$item->nama_kelas}}</th>
+                        <th class="freeze-vertical" style="top: 31px">{{$item->nama_kelas}}</th>
                     @endforeach
                 </tr>
             </thead>
@@ -88,7 +88,7 @@
                                 {{$item->hari->nama_hari}}
                             </div>
                         </th>
-                        <th scope="row" class="freeze-horizontal table-body" style="left: 101px">
+                        <th scope="row" class="freeze-horizontal table-body" style="left: 102px">
                             <div class="col-fixed" style="width: 150px">
                                 {{$item->waktu_awal}} - {{$item->waktu_akhir}}
                             </div>
@@ -123,8 +123,8 @@
         <table id="tbl8" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 0px"rowspan="2">Hari</th>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 101px" rowspan="2">Waktu</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 1px"rowspan="2">Hari</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px" rowspan="2">Waktu</th>
                     <th class="freeze-vertical" colspan="{{$tingkat["8"]}}">Kelas</th>
                 </tr>
                 @php
@@ -135,7 +135,7 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_8 as $item)
-                        <th class="freeze-vertical" style="top: 30px">{{$item->nama_kelas}}</th>
+                        <th class="freeze-vertical" style="top: 31px">{{$item->nama_kelas}}</th>
                     @endforeach
                 </tr>
             </thead>
@@ -147,7 +147,7 @@
                                 {{$item->hari->nama_hari}}
                             </div>
                         </th>
-                        <th scope="row" style="left: 101px" class="freeze-horizontal table-body">
+                        <th scope="row" style="left: 102px" class="freeze-horizontal table-body">
                             <div class="col-fixed" style="width: 150px">
                                 {{$item->waktu_awal}} - {{$item->waktu_akhir}}
                             </div>
