@@ -18,6 +18,7 @@ return new class extends Migration
                 $table->foreign('id_hari')->references('id')->on('hari');
                 $table->time('waktu_awal');
                 $table->time('waktu_akhir');
+                $table->boolean('isDeleted')->default(0);
                 $table->timestamps();
             });
         }

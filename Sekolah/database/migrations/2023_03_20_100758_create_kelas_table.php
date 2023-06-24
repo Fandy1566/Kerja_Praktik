@@ -16,6 +16,7 @@ return new class extends Migration
                 $table->string('nama_'.$this->tableName, 50);
                 $table->enum('tingkat', [7,8,9]);
                 $table->tinyInteger('lantai')->default(1);
+                $table->boolean('isDeleted')->default(0);
                 $table->timestamps();
             });
         }

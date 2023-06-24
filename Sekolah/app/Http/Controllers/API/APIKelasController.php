@@ -99,7 +99,8 @@ class APIKelasController extends Controller
             foreach ($request->checkedCheckboxes as $value) {
                 $kelas = Kelas::find($value);
                 if ($kelas) {
-                    $kelas->delete();
+                    $kelas->isDeleted = 1;
+                    $kelas->save();
                     $berhasil[$i] = $value;
                     $i++;
                 } else {
@@ -135,24 +136,5 @@ class APIKelasController extends Controller
             ],400);
         }
         
-    }
-
-    public function reset()
-    {
-        try {
-            $kelas = new Kelas;
-            DB::delete('DELETE FROM '.$kelas->getTable().';');
-            DB::statement('ALTER TABLE '.$kelas->getTable().' AUTO_INCREMENT = 1;');
-            return response()->json([
-                'status' => 200,
-                'message' => 'Semua data berhasil dihapus',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 400,
-                'message' => 'Data gagal dihapus',
-                'error' => $e
-            ],400);
-        }
     }
 }

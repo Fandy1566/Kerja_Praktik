@@ -98,7 +98,8 @@ class APIJadwalMengajarController extends Controller
             foreach ($request->checkedCheckboxes as $value) {
                 $jadwalMengajar = JadwalMengajar::find($value);
                 if ($jadwalMengajar) {
-                    $jadwalMengajar->delete();
+                    $jadwalMengajar->isDeleted = 1;
+                    $jadwalMengajar->save();
                     $berhasil[$i] = $value;
                     $i++;
                 } else {

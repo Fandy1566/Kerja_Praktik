@@ -14,6 +14,7 @@ return new class extends Migration
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
                 $table->string('nama_'.$this->tableName, 50);
+                $table->boolean('isDeleted')->default(0);
                 $table->timestamps();
             });
         }
