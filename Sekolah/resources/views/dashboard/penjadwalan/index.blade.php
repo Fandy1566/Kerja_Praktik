@@ -32,19 +32,20 @@
     <div class="card m-32 table-7 flex-row" style="gap:20px">
         <div>
             <label for="">Tahun ajaran</label><br>
-            <select name="id" class="select-style ">
+            <select name="tahun_awal" id="tahun" class="select-style" onchange="renderSemeseter()">
                 <option value="">Pilih Tahun Ajaran</option>
-                @foreach ($penjadwalan as $item)
-                    <option value="{{$item->id}}">{{$item->tahun_awal}}/{{$item->tahun_awal+1}} ({{$item->is_validated ? "Telah divalidasi": "Belum divalidasi"}})</option>
-                @endforeach
+                @for ($i = 0; $i < count($penjadwalan); $i++)
+                    @if ($i != 0 && ($penjadwalan[$i] != $penjadwalan[$i-1]))
+                        <option value="{{$penjadwalan[$i]->tahun_awal}}">{{$penjadwalan[$i]->tahun_awal}}/{{$penjadwalan[$i]->tahun_awal+1}}</option>
+                    @endif
+                @endfor
             </select>
 
         </div>
         <div>
             <label for="">Semester</label><br>
-            <select name="tahun" class="select-style">
-                <option value="1">Gasal</option>
-                <option value="0">Genap</option>
+            <select name="is_gasal" id="is_gasal" class="select-style">
+                <option value="">Pilih Semester</option>
             </select>
         </div>
         <button type="submit" class="btn" style="outline: none; border: none; width:100px; height: 30px; align-self:flex-end; cursor: pointer;">Cari</button>
@@ -63,8 +64,8 @@
             @endif
         @endcan
         @can('kepala_sekolah')
-            @if(!($jadwalDetails[0]->Jadwal->is_validated ?? 0) )
-                @if ($jadwalDetails[0] ?? 0)
+            @if(!($jadwalDetails[0]->Jadwal->is_validated ?? false) )
+                @if ($jadwalDetails[0] ?? false)
                     <form action="{{ route('jadwal.validasi', ['id' => $jadwalDetails[0]->id_jadwal]) }}" method="post">
                         @csrf
                         <button id="btn_hapus" style="border: none; height:24px; cursor: pointer" type="submit" class="btn">Validasi</button>
@@ -83,151 +84,136 @@
 @section('script')
 <script>
 
+    const jadwal =  <?php echo json_encode($penjadwalan); ?>;
+
+    function renderSemeseter() {
+        const tahun_awal = document.querySelector('#tahun').value;
+        const is_gasal = document.querySelector('#is_gasal');
+
+        getGasal = jadwal.filter(item => item.tahun_awal == tahun_awal)
+        
+        options = ""
+        
+        if (getGasal.map(item => item.is_gasal).includes(1)) {
+            const isValidated = getGasal.filter(item => item.is_gasal === 1).map(item => item.is_validated);
+            const optionText = isValidated[0] ? '' : '(Belum Divalidasi)';
+            options += `<option value="1">Gasal ${optionText}</option>`;
+        }
+        if (getGasal.map(item => item.is_gasal).includes(0)){
+            const isValidated = getGasal.filter(item => item.is_gasal === 0).map(item => item.is_validated);
+            const optionText = isValidated[0] ? '' : '(Belum Divalidasi)';
+            options += `<option value="0">Genap ${optionText}</option>`;
+        }
+        if (getGasal.length == 0) {
+            options += `<option value="">Pilih Semester</option>`;
+        }
+        is_gasal.innerHTML = options;
+    }
+    renderSemeseter();
+    
     const isAdmin = {{ auth()->user()->can('Admin') ? 'true' : 'false' }};
     const url = window.location.origin+"/api/jadwal";
     const jadwalDetails = <?php echo json_encode($jadwalDetails); ?>;
-    const jadwalMengajar = <?php echo json_encode($jadwalMengajar); ?>;
-    const guru = <?php echo json_encode($guru); ?>;
-    const mata_pelajaran = <?php echo json_encode($mataPelajaran); ?>;
-    const hari = <?php echo json_encode($hari); ?>;
-    const kelas = <?php echo json_encode($kelas); ?>;
-    // let data;
+    let kelas = new Set();
+    let jam = new Set();
 
-    if (jadwalDetails.length != 0) {
-        function renderTable() {
-    
-            const groupedJadwal = jadwalDetails.reduce((result, jadwal) => {
-                const { id_guru, id_mata_pelajaran, id_jam, } = jadwal;
-                const guruObj = guru.find(c => c.id === id_guru);
-                const mata_pelajaranObj = mata_pelajaran.find(c => c.id === id_mata_pelajaran);
-                const jadwalMengajarObj = jadwalMengajar.find(c => c.id === id_jam);
-                const { id_hari } = jadwalMengajarObj;
-                const hariObj = hari.find(c => c.id === id_hari);
-                const jam = jadwal.id_jam;
-    
-                if (!result[jam]) {
-                    result[jam] = [];
+    function renderTable() {
+        if (jadwalDetails.length === 0) {
+            const table = document.querySelector('.card-to-remove');
+            table.remove();
+            const element = `<div style="margin-top: 20px">Tidak ada data</div>`;
+            document.querySelector('.content').insertAdjacentHTML('beforeend', element);
+            return;
+        } else {
+            let kelasId = new Set();
+            let jamId = new Set();
+            
+            jadwalDetails.forEach((element) => {
+                if (element.kelas) {
+                    if (!kelasId.has(element.kelas.id)) {
+                        kelasId.add(element.kelas.id);
+                        kelas.add(element.kelas);
+                    }
                 }
-    
-                result[jam].push({ ...jadwal, ...guruObj, ...mata_pelajaranObj, ...jadwalMengajarObj, hari: hariObj });
-    
-                return result;
-            }, {});
-    
-            const kelasUnique = [...new Set(jadwalDetails.map(jadwal => jadwal.id_kelas))];
-    
-            const groupedKelas = kelasUnique.reduce((result, kelas2) => {
-                const kelasObj = kelas.find(c => c.id === kelas2);
-    
-                if (!result[kelas2]) {
-                    result[kelas2] = { ...kelasObj };
+                if (element.jam) {
+                    if (!jamId.has(element.jam.id)) {
+                        jamId.add(element.jam.id);
+                        jam.add(element.jam);
+                    }
                 }
-    
-                return result;
-            }, {});
-    
-            const groupedJadwalLength = Object.keys(groupedJadwal).length;
-    
+            });
+
+            kelas = Array.from(kelas);
+            jam = Array.from(jam);
+
+            console.log('Kelas:', kelas);
+            console.log('Jam:', jam);
+
             table_content = "";
     
             const table = document.querySelector('.table-check');
             table_content += `
                 <thead>
                     <tr>
-                        <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 1px">Hari</th>
-                        <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px">Waktu</th>
+                        <th scope="row" class="freeze-vertical freeze-horizontal">
+                            Hari
+                        </th>
+                        <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px">
+                            Jam
+                        </th>
             `
-            for (let i = 1; i <= Object.keys(groupedKelas).length; i++) {
-                table_content +=`
-                        <th>
-                            ${groupedKelas[i.toString()].nama_kelas}
+            kelas.forEach(element => {
+                table_content += `
+                        <th class="freeze-vertical">
+                            ${element.nama_kelas}
                         </th>
                 `;
-            }
+            })
             table_content += `
                     </tr>
                 </thead>
-            `
-            table_content += `
                 <tbody>
-            `;
-    
-            for (let i = 1; i <= Object.keys(groupedJadwal).length; i++) {
+            `
+            count = 0;
+            jam.forEach((jamVal, i) => {
                 table_content += `
                     <tr>
-                        `;
-                    table_content += `
                         <th scope="row" class="freeze-horizontal table-body">
                             <div class="col-fixed" style="width: 100px">
-                            ${groupedJadwal[i.toString()][0].hari.nama_hari ?? ''}
+                            ${jamVal.hari.nama_hari}
                             </div>
                         </th>
                         <th scope="row" style="left: 102px" class="freeze-horizontal table-body">
                             <div class="col-fixed" style="width: 150px">
-                            ${groupedJadwal[i.toString()][0].waktu_awal ?? ''} -
-                            ${groupedJadwal[i.toString()][0].waktu_akhir ?? ''}
+                            ${jamVal.waktu_awal} - ${jamVal.waktu_akhir}
                             </div>
                         </th>
-                        `;
-    
-                for (let j = 0; j < Object.keys(groupedJadwal[i]).length; j++) {
-                        console.log(groupedJadwal[i.toString()][j.toString()].id_guru);
+                `
+                kelas.forEach((kelasVal, j) => {
+                    if (jadwalDetails[count].kelas.id == kelasVal.id && jadwalDetails[count].jam.id == jamVal.id) {
                         table_content += `
                             <td>
                                 <div class="flex-column" style="align-items:center">
                                     <div>
-                                        ${groupedJadwal[i.toString()][j.toString()].name ?? ''}
+                                        ${jadwalDetails[count].guru && jadwalDetails[count].guru.name ? jadwalDetails[count].guru.name : ''}
                                     </div>
                                     <div style ="font-size: 20px">
-                                        ${groupedJadwal[i.toString()][j.toString()].id_guru ?? ''}
+                                        ${jadwalDetails[count].guru && jadwalDetails[count].guru.id ? jadwalDetails[count].guru.id : ''}
                                     </div>
                                     <div>
-                                        ${groupedJadwal[i.toString()][j.toString()].nama_mata_pelajaran ?? ''}
+                                        ${jadwalDetails[count].mata_pelajaran && jadwalDetails[count].mata_pelajaran.nama_mata_pelajaran ? jadwalDetails[count].mata_pelajaran.nama_mata_pelajaran : ''}
                                     </div>
                                 </div>
                             </td>
                         `;
-                }
-                table_content += `
-                    </tr>
-                `;
-            };
-            table_content += `
-                </tbody>
-            `;
+                        count++;
+                    }
+                });
+            });
             table.innerHTML = table_content;
-        }
-    } else {
-        function renderTable() {
-            const table = document.querySelector('.card-to-remove');
-            table.remove();
-            element = `
-            <div style ="margin-top:20px">
-                Tidak ada data
-            </div>
-            `;
-            document.querySelector('.content').insertAdjacentHTML('beforeend', element);
         }
     }
     renderTable();
-
-    async function deleteItem(id) {
-    try {
-        const response = await fetch(window.location.origin + "/api/jadwal/delete/" + id, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            method: "delete",
-            credentials: "same-origin",
-        });
-        const data = await response.json();
-        getMessage(data.message? data.message : getError());
-        // Handle the response data as needed
-    } catch (error) {
-        console.error(error);
-        // Handle the error condition
-    }
-}
 
 </script>
 @endsection

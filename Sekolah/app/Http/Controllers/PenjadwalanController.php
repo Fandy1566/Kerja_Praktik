@@ -22,15 +22,24 @@ class PenjadwalanController extends Controller
     public function index(Request $request)
     {
         $jadwalMengajar = JadwalMengajar::all();
-        $jadwalDetails = JadwalDetail::where('id_jadwal', $request->id)
-            ->orderBy('id_jam', 'asc')
-            ->orderBy('id_kelas', 'asc')
-            ->get();
+        $jadwal = Jadwal::where('tahun_awal', $request->tahun_awal)->where('is_gasal', $request->is_gasal)->first();
+        $jadwalDetails = JadwalDetail::with('Guru','Kelas','Jadwal','Jam','MataPelajaran','Jam.hari')->where('id_jadwal', $jadwal->id ?? 0)
+        ->orderBy('id_jam', 'asc')
+        ->orderBy('id_kelas', 'asc')
+        ->get();
+        // $jadwalDetails = Jadwal::with('JadwalDetail', 'JadwalDetail.Guru', 'JadwalDetail.Kelas', 'JadwalDetail.Jam', 'JadwalDetail.MataPelajaran', 'JadwalDetail.Jam.hari')
+        //     ->join('jadwal_detail', 'jadwal.id', '=', 'jadwal_detail.id_jadwal')
+        //     ->where('jadwal.tahun_awal', $request->tahun_awal)
+        //     ->where('jadwal.is_gasal', $request->is_gasal)
+        //     ->orderBy('jadwal_detail.id_jam', 'asc')
+        //     ->orderBy('jadwal_detail.id_kelas', 'asc') 
+        //     ->first();
+
         $kelas = Kelas::all();
         $mataPelajaran = MataPelajaran::all();
         $guru = User::all();
         $hari = Hari::all();
-        $penjadwalan = Jadwal::all();
+        $penjadwalan = Jadwal::orderBy('tahun_awal', 'asc')->get();
         return response()->view('dashboard.penjadwalan.index', compact('kelas','jadwalMengajar','hari','guru','jadwalDetails','penjadwalan','mataPelajaran'));
     }
 
@@ -46,7 +55,8 @@ class PenjadwalanController extends Controller
     public function show(Request $request)
     {
         $jadwalMengajar = JadwalMengajar::all();
-        $jadwalDetails = JadwalDetail::where('id_jadwal', $request->id)
+        $jadwal = Jadwal::where('tahun_awal', $request->tahun_awal)->where('is_gasal', $request->is_gasal)->first();
+        $jadwalDetails = JadwalDetail::with('Guru','Kelas','Jadwal','Jam','MataPelajaran','Jam.hari')->where('id_jadwal', $jadwal->id ?? 1)
             ->orderBy('id_jam', 'asc')
             ->orderBy('id_kelas', 'asc')
             ->get();
@@ -54,7 +64,7 @@ class PenjadwalanController extends Controller
         $mataPelajaran = MataPelajaran::all();
         $guru = User::all();
         $hari = Hari::all();
-        $penjadwalan = Jadwal::all();
+        $penjadwalan = Jadwal::orderBy('tahun_awal', 'asc')->get();
 
         return response()->view('dashboard.penjadwalan.show', compact('kelas','jadwalMengajar','hari','guru','jadwalDetails','penjadwalan','mataPelajaran'));
     }
