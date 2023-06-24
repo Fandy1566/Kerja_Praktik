@@ -48,9 +48,9 @@
             <div class="main-menu">
                 <div class="main-menu-title">MAIN MENU</div>
                 @for ($i = 0; $i < count($menu); $i++)
-                    <div class="menu menu-{{$i}} {{(request()->url() == $menu[$i][1]) ? 'active' : '' }}">
+                    <div class="menu menu-{{$i}} {{(request()->url() == $menu[$i][1] || Str::is($menu[$i][1].'/*', request()->url())) ? 'active' : '' }}">
                         <a href="{{ $menu[$i][1] }}">
-                            <img src="{{(request()->url() == $menu[$i][1]) ? $menu[$i][2][1] : $menu[$i][2][0]}}" alt="">
+                            <img src="{{(request()->url() == $menu[$i][1] || Str::is($menu[$i][1].'/*', request()->url())) ? $menu[$i][2][1] : $menu[$i][2][0]}}" alt="">
                             {{$menu[$i][0]}}
                         </a>
                     </div>
