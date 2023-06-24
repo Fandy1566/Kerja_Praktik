@@ -64,9 +64,9 @@
         <table id="tbl7" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
-                    <th scope="row" style="left: 0px"rowspan="2">Hari</th>
-                    <th scope="row" style="left: 101px" rowspan="2">Waktu</th>
-                    <th colspan ="{{$tingkat["7"]}}">Kelas</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 0px"rowspan="2">Hari</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 101px" rowspan="2">Waktu</th>
+                    <th class="freeze-vertical" colspan ="{{$tingkat["7"]}}">Kelas</th>
                 </tr>
                 @php
                     $filtered_7 = $kelas->filter(function($item)
@@ -76,19 +76,19 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_7 as $item)
-                        <th style="top: 30px">{{$item->nama_kelas}}</th>
+                        <th class="freeze-vertical" style="top: 30px">{{$item->nama_kelas}}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jadwalMengajar as $j => $item)
                     <tr>
-                        <th scope="row">
+                        <th scope="row" class="freeze-horizontal table-body">
                             <div class="col-fixed" style="width: 100px">
                                 {{$item->hari->nama_hari}}
                             </div>
                         </th>
-                        <th scope="row" style="left: 101px">
+                        <th scope="row" class="freeze-horizontal table-body" style="left: 101px">
                             <div class="col-fixed" style="width: 150px">
                                 {{$item->waktu_awal}} - {{$item->waktu_akhir}}
                             </div>
@@ -123,9 +123,9 @@
         <table id="tbl8" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
-                    <th scope="row" style="left: 0px"rowspan="2">Hari</th>
-                    <th scope="row" style="left: 101px" rowspan="2">Waktu</th>
-                    <th colspan ="{{$tingkat["8"]}}">Kelas</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 0px"rowspan="2">Hari</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 101px" rowspan="2">Waktu</th>
+                    <th class="freeze-vertical" colspan="{{$tingkat["8"]}}">Kelas</th>
                 </tr>
                 @php
                     $filtered_8 = $kelas->filter(function($item)
@@ -135,37 +135,39 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_8 as $item)
-                        <th style="top: 30px">{{$item->nama_kelas}}</th>
+                        <th class="freeze-vertical" style="top: 30px">{{$item->nama_kelas}}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jadwalMengajar as $j => $item)
                     <tr>
-                        <th scope="row">
+                        <th scope="row" class="freeze-horizontal table-body">
                             <div class="col-fixed" style="width: 100px">
                                 {{$item->hari->nama_hari}}
                             </div>
                         </th>
-                        <th scope="row" style="left: 101px">
+                        <th scope="row" style="left: 101px" class="freeze-horizontal table-body">
                             <div class="col-fixed" style="width: 150px">
                                 {{$item->waktu_awal}} - {{$item->waktu_akhir}}
                             </div>
                         </th>
                         @foreach ($filtered_8 as $i => $item2)
                         <td>
-                            <select class="clickable penjadwalan-select-guru" id="select-{{$j}}-{{$i}}" onchange="select8({{$j}},{{$i}})">
-                                <option value="">Pilih Guru</option>
-                                @foreach ($guru as $item3)
-                                    <option value="{{$item3->id}}">({{$item3->id}}) {{$item3->name}}</option>
-                                @endforeach
-                            </select>
-                            <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp8({{$j}},{{$i}})">
-                                <option value="">Pilih Mata Pelajaran</option>
-                                @foreach ($mataPelajaran as $item3)
-                                    <option value="{{$item3->id}}">{{$item3->nama_mata_pelajaran}}</option>
-                                @endforeach
-                            </select>
+                            <div class="flex-column" style="gap:10px; padding-inline: 10px">
+                                <select class="clickable penjadwalan-select-guru" id="select-{{$j}}-{{$i}}" onchange="select8({{$j}},{{$i}})">
+                                    <option value="">Pilih Guru</option>
+                                    @foreach ($guru as $item3)
+                                        <option value="{{$item3->id}}">({{$item3->id}}) {{$item3->name}}</option>
+                                    @endforeach
+                                </select>
+                                <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp8({{$j}},{{$i}})">
+                                    <option value="">Pilih Mata Pelajaran</option>
+                                    @foreach ($mataPelajaran as $item3)
+                                        <option value="{{$item3->id}}">{{$item3->nama_mata_pelajaran}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </td>
                         @endforeach
                     </tr>
@@ -180,9 +182,9 @@
         <table id="tbl9" class="table-check jawdal minimize-th" style= "overflow: scroll;">
             <thead>
                 <tr>
-                    <th scope="row" style="left: 0px"rowspan="2">Hari</th>
-                    <th scope="row" style="left: 101px" rowspan="2">Waktu</th>
-                    <th colspan ="{{$tingkat["9"]}}">Kelas</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 0px"rowspan="2">Hari</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 101px" rowspan="2">Waktu</th>
+                    <th class="freeze-vertical" colspan ="{{$tingkat["9"]}}">Kelas</th>
                 </tr>
                 @php
                     $filtered_9 = $kelas->filter(function($item)
@@ -192,37 +194,39 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_9 as $item)
-                        <th style="top: 30px">{{$item->nama_kelas}}</th>
+                        <th class="freeze-vertical" style="top: 30px">{{$item->nama_kelas}}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 @foreach ($jadwalMengajar as $j => $item)
                     <tr>
-                        <th scope="row">
-                            <div class="col-fixed" style="width: 100px">
+                        <th scope="row" class="freeze-horizontal table-body">
+                            <div class="col-fixed" style="width: 100px" >
                                 {{$item->hari->nama_hari}}
                             </div>
                         </th>
-                        <th scope="row" style="left: 101px">
-                            <div class="col-fixed" style="width: 150px">
+                        <th scope="row" style="left: 101px" class="freeze-horizontal table-body">
+                            <div class="col-fixed" style="width: 150px" >
                                 {{$item->waktu_awal}} - {{$item->waktu_akhir}}
                             </div>
                         </th>
                         @foreach ($filtered_9 as $i => $item2)
-                        <td>
-                            <select class="clickable penjadwalan-select-guru" id="select-{{$j}}-{{$i}}" onchange="select9({{$j}},{{$i}})">
-                                <option value="">Pilih Guru</option>
-                                @foreach ($guru as $item3)
-                                    <option value="{{$item3->id}}">({{$item3->id}}) {{$item3->name}}</option>
-                                @endforeach
-                            </select>
-                            <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp9({{$j}},{{$i}})">
-                                <option value="">Pilih Mata Pelajaran</option>
-                                @foreach ($mataPelajaran as $item3)
-                                    <option value="{{$item3->id}}">{{$item3->nama_mata_pelajaran}}</option>
-                                @endforeach
-                            </select>
+                        <td style="height: 120px">
+                            <div class="flex-column" style="gap:10px; padding-inline: 10px">
+                                <select class="clickable penjadwalan-select-guru" id="select-{{$j}}-{{$i}}" onchange="select9({{$j}},{{$i}})">
+                                    <option value="">Pilih Guru</option>
+                                    @foreach ($guru as $item3)
+                                        <option value="{{$item3->id}}">({{$item3->id}}) {{$item3->name}}</option>
+                                    @endforeach
+                                </select>
+                                <select class="clickable penjadwalan-select-mata-pelajaran" id="select-mp-{{$j}}-{{$i}}" onchange="selectmp9({{$j}},{{$i}})">
+                                    <option value="">Pilih Mata Pelajaran</option>
+                                    @foreach ($mataPelajaran as $item3)
+                                        <option value="{{$item3->id}}">{{$item3->nama_mata_pelajaran}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </td>
                         @endforeach
                     </tr>

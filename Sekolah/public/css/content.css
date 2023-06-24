@@ -97,6 +97,7 @@
 
 #tbl th {
     background-color: #345678;
+    outline: 1px solid#345678;
     color: white;
     font-weight: 500;
     font-size: 14px;
@@ -548,19 +549,19 @@ h2#title-penjadwalan{
     text-align: start;
 }
 
-.table-check thead th {
+th.freeze-vertical {
     position: sticky;
     top: 0;
     z-index: 2;
 }
 
-.table-check th[scope=row]{
+th[scope=row].freeze-horizontal{
     position: sticky;
     left: 0;
     z-index: 3;
 }
 
-.table-check tbody th[scope=row]{
+th[scope=row].freeze-horizontal.table-body{
     background-color: white;
     outline: 1px solid #345678;
     font-size: 13px;

@@ -59,12 +59,12 @@
         <table id="tbl">
             <thead>
                 <tr>
-                    <th><input type="checkbox" onchange="checkAll()"></th>
-                    <th>ID Mata Pelajaran</th>
-                    <th>Mata Pelajaran</th>
+                    <th class="freeze-vertical"><input type="checkbox" onchange="checkAll()"></th>
+                    <th class="freeze-vertical">ID Mata Pelajaran</th>
+                    <th class="freeze-vertical">Mata Pelajaran</th>
                     {{-- <th>Total Jam / Minggu</th> --}}
                     @can('Admin')
-                    <th>Edit</th>
+                    <th class="freeze-vertical">Edit</th>
                     @endcan
                 </tr>
             </thead>

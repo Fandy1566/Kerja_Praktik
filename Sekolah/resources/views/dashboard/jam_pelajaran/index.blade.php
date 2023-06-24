@@ -52,12 +52,12 @@
         <table id="tbl">
             <thead>
                 <tr>
-                    <th style="width: 5%"><input type="checkbox" onchange="checkAll(this)"></th>
+                    <th class="freeze-vertical" style="width: 5%"><input type="checkbox" onchange="checkAll(this)"></th>
                     {{-- <th>ID Jam Pelajaran</th> --}}
-                    <th class="clickable prevent-select" data-sort="id">Hari</th>
-                    <th class="clickable prevent-select" data-sort="waktu_awal">Waktu Pelajaran</th>
+                    <th class="clickable prevent-select freeze-vertical" data-sort="id">Hari</th>
+                    <th class="clickable prevent-select freeze-vertical" data-sort="waktu_awal">Waktu Pelajaran</th>
                     @can('Admin')
-                    <th>Edit</th>
+                    <th class="freeze-vertical">Edit</th>
                     @endcan
                 </tr>
             </thead>

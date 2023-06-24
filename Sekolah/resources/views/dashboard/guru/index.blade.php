@@ -72,13 +72,13 @@
         <table id="tbl">
             <thead>
                 <tr>
-                    <th style="width: 5%"><input type="checkbox" onchange="checkAll()"></th>
-                    <th class="clickable prevent-select" data-sort="id">ID  Guru</th>
-                    <th class="clickable prevent-select" data-sort="name">Nama Guru</th>
-                    <th class="clickable prevent-select" data-sort="guru_detail">Kelas</th>
-                    <th class="clickable prevent-select" data-sort="is_guru_tetap">Status</th>
+                    <th class="freeze-vertical"style="width: 5%"><input type="checkbox" onchange="checkAll()"></th>
+                    <th class="clickable prevent-select freeze-vertical" data-sort="id">ID  Guru</th>
+                    <th class="clickable prevent-select freeze-vertical" data-sort="name">Nama Guru</th>
+                    <th class="clickable prevent-select freeze-vertical" data-sort="guru_detail">Kelas</th>
+                    <th class="clickable prevent-select freeze-vertical" data-sort="is_guru_tetap">Status</th>
                     @can('Admin')
-                    <th>Edit</th>
+                    <th class="freeze-vertical">Edit</th>
                     @endcan
                 </tr>
             </thead>
@@ -132,14 +132,22 @@
                     <div class="right-side-form" style="margin-left: 32px;">
                         <div class="pengaturan-rb">
                             <label>Kategori</label>
-                        </div>
-                        <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                            <input type="radio" name="is_guru_tetap" id="" checked value="1" ${obj.is_guru_tetap? 'checked' : ''}>
-                            <label for="" style="margin-left: 12px;">Guru Tetap</label>
-                        </div>
-                        <div class="" style="display: flex; align-items: center; margin-top: 12px;" ${!obj.is_guru_tetap? 'checked' : ''}>
-                            <input type="radio" name="is_guru_tetap" id="" value="0">
-                            <label for="" style="margin-left: 12px;">Guru Honorer</label>
+                            <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                                <input type="radio" name="role" id="" checked value="1">
+                                <label for="" style="margin-left: 12px;">Kepala Sekolah</label>
+                            </div>
+                            <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                                <input type="radio" name="role" id="" value="2">
+                                <label for="" style="margin-left: 12px;">Admin</label>
+                            </div>
+                            <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                                <input type="radio" name="role" id="" value="3">
+                                <label for="" style="margin-left: 12px;">Guru Tetap</label>
+                            </div>
+                            <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                                <input type="radio" name="role" id="" value="4">
+                                <label for="" style="margin-left: 12px;">Guru Honorer</label>
+                            </div>
                         </div>
                     </div>
                     <input class="clickable form-button title-card" type="submit" value="Edit" onclick="updateData(${obj.id})">
@@ -204,7 +212,7 @@
                             element.is_guru_kelas_9 ? '9' : ''
                         ].filter(Boolean).join(', ')}
                     </td>
-                    <td id="kode_guru">${isGuruTetap(element.is_kepala_sekolah, element.is_guru_tetap, element.is_admin)}</td>
+                    <td id="kode_guru">${getRole(element.role)}</td>
                     <td>
                         ${isAdmin ? `<button onclick='Edit(${JSON.stringify(element)})'>Edit</button>` : ''}
                     </td>
@@ -220,26 +228,40 @@
         getData();
     });
 
-    function isGuruTetap(bool1, bool2, bool3) {
-        if (bool1) {
-            return `
+    function getRole(role) {
+        switch (role) {
+            case 1:
+                return `
                 <div class="status-guru-container kepala-sekolah">
                     Kepala Sekolah
                 </div>
-            `;
-        }
-        else if (bool2) {
-            return `
-                <div class="status-guru-container ${bool3 ? `admin` : 'guru-tetap'} ">
-                    Guru  ${bool3 ? `/ Admin` : 'Tetap'}
+                `
+                break;
+            case 2:
+                return `
+                <div class="status-guru-container admin">
+                    Admin
                 </div>
-            `;
-        } else {
-            return `
+                `
+                break;
+            case 3:
+                return `
+                <div class="status-guru-container guru-tetap">
+                    Guru Tetap
+                </div>
+                `
+                break;
+            case 4:
+                return `
                 <div class="status-guru-container guru-honorer">
                     Guru Honorer
                 </div>
-            `;
+                `
+                break;
+        
+            default:
+                return ``
+                break;
         }
     }
 

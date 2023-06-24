@@ -51,12 +51,12 @@
         <table id="tbl">
             <thead>
                 <tr>
-                    <th style="width: 5%"><input type="checkbox" onchange="checkAll()"></th>
-                    <th>ID Kelas</th>
-                    <th>Kelas</th>
-                    <th>Lantai</th>
+                    <th class="freeze-vertical" style="width: 5%"><input type="checkbox" onchange="checkAll()"></th>
+                    <th class="freeze-vertical" >ID Kelas</th>
+                    <th class="freeze-vertical">Kelas</th>
+                    <th class="freeze-vertical">Lantai</th>
                     @can('Admin')
-                    <th>Edit</th>
+                    <th class="freeze-vertical">Edit</th>
                     @endcan
                 </tr>
             </thead>
