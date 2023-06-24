@@ -53,7 +53,9 @@
     <div class="table-top" style="margin-left: 12px;">
         <input data-col-name="nama_mata_pelajaran" class="search" style="width: 70%;" type="text" onkeyup="renderTable()" placeholder="Cari Mata Pelajaran" id="search">
         <button class="clickable cari" onclick="renderTable()">Cari</button>
+        @can('Admin')
         <button class="clickable delete" onclick="deleteSelected('mata_pelajaran')">Delete</button>
+        @endcan
     </div>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">

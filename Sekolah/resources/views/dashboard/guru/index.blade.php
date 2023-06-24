@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 <script src="{{ asset('js/select2.min.js') }}"></script>
 @endsection
-@section('title', '😀 Dashboard')
+@section('title', 'Dashboard')
 @section('content')
 @include('layouts.header', ['title' => 'Guru'])
 @can('Admin')
@@ -41,15 +41,19 @@
                     <label for="" style="margin-left: 12px;">Kepala Sekolah</label>
                 </div>
                 <div class="" style="display: flex; align-items: center; margin-top: 12px;">
-                    <input type="radio" name="role" id="" value="2">
-                    <label for="" style="margin-left: 12px;">Admin</label>
+                    <input type="radio" name="role" id="" checked value="2">
+                    <label for="" style="margin-left: 12px;">Wakil Kepala Sekolah</label>
                 </div>
                 <div class="" style="display: flex; align-items: center; margin-top: 12px;">
                     <input type="radio" name="role" id="" value="3">
-                    <label for="" style="margin-left: 12px;">Guru Tetap</label>
+                    <label for="" style="margin-left: 12px;">Admin</label>
                 </div>
                 <div class="" style="display: flex; align-items: center; margin-top: 12px;">
                     <input type="radio" name="role" id="" value="4">
+                    <label for="" style="margin-left: 12px;">Guru Tetap</label>
+                </div>
+                <div class="" style="display: flex; align-items: center; margin-top: 12px;">
+                    <input type="radio" name="role" id="" value="5">
                     <label for="" style="margin-left: 12px;">Guru Honorer</label>
                 </div>
             </div>
@@ -66,7 +70,9 @@
     <div class="table-top" style="margin-left: 12px; " >
         <input data-col-name="name" class="search" style="width: 70%;" type="text" onkeyup="renderTable('nama_guru')" placeholder="Cari Guru" id="search">
         <button class="clickable cari" onclick="renderTable('nama_guru')">Cari</button>
+        @can('Admin')
         <button class="clickable delete" onclick="deleteSelected('guru')">Delete</button>
+        @endcan
     </div>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px;">
         <table id="tbl">
@@ -239,19 +245,26 @@
                 break;
             case 2:
                 return `
+                <div class="status-guru-container kepala-sekolah">
+                    Wakil Kepala Sekolah
+                </div>
+                `
+                break;
+            case 3:
+                return `
                 <div class="status-guru-container admin">
                     Admin
                 </div>
                 `
                 break;
-            case 3:
+            case 4:
                 return `
                 <div class="status-guru-container guru-tetap">
                     Guru Tetap
                 </div>
                 `
                 break;
-            case 4:
+            case 5:
                 return `
                 <div class="status-guru-container guru-honorer">
                     Guru Honorer
