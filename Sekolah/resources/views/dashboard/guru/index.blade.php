@@ -200,6 +200,12 @@
                 return value.includes(filter);
             });
         }
+        
+        data = table_data.filter(item => {
+            if (item.role !== 6) {
+                return item
+            }
+        });
 
         data.filter((row, index) => {
                 let start = (curPage - 1) * pageSize;

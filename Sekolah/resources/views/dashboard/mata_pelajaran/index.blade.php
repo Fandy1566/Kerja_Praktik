@@ -147,6 +147,12 @@
             })
         }
 
+        data = table_data.filter(item => {
+            if (!item.isDeleted) {
+                return item
+            }
+        });
+
         data.filter((row, index) => {
             let start = (curPage - 1) * pageSize;
             let end = curPage * pageSize;
