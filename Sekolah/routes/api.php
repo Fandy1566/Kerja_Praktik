@@ -57,7 +57,6 @@ Route::controller(APIMataPelajaranController::class)->group( function() {
     Route::post('mata_pelajaran/{id}', 'update');
     Route::delete('delete/mata_pelajaran', 'destroy');
 
-
     Route::get('get_guru_mata_pelajaran', 'getGuruMengajar');
     Route::delete('reset/mata_pelajaran', 'reset');
 });
@@ -65,4 +64,5 @@ Route::controller(APIMataPelajaranController::class)->group( function() {
 use App\Http\Controllers\API\APIJadwalController;
 Route::controller(APIJadwalController::class)->group( function() {
     Route::post('jadwal', 'store');
+    Route::post('jadwal/update', 'update');
 });
