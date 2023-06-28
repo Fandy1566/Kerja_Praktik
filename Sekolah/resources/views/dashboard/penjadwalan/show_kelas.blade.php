@@ -23,7 +23,7 @@
         <div class="flex-row" style="gap:20px">
             <div>
                 <label for="">Tahun ajaran</label><br>
-                <select name="tahun_awal" id="tahun" class="select-style" onchange="renderSemester()">
+                <select name="tahun_awal" class="select-style" onclick="renderSemester()">
                     <option value="">Pilih Tahun Ajaran</option>
                     @for ($i = 0; $i < count($penjadwalan); $i++)
                         @if ($i != 0 && ($penjadwalan[$i] != $penjadwalan[$i-1]))
@@ -34,18 +34,18 @@
             </div>
             <div>
                 <label for="">Semester</label><br>
-                <select name="is_gasal" id="is_gasal" class="select-style">
+                <select name="is_gasal" class="select-style">
                     <option value="">Pilih Semester</option>
                 </select>
             </div>
         </div>
         <div class="flex-row" style="gap:20px">
             <div>
-                <label for="">Guru</label><br>
-                <select name="guru" id="guru" class="select-style" onchange="renderTable()">
+                <label for="">Kelas</label><br>
+                <select name="kelas" id="" class="select-style">
                     <option value="">Pilih Kelas</option>
-                    @foreach($guru as $item)
-                        <option value="{{ $item->id }}">({{$item->id}}) {{ $item->name }}</option>
+                    @foreach($kelas as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama_kelas }}</option>
                     @endforeach
                 </select>
             </div>
@@ -64,8 +64,6 @@
 @section('script')
 <script>
     const jadwal =  <?php echo json_encode($penjadwalan); ?>;
-                
-    let counts = {}
 
     function renderSemester() {
         const tahun_awal = document.querySelector('#tahun').value;
@@ -96,56 +94,8 @@
     const user = <?php echo json_encode(auth()->user()); ?>;
     const url = window.location.origin+"/api/jadwal";
     const jadwalDetails = <?php echo json_encode($jadwalDetails); ?>;
-    console.log(jadwalDetails);
     let kelas = new Set();
     let jam = new Set();
-    let hari = new Set();
-
-
-        let kelasId = new Set();
-        let jamId = new Set();
-        
-        jadwalDetails.forEach((element) => {
-            if (element.kelas) {
-                if (!kelasId.has(element.kelas.id)) {
-                    kelasId.add(element.kelas.id);
-                    kelas.add(element.kelas);
-                }
-            }
-            if (element.jam) {
-                if (!jamId.has(element.jam.id)) {
-                    jamId.add(element.jam.id);
-                    jam.add(element.jam);
-                }
-            }
-        });
-
-        kelas = Array.from(kelas);
-        jam = Array.from(jam);
-
-        let hariId = new Set();
-        jam.sort(function(a, b) {return a.id_hari - b.id_hari;}).forEach((element) =>{
-            if (element.hari) {
-                if (!hariId.has(element.hari.id)) {
-                    hariId.add(element.hari.id);
-                    hari.add({'nama_hari':element.hari.nama_hari, 'id_hari':element.hari.id});
-                }
-            }
-        })
-
-        hari = Array.from(hari);
-        
-        jam.forEach(item => {
-            const id_hari = item.id_hari;
-            if (counts[id_hari]) {
-                counts[id_hari]++;
-            } else {
-                counts[id_hari] = 1;
-            }
-        }); 
-        console.log(counts);
-
-        const max = Math.max(...Object.values(counts));
 
     function renderTable() {
         if (jadwalDetails.length === 0) {
@@ -155,6 +105,30 @@
             document.querySelector('.content').insertAdjacentHTML('beforeend', element);
             return;
         } else {
+            let kelasId = new Set();
+            let jamId = new Set();
+            
+            jadwalDetails.forEach((element) => {
+                if (element.kelas) {
+                    if (!kelasId.has(element.kelas.id)) {
+                        kelasId.add(element.kelas.id);
+                        kelas.add(element.kelas);
+                    }
+                }
+                if (element.jam) {
+                    if (!jamId.has(element.jam.id)) {
+                        jamId.add(element.jam.id);
+                        jam.add(element.jam);
+                    }
+                }
+            });
+
+            kelas = Array.from(kelas);
+            jam = Array.from(jam);
+
+            console.log('Kelas:', kelas);
+            console.log('Jam:', jam);
+
             table_content = "";
     
             const table = document.querySelector('.table-check');
@@ -162,13 +136,16 @@
                 <thead>
                     <tr>
                         <th scope="row" class="freeze-vertical freeze-horizontal">
+                            Hari
+                        </th>
+                        <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px">
                             Jam
                         </th>
             `
-            hari.forEach(element => {
+            kelas.forEach(element => {
                 table_content += `
                         <th class="freeze-vertical">
-                            ${element.nama_hari}
+                            ${element.nama_kelas}
                         </th>
                 `;
             })
@@ -177,52 +154,42 @@
                 </thead>
                 <tbody>
             `
-
-            let count = 0;
-            for (let i = 0; i < max; i++) { // baris
-                count = i;
+            count = 0;
+            jam.forEach((jamVal, i) => {
                 table_content += `
                     <tr>
                         <th scope="row" class="freeze-horizontal table-body">
                             <div class="col-fixed" style="width: 100px">
-                            ke-${i+1}
+                            ${jamVal.hari.nama_hari}
+                            </div>
+                        </th>
+                        <th scope="row" style="left: 102px" class="freeze-horizontal table-body">
+                            <div class="col-fixed" style="width: 150px">
+                            ${jamVal.waktu_awal} - ${jamVal.waktu_akhir}
                             </div>
                         </th>
                 `
-                
-                    hari.forEach((hariVal, j) => { //kolom
-                        try {
+                kelas.forEach((kelasVal, j) => {
+                    if (jadwalDetails[count].kelas.id == kelasVal.id && jadwalDetails[count].jam.id == jamVal.id) {
                         table_content += `
                             <td>
-                                <div class="flex-column" style="align-items:center">`
-                                    jadwalDetails.filter(item => {return item.jam.id_hari == hariVal.id_hari && item.jam.id == jam[count+j].id}).forEach(element => {
-                                        if (element.guru && element.guru.id ? (element.guru.id == document.querySelector('#guru').value) : false) {
-                                            table_content +=  `
-                                            <div>
-                                                ${element.mata_pelajaran && element.mata_pelajaran.nama_mata_pelajaran ? element.mata_pelajaran.nama_mata_pelajaran : ''}
-                                            </div>
-                                            <div>
-                                                ${element.kelas && element.kelas.nama_kelas ? element.kelas.nama_kelas : ''}
-                                            </div>
-                                            `
-                                        }
-                                        
-                                    });
-                                    table_content += `</div>
+                                <div class="flex-column" style="align-items:center">
+                                    <div>
+                                        ${jadwalDetails[count].guru && jadwalDetails[count].guru.name ? jadwalDetails[count].guru.name : ''}
+                                    </div>
+                                    <div style ="font-size: 20px">
+                                        ${jadwalDetails[count].guru && jadwalDetails[count].guru.id ? jadwalDetails[count].guru.id : ''}
+                                    </div>
+                                    <div>
+                                        ${jadwalDetails[count].mata_pelajaran && jadwalDetails[count].mata_pelajaran.nama_mata_pelajaran ? jadwalDetails[count].mata_pelajaran.nama_mata_pelajaran : ''}
+                                    </div>
+                                </div>
                             </td>
                         `;
-                        count = count + counts[j+1];
-                        console.log(i,counts[j+1]);
-                        console.log(count);
-                        } catch (error) {
-
-                        }
-                    });
-                
-
-                
-            }
-
+                        count++;
+                    }
+                });
+            });
             table.innerHTML = table_content;
         }
     }
