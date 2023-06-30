@@ -9,13 +9,13 @@
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin+'/penjadwalan';">
         Jadwal
     </div>
+    @can('Admin')
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
         Jadwal Guru
     </div>
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show/kelas';">
         Jadwal Kelas
     </div>
-    @can('Admin')
     <div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal.create') }}'">
         Tambah Jadwal
     </div>

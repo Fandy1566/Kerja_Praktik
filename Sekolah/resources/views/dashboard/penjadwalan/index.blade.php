@@ -19,13 +19,13 @@
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin+'/penjadwalan';">
         Jadwal
     </div>
+    @can('Admin')
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
         Jadwal Guru
     </div>
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show/kelas';">
         Jadwal Kelas
     </div>
-    @can('Admin')
     <div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal.create') }}'">
         Tambah Jadwal
     </div>
@@ -128,7 +128,7 @@
     let jam = new Set();
 
     function renderTable() {
-        if (jadwalDetails.length === 0) {
+        if (jadwalDetails.length === 0 || jadwalDetails === false) {
             const table = document.querySelector('.card-to-remove');
             table.remove();
             const element = `<div style="margin-top: 20px">Tidak ada data</div>`;

@@ -7,6 +7,10 @@
     
 </div>
 
+<div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal') }}'" style="margin-top:16px">
+    Kembali
+</div>
+
 <div id="form-layout" class="card m-20" style="width: 55%">
     <div class="title-card">
         Edit Penjadwalan
