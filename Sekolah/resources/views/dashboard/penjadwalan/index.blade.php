@@ -20,10 +20,10 @@
         Jadwal
     </div>
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
-        Jadwal Saya
+        Jadwal Guru
     </div>
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show/kelas';">
-        Jadwal Saya
+        Jadwal Kelas
     </div>
     @can('Admin')
     <div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal.create') }}'">
@@ -166,16 +166,16 @@
                 <thead>
                     <tr>
                         <th scope="row" class="freeze-vertical freeze-horizontal">
-                            Hari
+                            <div class="text-center">hari</div>
                         </th>
                         <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px">
-                            Jam
+                            <div class="text-center">Jam</div>
                         </th>
             `
             kelas.forEach(element => {
                 table_content += `
                         <th class="freeze-vertical">
-                            ${element.nama_kelas}
+                            <div class="text-center">${element.nama_kelas}</div>
                         </th>
                 `;
             })

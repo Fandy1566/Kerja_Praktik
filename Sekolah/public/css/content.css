@@ -687,3 +687,22 @@ th[scope=row].freeze-horizontal.table-body{
 table.minimize-th th{
     height: 30px;
 }
+
+table th .text-center{
+    display: flex;
+    place-items: center;
+    flex-direction: column;
+}
+
+button.print{
+    background-color: #5AA0D4;
+    border-radius: 5px;
+    color: white;
+    width: fit-content;
+    padding-inline: 10px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: 400;
+    outline: 0;
+    border: 0;
+}

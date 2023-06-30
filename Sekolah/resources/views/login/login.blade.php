@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="left-side" style="width:60vw; height:100%;">
-        {{-- <img src="{{asset('image/picture/login2.png')}}" alt="" style="width: 100%; height: 100%; object-fit: cover;"> --}}
+        <img src="{{asset('image/picture/smp.jpg')}}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -31,9 +31,9 @@
             </div>
             <div class="login-input">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus>
+                    <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus style="padding:8px;">
                     <label for="">Password</label>
-                    <input id="password" class="form-control" type="password" name="password" placeholder="Password" required autocomplete="current-password" >
+                    <input id="password" class="form-control" type="password" name="password" placeholder="Password" required autocomplete="current-password" style="padding:8px;">
             </div>
             <div class="login-help">
                 <div class="remember-me">

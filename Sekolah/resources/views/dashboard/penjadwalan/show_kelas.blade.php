@@ -10,7 +10,10 @@
         Jadwal
     </div>
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
-        Jadwal Saya
+        Jadwal Guru
+    </div>
+    <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show/kelas';">
+        Jadwal Kelas
     </div>
     @can('Admin')
     <div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal.create') }}'">
@@ -39,21 +42,26 @@
                 </select>
             </div>
         </div>
-        <div class="flex-row" style="gap:20px">
-            <div>
-                <label for="">Kelas</label><br>
-                <select name="kelas" id="kelas" class="select-style" onchange="renderTable()">
-                    <option value="">Pilih Kelas</option>
-                    @foreach($kelas as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama_kelas }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
         <button type="submit" class="btn" style="outline: none; border: none; width:100px; height: 30px; align-self:flex-end">Cari</button>
     </div>
 </form>
-<div class="card m-32 card-to-remove">
+
+<div class="card" style="margin-top: 16px;">
+    <div class="flex-row" style="gap:20px">
+         <div>
+            <label for="">Kelas</label><br>
+            <select name="kelas" id="kelas" class="select-style" onchange="renderTable()">
+                <option value="">Pilih Kelas</option>
+                @foreach($kelas as $item)
+                    <option value="{{ $item->id }}">{{ $item->nama_kelas }}</option>
+                @endforeach
+            </select>
+         </div>
+    </div>
+</div>
+
+<div class="card card-to-remove" style="margin-top: 16px;">
+    <button class="print" onclick="print()">Print</button>
     <div class="table-container" style="margin-left: 12px; margin-right: 12px; overflow-x: scroll;">
         <table class="table-check jadwal">
             
@@ -147,6 +155,9 @@
 
         const max = Math.max(...Object.values(counts));
 
+        const waktu = jam.filter(item=>item.id_hari=== 1)
+        console.log(waktu);
+
     function renderTable() {
         if (jadwalDetails.length === 0) {
             const table = document.querySelector('.card-to-remove');
@@ -162,13 +173,13 @@
                 <thead>
                     <tr>
                         <th scope="row" class="freeze-vertical freeze-horizontal">
-                            Jam
+                        <div class="text-center">Jam</div>
                         </th>
             `
             hari.forEach(element => {
                 table_content += `
                         <th class="freeze-vertical">
-                            ${element.nama_hari}
+                        <div class="text-center"> ${element.nama_hari}</div>
                         </th>
                 `;
             })
@@ -184,8 +195,8 @@
                 table_content += `
                     <tr>
                         <th scope="row" class="freeze-horizontal table-body">
-                            <div class="col-fixed" style="width: 100px">
-                            ke-${i+1}
+                            <div class="col-fixed" style="width: 175px">
+                            ${waktu[i].waktu_awal} - ${waktu[i].waktu_akhir}
                             </div>
                         </th>
                 `

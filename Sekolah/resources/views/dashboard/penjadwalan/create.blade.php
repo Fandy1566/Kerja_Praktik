@@ -64,9 +64,15 @@
         <table id="tbl7" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 1px"rowspan="2">Hari</th>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px" rowspan="2">Waktu</th>
-                    <th class="freeze-vertical" colspan ="{{$tingkat["7"]}}">Kelas</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 1px"rowspan="2">
+                        <div class="text-center">Hari</div>
+                    </th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px" rowspan="2">
+                        <div class="text-center">Waktu</div>
+                    </th>
+                    <th class="freeze-vertical" colspan ="{{$tingkat["7"]}}">
+                        <div class="text-center">Kelas</div>
+                    </th>
                 </tr>
                 @php
                     $filtered_7 = $kelas->filter(function($item)
@@ -76,7 +82,9 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_7 as $item)
-                        <th class="freeze-vertical" style="top: 31px">{{$item->nama_kelas}}</th>
+                        <th class="freeze-vertical" style="top: 31px">
+                            <div class="text-center">{{$item->nama_kelas}}</div>
+                        </th>
                     @endforeach
                 </tr>
             </thead>
@@ -123,9 +131,15 @@
         <table id="tbl8" class="table-check jadwal minimize-th">
             <thead>
                 <tr>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 1px"rowspan="2">Hari</th>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px" rowspan="2">Waktu</th>
-                    <th class="freeze-vertical" colspan="{{$tingkat["8"]}}">Kelas</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 1px"rowspan="2">
+                        <div class="text-center">Hari</div>
+                    </th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 102px" rowspan="2">
+                        <div class="text-center">Waktu</div>
+                    </th>
+                    <th class="freeze-vertical" colspan="{{$tingkat["8"]}}">
+                        <div class="text-center">Kelas</div>
+                    </th>
                 </tr>
                 @php
                     $filtered_8 = $kelas->filter(function($item)
@@ -135,7 +149,9 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_8 as $item)
-                        <th class="freeze-vertical" style="top: 31px">{{$item->nama_kelas}}</th>
+                        <th class="freeze-vertical" style="top: 31px">
+                            <div class="text-center">{{$item->nama_kelas}}</div>
+                        </th>
                     @endforeach
                 </tr>
             </thead>
@@ -182,9 +198,15 @@
         <table id="tbl9" class="table-check jawdal minimize-th" style= "overflow: scroll;">
             <thead>
                 <tr>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 0px"rowspan="2">Hari</th>
-                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 101px" rowspan="2">Waktu</th>
-                    <th class="freeze-vertical" colspan ="{{$tingkat["9"]}}">Kelas</th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 0px"rowspan="2">
+                        <div class="text-center">Hari</div>
+                    </th>
+                    <th scope="row" class="freeze-vertical freeze-horizontal" style="left: 101px" rowspan="2">
+                        <div class="text-center">Waktu</div>
+                    </th>
+                    <th class="freeze-vertical" colspan ="{{$tingkat["9"]}}">
+                        <div class="text-center">Kelas</div>
+                    </th>
                 </tr>
                 @php
                     $filtered_9 = $kelas->filter(function($item)
@@ -194,7 +216,9 @@
                 @endphp
                 <tr>
                     @foreach ($filtered_9 as $item)
-                        <th class="freeze-vertical" style="top: 30px">{{$item->nama_kelas}}</th>
+                        <th class="freeze-vertical" style="top: 30px">
+                            <div class="text-center">{{$item->nama_kelas}}</div>
+                        </th>
                     @endforeach
                 </tr>
             </thead>

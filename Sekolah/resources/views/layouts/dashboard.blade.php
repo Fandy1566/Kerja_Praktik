@@ -43,7 +43,7 @@
         <div class="sidebar-top">
             <div class="logo">
                 <div class="logo-smp"><img src="{{asset('image/picture/Logo.png')}}" alt=""></div>
-                <div class="judul">SMPN 23 PALEMBANG</div>
+                <div class="judul" style="text-align:center;">SMPN 23 PALEMBANG</div>
             </div>
             <div class="main-menu">
                 <div class="main-menu-title">MAIN MENU</div>
