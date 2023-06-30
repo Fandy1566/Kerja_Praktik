@@ -1,104 +1,23 @@
-
-@extends('layouts.dashboard')
-@section('title', 'Dashboard')
-@section('content')
-@include('layouts.header', ['title' => 'Jadwal Mengajar'])
-
-<div class="message"></div>
-
-<div class="form-nav flex-row" style="gap: 12px; margin-right: 12px; margin-top: 16px;">
-    <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin+'/penjadwalan';">
-        Jadwal
-    </div>
-    <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
-        Jadwal Saya
-    </div>
-    @can('Admin')
-    <div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal.create') }}'">
-        Tambah Jadwal
-    </div>
-    @endcan
-</div>
-<form method="get" action="/penjadwalan/show">
-    <div class="card m-32 table-7 flex-column" style="gap:20px">
-        <div class="flex-row" style="gap:20px">
-            <div>
-                <label for="">Tahun ajaran</label><br>
-                <select name="tahun_awal" id="tahun" class="select-style" onchange="renderSemester()">
-                    <option value="">Pilih Tahun Ajaran</option>
-                    @for ($i = 0; $i < count($penjadwalan); $i++)
-                        @if ($i != 0 && ($penjadwalan[$i] != $penjadwalan[$i-1]))
-                            <option value="{{$penjadwalan[$i]->tahun_awal}}">{{$penjadwalan[$i]->tahun_awal}}/{{$penjadwalan[$i]->tahun_awal+1}}</option>
-                        @endif
-                    @endfor
-                </select>
-            </div>
-            <div>
-                <label for="">Semester</label><br>
-                <select name="is_gasal" id="is_gasal" class="select-style">
-                    <option value="">Pilih Semester</option>
-                </select>
-            </div>
-        </div>
-        <div class="flex-row" style="gap:20px">
-            <div>
-                <label for="">Guru</label><br>
-                <select name="guru" id="guru" class="select-style" onchange="renderTable()">
-                    <option value="">Pilih Kelas</option>
-                    @foreach($guru as $item)
-                        <option value="{{ $item->id }}">({{$item->id}}) {{ $item->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        <button type="submit" class="btn" style="outline: none; border: none; width:100px; height: 30px; align-self:flex-end">Cari</button>
-    </div>
-</form>
-<button onclick="print()">Print</button>
-<div class="card m-32 card-to-remove">
-    <div class="table-container" style="margin-left: 12px; margin-right: 12px; overflow-x: scroll;">
-        <table class="table-check jadwal">
-            
-        </table>
-    </div>
-</div>
-@endsection
-@section('script')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jadwal</title>
+</head>
+<body>
+    <table class="table-check jadwal">
+        
+    </table>
+</body>
 <script>
-    const jadwal =  <?php echo json_encode($penjadwalan); ?>;
-                
+    const guruId =  localStorage.getItem("guruToPass");
+    const jadwalDetails = <?php echo json_encode($jadwalDetails); ?>;
     let counts = {}
 
-    function renderSemester() {
-        const tahun_awal = document.querySelector('#tahun').value;
-        const is_gasal = document.querySelector('#is_gasal');
-
-        getGasal = jadwal.filter(item => item.tahun_awal == tahun_awal)
-        
-        options = ""
-        
-        if (getGasal.map(item => item.is_gasal).includes(1)) {
-            const isValidated = getGasal.filter(item => item.is_gasal === 1).map(item => item.is_validated);
-            const optionText = isValidated[0] ? '' : '(Belum Divalidasi)';
-            options += `<option value="1">Gasal ${optionText}</option>`;
-        }
-        if (getGasal.map(item => item.is_gasal).includes(0)){
-            const isValidated = getGasal.filter(item => item.is_gasal === 0).map(item => item.is_validated);
-            const optionText = isValidated[0] ? '' : '(Belum Divalidasi)';
-            options += `<option value="0">Genap ${optionText}</option>`;
-        }
-        if (getGasal.length == 0) {
-            options += `<option value="">Pilih Semester</option>`;
-        }
-        is_gasal.innerHTML = options;
-    }
-    
-    renderSemester();
     const isAdmin = {{ auth()->user()->can('Admin') ? 'true' : 'false' }};
     const user = <?php echo json_encode(auth()->user()); ?>;
-    const url = window.location.origin+"/api/jadwal";
-    const jadwalDetails = <?php echo json_encode($jadwalDetails); ?>;
-    console.log(jadwalDetails);
     let kelas = new Set();
     let jam = new Set();
     let hari = new Set();
@@ -198,7 +117,7 @@
                             <td>
                                 <div class="flex-column" style="align-items:center">`
                                     jadwalDetails.filter(item => {return item.jam.id_hari == hariVal.id_hari && item.jam.id == jam[count+j].id}).forEach(element => {
-                                        if (element.guru && element.guru.id ? (element.guru.id == document.querySelector('#guru').value) : false) {
+                                        if (element.guru && element.guru.id ? (element.guru.id == guruId) : false) {
                                             table_content +=  `
                                             <div>
                                                 ${element.mata_pelajaran && element.mata_pelajaran.nama_mata_pelajaran ? element.mata_pelajaran.nama_mata_pelajaran : ''}
@@ -221,8 +140,6 @@
                         }
                     });
                 
-
-                
             }
 
             table.innerHTML = table_content;
@@ -230,14 +147,5 @@
     }
     renderTable();
 
-    function print() {
-        const guruToPass = document.querySelector('#guru').value;
-        localStorage.setItem("guruToPass", guruToPass);
-        const guruToPrint = localStorage.getItem("guruToPass"); // Rename the variable
-        console.log(guruToPrint);
-        const newWindow = window.open("{{route('jadwal.print', ['id' => $jadwalDetails[0]->id_jadwal])}}");
-    }
-
-
 </script>
-@endsection
+</html>

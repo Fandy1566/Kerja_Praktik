@@ -101,4 +101,13 @@ class PenjadwalanController extends Controller
 
         return redirect()->back();
     }
+
+    public function print($id)
+    {
+        $jadwalDetails = JadwalDetail::with('Guru','Kelas','Jadwal','Jam','MataPelajaran','Jam.hari')->where('id_jadwal', $id ?? 2)
+            ->orderBy('id_jam', 'asc')
+            ->orderBy('id_kelas', 'asc')
+            ->get();
+        return view('dashboard.penjadwalan.print', compact('jadwalDetails'));
+    }
 }
