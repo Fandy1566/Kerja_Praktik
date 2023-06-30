@@ -46,7 +46,7 @@
         <button type="submit" class="btn" style="outline: none; border: none; width:100px; height: 30px; align-self:flex-end">Cari</button>
     </div>
 </form>
-<div class="card" style="margin-top: 16px;">
+<div id="select-guru" class="card hidden" style="margin-top: 16px;">
         <div class="flex-row" style="gap:20px">
             <div>
                 <label for="">Guru</label><br>
@@ -104,15 +104,17 @@
     const user = <?php echo json_encode(auth()->user()); ?>;
     const url = window.location.origin+"/api/jadwal";
     const jadwalDetails = <?php echo json_encode($jadwalDetails); ?>;
-    console.log(jadwalDetails);
+    // console.log(jadwalDetails);
     let kelas = new Set();
     let jam = new Set();
     let hari = new Set();
+    let kelasId = new Set();
+    let jamId = new Set();
 
+    let max;
+    let waktu;
 
-        let kelasId = new Set();
-        let jamId = new Set();
-        
+    try {
         jadwalDetails.forEach((element) => {
             if (element.kelas) {
                 if (!kelasId.has(element.kelas.id)) {
@@ -142,7 +144,6 @@
         })
 
         hari = Array.from(hari);
-        
         jam.forEach(item => {
             const id_hari = item.id_hari;
             if (counts[id_hari]) {
@@ -151,15 +152,18 @@
                 counts[id_hari] = 1;
             }
         }); 
-        console.log(counts);
+        // console.log(counts);
 
-        const max = Math.max(...Object.values(counts));
-    
-        const waktu = jam.filter(item=>item.id_hari=== 1)
-        console.log(waktu);
+        max = Math.max(...Object.values(counts));
+
+        waktu = jam.filter(item=>item.id_hari=== 1)
+
+    } catch (error) {
+        
+    }
 
     function renderTable() {
-        if (jadwalDetails.length === 0) {
+        if (jadwalDetails.length === 0 || jadwalDetails === false) {
             const table = document.querySelector('.card-to-remove');
             table.remove();
             const element = `<div style="margin-top: 20px">Tidak ada data</div>`;
@@ -167,7 +171,7 @@
             return;
         } else {
             table_content = "";
-    
+            document.querySelector('#select-guru').classList.remove('hidden');
             const table = document.querySelector('.table-check');
             table_content += `
                 <thead>
@@ -196,7 +200,7 @@
                     <tr>
                         <th scope="row" class="freeze-horizontal table-body">
                             <div class="col-fixed" style="width: 175px">
-                            ${waktu[i].waktu_awal} - ${waktu[i].waktu_akhir}
+                                ${waktu[i].waktu_awal} - ${waktu[i].waktu_akhir}
                             </div>
                         </th>
                 `
@@ -223,8 +227,8 @@
                             </td>
                         `;
                         count = count + counts[j+1];
-                        console.log(i,counts[j+1]);
-                        console.log(count);
+                        // console.log(i,counts[j+1]);
+                        // console.log(count);
                         } catch (error) {
 
                         }
@@ -244,7 +248,8 @@
         localStorage.setItem("guruToPass", guruToPass);
         const guruToPrint = localStorage.getItem("guruToPass"); // Rename the variable
         console.log(guruToPrint);
-        const newWindow = window.open("{{route('jadwal.print', ['id' => $jadwalDetails[0]->id_jadwal])}}");
+        const newWindow = window.open("{{route('jadwal.guru.print', ['id' => $jadwalDetails[0]->id_jadwal ?? 0])}}");
+
     }
 
 

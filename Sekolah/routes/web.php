@@ -27,7 +27,7 @@ Route::get('/', function () {
 //     return view('dashboard.home');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth','preventBackHistory'])->group(function () {
+Route::middleware(['auth','preventBackHistory','active'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -56,7 +56,8 @@ Route::middleware(['auth','preventBackHistory'])->group(function () {
     Route::get('/penjadwalan/show', [PenjadwalanController::class, 'show'])->name('jadwal.show');
     Route::get('/penjadwalan/edit/{id}', [PenjadwalanController::class, 'edit'])->name('jadwal.edit');
     Route::post('/penjadwalan/validasi/{id}', [PenjadwalanController::class, 'validasi'])->name('jadwal.validasi');
-    Route::get('/penjadwalan/print/{id}', [PenjadwalanController::class, 'print'])->name('jadwal.print');
+    Route::get('/penjadwalan/print/guru/{id}', [PenjadwalanController::class, 'print'])->name('jadwal.guru.print');
+    Route::get('/penjadwalan/print/kelas/{id}', [PenjadwalanController::class, 'printKelas'])->name('jadwal.kelas.print');
     Route::get('/penjadwalan/show/kelas', [PenjadwalanController::class, 'showKelas'])->name('jadwal.showKelas');
     Route::delete('/jadwal/delete/{id}', [PenjadwalanController::class, 'destroy'])->name('jadwal.delete');
     Route::patch('/user/edit/{id}', [UserController::class, 'update'])->name('user.edit');

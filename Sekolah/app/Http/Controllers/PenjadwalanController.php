@@ -23,17 +23,15 @@ class PenjadwalanController extends Controller
     {
         $jadwalMengajar = JadwalMengajar::all();
         $jadwal = Jadwal::where('tahun_awal', $request->tahun_awal)->where('is_gasal', $request->is_gasal)->first();
-        $jadwalDetails = JadwalDetail::with('Guru','Kelas','Jadwal','Jam','MataPelajaran','Jam.hari')->where('id_jadwal', $jadwal->id ?? 0)
-        ->orderBy('id_jam', 'asc')
-        ->orderBy('id_kelas', 'asc')
-        ->get();
-        // $jadwalDetails = Jadwal::with('JadwalDetail', 'JadwalDetail.Guru', 'JadwalDetail.Kelas', 'JadwalDetail.Jam', 'JadwalDetail.MataPelajaran', 'JadwalDetail.Jam.hari')
-        //     ->join('jadwal_detail', 'jadwal.id', '=', 'jadwal_detail.id_jadwal')
-        //     ->where('jadwal.tahun_awal', $request->tahun_awal)
-        //     ->where('jadwal.is_gasal', $request->is_gasal)
-        //     ->orderBy('jadwal_detail.id_jam', 'asc')
-        //     ->orderBy('jadwal_detail.id_kelas', 'asc') 
-        //     ->first();
+        try {
+            $jadwalDetails = JadwalDetail::with('Guru', 'Kelas', 'Jadwal', 'Jam', 'MataPelajaran', 'Jam.hari')
+            ->where('id_jadwal', $jadwal->id)
+            ->orderBy('id_jam', 'asc')
+            ->orderBy('id_kelas', 'asc')
+            ->get();
+        } catch (\Exception $e) {
+            $jadwalDetails = false;
+        }
 
         $kelas = Kelas::all();
         $mataPelajaran = MataPelajaran::all();
@@ -70,10 +68,15 @@ class PenjadwalanController extends Controller
     {
         $jadwalMengajar = JadwalMengajar::all();
         $jadwal = Jadwal::where('tahun_awal', $request->tahun_awal)->where('is_gasal', $request->is_gasal)->first();
-        $jadwalDetails = JadwalDetail::with('Guru','Kelas','Jadwal','Jam','MataPelajaran','Jam.hari')->where('id_jadwal', $jadwal->id ?? 2)
+        try {
+            $jadwalDetails = JadwalDetail::with('Guru', 'Kelas', 'Jadwal', 'Jam', 'MataPelajaran', 'Jam.hari')
+            ->where('id_jadwal', $jadwal->id)
             ->orderBy('id_jam', 'asc')
             ->orderBy('id_kelas', 'asc')
             ->get();
+        } catch (\Exception $e) {
+            $jadwalDetails = false;
+        }
         $kelas = Kelas::all();
         $guru = User::all();
         $penjadwalan = Jadwal::orderBy('tahun_awal', 'asc')->get();
@@ -85,10 +88,18 @@ class PenjadwalanController extends Controller
     {
         $jadwalMengajar = JadwalMengajar::all();
         $jadwal = Jadwal::where('tahun_awal', $request->tahun_awal)->where('is_gasal', $request->is_gasal)->first();
-        $jadwalDetails = JadwalDetail::with('Guru','Kelas','Jadwal','Jam','MataPelajaran','Jam.hari')->where('id_jadwal', $jadwal->id ?? 2)
+
+        
+        try {
+            $jadwalDetails = JadwalDetail::with('Guru', 'Kelas', 'Jadwal', 'Jam', 'MataPelajaran', 'Jam.hari')
+            ->where('id_jadwal', $jadwal->id)
             ->orderBy('id_jam', 'asc')
             ->orderBy('id_kelas', 'asc')
             ->get();
+        } catch (\Exception $e) {
+            $jadwalDetails = false;
+        }
+
         $kelas = Kelas::all();
         $guru = User::all();
         $penjadwalan = Jadwal::orderBy('tahun_awal', 'asc')->get();
@@ -119,10 +130,19 @@ class PenjadwalanController extends Controller
 
     public function print($id)
     {
-        $jadwalDetails = JadwalDetail::with('Guru','Kelas','Jadwal','Jam','MataPelajaran','Jam.hari')->where('id_jadwal', $id ?? 2)
+        $jadwalDetails = JadwalDetail::with('Guru','Kelas','Jadwal','Jam','MataPelajaran','Jam.hari')->where('id_jadwal', $id)
             ->orderBy('id_jam', 'asc')
             ->orderBy('id_kelas', 'asc')
             ->get();
         return view('dashboard.penjadwalan.print', compact('jadwalDetails'));
+    }
+
+    public function printKelas($id)
+    {
+        $jadwalDetails = JadwalDetail::with('Guru','Kelas','Jadwal','Jam','MataPelajaran','Jam.hari')->where('id_jadwal', $id)
+            ->orderBy('id_jam', 'asc')
+            ->orderBy('id_kelas', 'asc')
+            ->get();
+        return view('dashboard.penjadwalan.print_kelas', compact('jadwalDetails'));
     }
 }

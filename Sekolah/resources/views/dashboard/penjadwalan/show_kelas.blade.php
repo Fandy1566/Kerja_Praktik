@@ -26,7 +26,7 @@
         <div class="flex-row" style="gap:20px">
             <div>
                 <label for="">Tahun ajaran</label><br>
-                <select name="tahun" id="tahun" class="select-style" onclick="renderSemester()">
+                <select name="tahun_awal" id="tahun" class="select-style" onclick="renderSemester()">
                     <option value="">Pilih Tahun Ajaran</option>
                     @for ($i = 0; $i < count($penjadwalan); $i++)
                         @if ($i != 0 && ($penjadwalan[$i] != $penjadwalan[$i-1]))
@@ -46,7 +46,7 @@
     </div>
 </form>
 
-<div class="card" style="margin-top: 16px;">
+<div id="select-kelas" class="card hidden" style="margin-top: 16px;">
     <div class="flex-row" style="gap:20px">
          <div>
             <label for="">Kelas</label><br>
@@ -104,15 +104,14 @@
     const user = <?php echo json_encode(auth()->user()); ?>;
     const url = window.location.origin+"/api/jadwal";
     const jadwalDetails = <?php echo json_encode($jadwalDetails); ?>;
-    console.log(jadwalDetails);
     let kelas = new Set();
     let jam = new Set();
     let hari = new Set();
+    let kelasId = new Set();
+    let jamId = new Set();
+    let max, waktu;
 
-
-        let kelasId = new Set();
-        let jamId = new Set();
-        
+    try {
         jadwalDetails.forEach((element) => {
             if (element.kelas) {
                 if (!kelasId.has(element.kelas.id)) {
@@ -151,21 +150,25 @@
                 counts[id_hari] = 1;
             }
         }); 
-        console.log(counts);
+        // console.log(counts);
 
-        const max = Math.max(...Object.values(counts));
+        max = Math.max(...Object.values(counts));
 
-        const waktu = jam.filter(item=>item.id_hari=== 1)
-        console.log(waktu);
+        waktu = jam.filter(item=>item.id_hari=== 1)
+        // console.log(waktu);
+    } catch (error) {
+        
+    }
 
     function renderTable() {
-        if (jadwalDetails.length === 0) {
+        if (jadwalDetails.length === 0 || jadwalDetails === false) {
             const table = document.querySelector('.card-to-remove');
             table.remove();
             const element = `<div style="margin-top: 20px">Tidak ada data</div>`;
             document.querySelector('.content').insertAdjacentHTML('beforeend', element);
             return;
         } else {
+            document.querySelector('#select-kelas').classList.remove('hidden');
             table_content = "";
     
             const table = document.querySelector('.table-check');
@@ -229,8 +232,6 @@
                         }
                     });
                 
-
-                
             }
 
             table.innerHTML = table_content;
@@ -239,13 +240,12 @@
     renderTable();
 
     function print() {
-        const guruToPass = document.querySelector('#guru').value;
-        localStorage.setItem("guruToPass", guruToPass);
-        const guruToPrint = localStorage.getItem("guruToPass"); // Rename the variable
-        console.log(guruToPrint);
-        const newWindow = window.open("{{route('jadwal.print', ['id' => $jadwalDetails[0]->id_jadwal])}}");
+        const kelasToPass = document.querySelector('#kelas').value;
+        localStorage.setItem("kelasToPass", kelasToPass);
+        const kelasToPrint = localStorage.getItem("kelasToPass"); // Rename the variable
+        console.log(kelasToPrint);
+        const newWindow = window.open("{{route('jadwal.kelas.print', ['id' => $jadwalDetails[0]->id_jadwal ?? 0])}}");
     }
-            
-                    
+                
 </script>
 @endsection

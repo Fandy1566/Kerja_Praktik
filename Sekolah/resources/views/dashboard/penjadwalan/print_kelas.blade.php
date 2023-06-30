@@ -5,7 +5,7 @@
         
     </table>
     <script>
-        const guruId =  localStorage.getItem("guruToPass");
+        const kelas_Id =  localStorage.getItem("kelasToPass");
         const jadwalDetails = <?php echo json_encode($jadwalDetails); ?>;
         let counts = {}
 
@@ -55,7 +55,6 @@
                 counts[id_hari] = 1;
             }
         }); 
-        // console.log(counts);
 
         const max = Math.max(...Object.values(counts));
 
@@ -108,15 +107,15 @@
                             try {
                             table_content += `
                                 <td>
-                                    <div class="flex-column" style="align-items:center">`
+                                    <div class="flex-column" style="align-items:center" style="width:200px">`
                                         jadwalDetails.filter(item => {return item.jam.id_hari == hariVal.id_hari && item.jam.id == jam[count+j].id}).forEach(element => {
-                                            if (element.guru && element.guru.id ? (element.guru.id == guruId) : false) {
+                                            if (element.kelas && element.kelas.id ? (element.kelas.id == kelas_Id) : false) {
                                                 table_content +=  `
                                                 <div>
-                                                    ${element.mata_pelajaran && element.mata_pelajaran.nama_mata_pelajaran ? element.mata_pelajaran.nama_mata_pelajaran : ''}
+                                                    ${element.guru && element.guru.name ? element.guru.name : ''}
                                                 </div>
                                                 <div>
-                                                    ${element.kelas && element.kelas.nama_kelas ? element.kelas.nama_kelas : ''}
+                                                    ${element.mata_pelajaran && element.mata_pelajaran.nama_mata_pelajaran ? element.mata_pelajaran.nama_mata_pelajaran : ''}
                                                 </div>
                                                 `
                                             }
@@ -126,8 +125,8 @@
                                 </td>
                             `;
                             count = count + counts[j+1];
-                            console.log(i,counts[j+1]);
-                            console.log(count);
+                            // console.log(i,counts[j+1]);
+                            // console.log(count);
                             } catch (error) {
 
                             }
