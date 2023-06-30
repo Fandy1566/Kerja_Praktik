@@ -10,6 +10,11 @@
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin+'/penjadwalan';">
         Jadwal
     </div>
+    @can('guru')
+    <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
+        Jadwal Saya
+    </div>
+    @endcan
     @can('Admin')
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
         Jadwal Guru
@@ -52,9 +57,14 @@
                 <label for="">Guru</label><br>
                 <select name="guru" id="guru" class="select-style" onchange="renderTable()">
                     <option value="">Pilih Guru</option>
-                    @foreach($guru as $item)
-                        <option value="{{ $item->id }}">({{$item->id}}) {{ $item->name }}</option>
-                    @endforeach
+                    @can('admin')
+                        @foreach($guru as $item)
+                            <option value="{{ $item->id }}">({{$item->id}}) {{ $item->name }}</option>
+                        @endforeach
+                    @endcan
+                    @can('guru')
+                        <option selected value="{{ Auth::user()->id }}">({{Auth::user()->id}}) {{ Auth::user()->name }}</option>
+                    @endcan
                 </select>
             </div>
         </div>
@@ -170,7 +180,9 @@
             return;
         } else {
             table_content = "";
-            document.querySelector('#select-guru').classList.remove('hidden');
+            if (isAdmin) {
+                document.querySelector('#select-guru').classList.remove('hidden');
+            }
             const table = document.querySelector('.table-check');
             table_content += `
                 <thead>

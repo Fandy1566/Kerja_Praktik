@@ -19,6 +19,11 @@
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin+'/penjadwalan';">
         Jadwal
     </div>
+    @can('guru')
+    <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
+        Jadwal Saya
+    </div>
+    @endcan
     @can('Admin')
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
         Jadwal Guru
