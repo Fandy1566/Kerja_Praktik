@@ -30,7 +30,7 @@
                     <option value="">Pilih Tahun Ajaran</option>
                     @for ($i = 0; $i < count($penjadwalan); $i++)
                         @if ($i != 0 && ($penjadwalan[$i] != $penjadwalan[$i-1]))
-                            <option value="{{$penjadwalan[$i]->tahun_awal}}">{{$penjadwalan[$i]->tahun_awal}}/{{$penjadwalan[$i]->tahun_awal+1}}</option>
+                            <option {{($_GET['tahun_awal'] ?? 0) == $penjadwalan[$i]->tahun_awal ? 'selected' : ''}} value="{{$penjadwalan[$i]->tahun_awal}}">{{$penjadwalan[$i]->tahun_awal}}/{{$penjadwalan[$i]->tahun_awal+1}}</option>
                         @endif
                     @endfor
                 </select>
@@ -86,12 +86,12 @@
         if (getGasal.map(item => item.is_gasal).includes(1)) {
             const isValidated = getGasal.filter(item => item.is_gasal === 1).map(item => item.is_validated);
             const optionText = isValidated[0] ? '' : '(Belum Divalidasi)';
-            options += `<option value="1">Gasal ${optionText}</option>`;
+            options += `<option {{($_GET['is_gasal'] ?? 0) == 1 ? 'selected' : ''}} value="1">Gasal ${optionText}</option>`;
         }
         if (getGasal.map(item => item.is_gasal).includes(0)){
             const isValidated = getGasal.filter(item => item.is_gasal === 0).map(item => item.is_validated);
             const optionText = isValidated[0] ? '' : '(Belum Divalidasi)';
-            options += `<option value="0">Genap ${optionText}</option>`;
+            options += `<option {{($_GET['is_gasal'] ?? 0) == 0 ? 'selected' : ''}} value="0">Genap ${optionText}</option>`;
         }
         if (getGasal.length == 0) {
             options += `<option value="">Pilih Semester</option>`;
