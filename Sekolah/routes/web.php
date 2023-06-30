@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/penjadwalan/edit/{id}', [PenjadwalanController::class, 'edit'])->name('jadwal.edit');
     Route::post('/penjadwalan/validasi/{id}', [PenjadwalanController::class, 'validasi'])->name('jadwal.validasi');
     Route::get('/penjadwalan/print/{id}', [PenjadwalanController::class, 'print'])->name('jadwal.print');
+    Route::get('/penjadwalan/show/kelas', [PenjadwalanController::class, 'showKelas'])->name('jadwal.showKelas');
     Route::delete('/jadwal/delete/{id}', [PenjadwalanController::class, 'destroy'])->name('jadwal.delete');
     Route::patch('/user/edit/{id}', [UserController::class, 'update'])->name('user.edit');
 
