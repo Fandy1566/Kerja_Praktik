@@ -79,6 +79,9 @@ class APIUserController extends Controller
             if ($guru) {
                 $guru->name = $request->nama_guru;
                 $guru->role = $request->role;
+                if ($request->password != '') {
+                    $guru->password = bcrypt($request->password);
+                }
                 $guru->is_guru_kelas_7 = in_array('7', $request->kelas) ? 1 : 0;
                 $guru->is_guru_kelas_8 = in_array('8', $request->kelas) ? 1 : 0;
                 $guru->is_guru_kelas_9 = in_array('9', $request->kelas) ? 1 : 0;
@@ -120,6 +123,7 @@ class APIUserController extends Controller
                 $guru = User::find($value);
                 if ($guru) {
                     $guru->role = 6;
+                    $guru->password = '';
                     $guru->save();
                     $berhasil[$i] = $value;
                     $i++;

@@ -22,6 +22,9 @@
     <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show';">
         Jadwal Saya
     </div>
+    <div class="clickable prevent-select center-text btn" onclick="window.location = window.location.origin + '/penjadwalan/show/kelas';">
+        Jadwal Saya
+    </div>
     @can('Admin')
     <div class="clickable prevent-select center-text btn" onclick="window.location = '{{ route('jadwal.create') }}'">
         Tambah Jadwal
@@ -60,6 +63,13 @@
                 @method('delete')
                 <input type="hidden" name="_method" value="delete">
                 <button id="btn_hapus" style="background-color: red; border: none; height:24px; cursor: pointer" type="submit" class="btn">Hapus</button>
+            </form>
+            @endif
+        @endcan
+        @can('Admin')
+            @if ($jadwalDetails[0] ?? 0)
+            <form action="{{ route('jadwal.edit', ['id' => $jadwalDetails[0]->id_jadwal]) }}" method="get">
+                <button id="btn_hapus" style="background-color: rgb(131, 131, 0); border: none; height:24px; cursor: pointer" type="submit" class="btn">Edit</button>
             </form>
             @endif
         @endcan

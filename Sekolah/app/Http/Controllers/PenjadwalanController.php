@@ -47,7 +47,7 @@ class PenjadwalanController extends Controller
     public function create()
     {
         $kelas = Kelas::all();
-        $guru = User::all();
+        $guru = User::where('role', '!=', 6)->get();
         $jadwalMengajar = JadwalMengajar::all();
         $mataPelajaran = MataPelajaran::all();
         return view('dashboard.penjadwalan.create', compact('kelas','guru','jadwalMengajar','mataPelajaran'));
@@ -60,7 +60,7 @@ class PenjadwalanController extends Controller
         ->orderBy('id_kelas', 'asc')
         ->get();
         $kelas = Kelas::all();
-        $guru = User::all();
+        $guru = User::where('role', '!=', 6)->get();
         $jadwalMengajar = JadwalMengajar::all();
         $mataPelajaran = MataPelajaran::all();
         return view('dashboard.penjadwalan.edit', compact('kelas','guru','jadwalMengajar','mataPelajaran','jadwalDetails'));

@@ -48,7 +48,6 @@
     }
     $guru_kelas = [$guru_kelas_7, $guru_kelas_8, $guru_kelas_9];
 @endphp
-
 @extends('layouts.dashboard')
 @section('title', 'Dashboard')
 @section('content')
@@ -94,7 +93,7 @@
                     Kelas VII
                     <div class="pb-mapel2" style="background-color: #FFAEAE; margin-top: 12px;">
                         <div class="pb-mapel2" style="background-color: #BB1818; width: {{(($guru_kelas[0] / ($tingkat["7"] ?? 0))*100 >= 100) ? '100' : (($guru_kelas[0] / ($tingkat["7"] ?? 0))*100)}}%;">
-                        <div class="pb-persen2">{{($guru_kelas[0] / ($tingkat["7"] ?? 1))*100}}%</div>
+                        <div class="pb-persen2">{{(($guru_kelas[0] / ($tingkat["7"] ?? 0))*100 >= 100) ? '100' : (($guru_kelas[0] / ($tingkat["7"] ?? 0))*100)}}%</div>
                         </div>
                     </div>
                 </div>
@@ -102,7 +101,7 @@
                     Kelas VIII
                     <div class="pb-mapel2" style="background-color: #FFD95A; margin-top: 12px;">
                         <div class="pb-mapel2" style="background-color: #FCD552; width: {{(($guru_kelas[1] / ($tingkat["8"] ?? 0))*100 >= 100) ? '100' : (($guru_kelas[1] / ($tingkat["8"] ?? 0))*100)}}%;">
-                        <div class="pb-persen2">{{($guru_kelas[1] / ($tingkat["8"] ?? 1))*100}}%</div>
+                        <div class="pb-persen2">{{(($guru_kelas[1] / ($tingkat["8"] ?? 0))*100 >= 100) ? '100' : (($guru_kelas[1] / ($tingkat["8"] ?? 0))*100)}}%</div>
                         </div>
                     </div>
                 </div>
@@ -110,7 +109,7 @@
                     Kelas IX
                     <div class="pb-mapel2" style="background-color: #A6CDE5; margin-top: 12px;">
                         <div class="pb-mapel2" style="background-color: #479D39; width: {{(($guru_kelas[2] / ($tingkat["9"] ?? 0))*100 >= 100) ? '100' : (($guru_kelas[2] / ($tingkat["9"] ?? 0))*100)}}%;">
-                        <div class="pb-persen2">{{($guru_kelas[2] / ($tingkat["9"] ?? 1))*100}}%</div>
+                        <div class="pb-persen2">{{(($guru_kelas[2] / ($tingkat["9"] ?? 0))*100 >= 100) ? '100' : (($guru_kelas[2] / ($tingkat["9"] ?? 0))*100)}}%</div>
                         </div>
                     </div>
                 </div>
