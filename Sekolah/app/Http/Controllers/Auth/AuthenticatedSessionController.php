@@ -37,7 +37,9 @@ class AuthenticatedSessionController extends Controller
             throw ValidationException::withMessages([
                 'email' => 'Your account is inactive.',
             ]);
-            return redirect()->back();
+            $request->session()->regenerateToken();
+    
+            return redirect('/');
         }
     
         $request->session()->regenerate();
